@@ -41,4 +41,24 @@
         android:layout_alignParentEnd="true"
         android:background="#d9d9d9" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Backlog"
+        android:id="@+id/textView_Backlog"
+        android:layout_marginTop="151dp"
+        android:textSize="45sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Insurmountable"
+        android:id="@+id/textView_Insurmountable"
+        android:layout_below="@+id/textView_Backlog"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>
