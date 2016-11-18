@@ -3,6 +3,8 @@ package com.example.backloginsurmountable;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
@@ -14,9 +16,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class BacklogActivity extends AppCompatActivity {
+    @Bind(R.id.listView_NESGameList) ListView mListView_NESGameList;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -32,17 +36,21 @@ public class BacklogActivity extends AppCompatActivity {
         setContentView(R.layout.activity_backlog);
         ButterKnife.bind(this);
 
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(
                     new InputStreamReader(getAssets().open("gamelists/nes_game_list.txt")));
             // do reading, usually loop until end of file reading
             String mLine;
-            Toast.makeText(BacklogActivity.this, "Read File", Toast.LENGTH_SHORT).show();
             while ((mLine = reader.readLine()) != null) {
                 //process line
                 mNESGameList.add(mLine);
             }
+
         } catch (IOException e) {
             //log the exception
         } finally {
@@ -54,9 +62,11 @@ public class BacklogActivity extends AppCompatActivity {
                 }
             }
         }
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+
+        ArrayAdapter NESGameListAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mNESGameList);
+        mListView_NESGameList.setAdapter(NESGameListAdapter);
+
     }
 
     @Override
