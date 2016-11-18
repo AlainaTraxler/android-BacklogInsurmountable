@@ -26,6 +26,9 @@ import butterknife.ButterKnife;
 
 public class BacklogActivity extends AppCompatActivity {
     @Bind(R.id.listView_NESGameList) ListView mListView_NESGameList;
+    @Bind(R.id.textView_Completed) TextView mTextView_Completed;
+    @Bind(R.id.textView_Remaining) TextView mTextView_Remaining;
+    @Bind(R.id.textView_PercentCompleted) TextView mTextView_PercentCompleted;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -34,6 +37,10 @@ public class BacklogActivity extends AppCompatActivity {
     private GoogleApiClient client;
 
     ArrayList<String> mNESGameList = new ArrayList<String>();
+    int mNumberOfGames;
+    int mRemaining;
+    int mCompleted;
+    String mPercentCompleted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,17 +85,27 @@ public class BacklogActivity extends AppCompatActivity {
                 tileView = (TextView) v.findViewById(android.R.id.text1);
 
                 if(!(String.valueOf(tileView.getCurrentTextColor()).equals("-1703936"))){
+                    mRemaining--;
+                    mCompleted++;
                     tileView.setTextColor(0xffe60000);
                     tileView.setPaintFlags(tileView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 } else {
+                    mRemaining++;
+                    mCompleted--;
                     tileView.setTextColor(0xff000000);
                     tileView.setPaintFlags( tileView.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
                 }
-
-                String str1 = ((TextView)v.findViewById(android.R.id.text1)).getText().toString();
             }
         });
 
+        mNumberOfGames = mNESGameList.size();
+        mRemaining = mNumberOfGames;
+        mCompleted = 0;
+        mPercentCompleted = "0%";
+
+        mTextView_Completed.setText(String.valueOf(mCompleted));
+        mTextView_Remaining.setText(String.valueOf(mRemaining));
+        mTextView_Remaining.setText(String.valueOf(mPercentCompleted));
     }
 
     @Override

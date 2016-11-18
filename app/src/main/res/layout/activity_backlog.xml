@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/listView_NESGameList"
         android:layout_marginTop="39dp"
-        android:layout_below="@+id/textView5"
+        android:layout_below="@+id/textView_Completed"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -42,13 +42,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="677"
-        android:id="@+id/textView3"
-        android:layout_marginRight="35dp"
-        android:layout_marginEnd="35dp"
-        android:layout_above="@+id/listView_NESGameList"
-        android:layout_alignRight="@+id/textView4"
-        android:layout_alignEnd="@+id/textView4" />
+        android:text="NUM"
+        android:id="@+id/textView_Remaining"
+        android:layout_below="@+id/textView4"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_alignStart="@+id/textView4"
+        android:layout_marginLeft="31dp"
+        android:layout_marginStart="31dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -67,21 +67,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="0"
-        android:id="@+id/textView5"
-        android:layout_marginLeft="46dp"
-        android:layout_marginStart="46dp"
+        android:text="NUM"
+        android:id="@+id/textView_Completed"
         android:layout_below="@+id/textView"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView" />
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView"
+        android:layout_marginRight="33dp"
+        android:layout_marginEnd="33dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="0%"
-        android:id="@+id/textView6"
-        android:layout_above="@+id/textView3"
+        android:text="NUM"
+        android:id="@+id/textView_PercentCompleted"
+        android:layout_above="@+id/textView_Remaining"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
