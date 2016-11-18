@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -95,6 +96,11 @@ public class BacklogActivity extends AppCompatActivity {
                     tileView.setTextColor(0xff000000);
                     tileView.setPaintFlags( tileView.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
                 }
+                mTextView_Completed.setText(String.valueOf(mCompleted));
+                mTextView_Remaining.setText(String.valueOf(mRemaining));
+
+                mPercentCompleted = String.valueOf(String.format( "%.2f", ((double) mCompleted / (double) mRemaining) * 100));
+                mTextView_PercentCompleted.setText(String.valueOf(mPercentCompleted));
             }
         });
 
@@ -105,7 +111,7 @@ public class BacklogActivity extends AppCompatActivity {
 
         mTextView_Completed.setText(String.valueOf(mCompleted));
         mTextView_Remaining.setText(String.valueOf(mRemaining));
-        mTextView_Remaining.setText(String.valueOf(mPercentCompleted));
+        mTextView_PercentCompleted.setText(String.valueOf(mPercentCompleted));
     }
 
     @Override
