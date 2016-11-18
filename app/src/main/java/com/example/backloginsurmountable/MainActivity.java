@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else if(v == mButton_Gauntlet){
             Intent intent = new Intent(MainActivity.this, GauntletActivity.class);
             startActivity(intent);
+        }else{
+            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivity(intent);
         }
     }
 
