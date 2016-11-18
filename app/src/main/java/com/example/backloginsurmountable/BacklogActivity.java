@@ -1,10 +1,15 @@
 package com.example.backloginsurmountable;
 
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
@@ -66,6 +71,23 @@ public class BacklogActivity extends AppCompatActivity {
 
         ArrayAdapter NESGameListAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mNESGameList);
         mListView_NESGameList.setAdapter(NESGameListAdapter);
+
+        mListView_NESGameList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                TextView tileView;
+                tileView = (TextView) v.findViewById(android.R.id.text1);
+
+                if(!(String.valueOf(tileView.getCurrentTextColor()).equals("-1703936"))){
+                    tileView.setTextColor(0xffe60000);
+                    tileView.setPaintFlags(tileView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                } else {
+                    tileView.setTextColor(0xff000000);
+                    tileView.setPaintFlags( tileView.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                }
+
+                String str1 = ((TextView)v.findViewById(android.R.id.text1)).getText().toString();
+            }
+        });
 
     }
 
