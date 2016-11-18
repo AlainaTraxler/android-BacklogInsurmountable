@@ -23,20 +23,20 @@
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editText3"
+        android:id="@+id/editText_Username"
         android:layout_marginTop="221dp"
         android:hint="Username"
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/editText4"
-        android:layout_alignStart="@+id/editText4" />
+        android:layout_alignLeft="@+id/editText_Password"
+        android:layout_alignStart="@+id/editText_Password" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/editText4"
-        android:layout_below="@+id/editText3"
+        android:id="@+id/editText_Password"
+        android:layout_below="@+id/editText_Username"
         android:layout_centerHorizontal="true"
         android:hint="Password" />
 
@@ -44,10 +44,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Returning User"
-        android:id="@+id/checkBox"
-        android:layout_below="@+id/editText4"
-        android:layout_alignLeft="@+id/editText4"
-        android:layout_alignStart="@+id/editText4"
+        android:id="@+id/checkBox_Returning"
+        android:layout_below="@+id/editText_Password"
+        android:layout_alignLeft="@+id/editText_Password"
+        android:layout_alignStart="@+id/editText_Password"
         android:checked="true" />
 
     <Button
@@ -55,11 +55,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Let&apos;s Go"
-        android:id="@+id/button"
-        android:layout_below="@+id/checkBox"
-        android:layout_alignLeft="@+id/checkBox"
-        android:layout_alignStart="@+id/checkBox"
-        android:layout_alignRight="@+id/editText4"
-        android:layout_alignEnd="@+id/editText4"
+        android:id="@+id/button_LetsGo"
+        android:layout_below="@+id/checkBox_Returning"
+        android:layout_alignLeft="@+id/checkBox_Returning"
+        android:layout_alignStart="@+id/checkBox_Returning"
+        android:layout_alignRight="@+id/editText_Password"
+        android:layout_alignEnd="@+id/editText_Password"
         android:background="@color/accent_material_light" />
 </RelativeLayout>
