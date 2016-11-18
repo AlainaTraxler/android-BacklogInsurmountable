@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(v == mButton_Backlog){
             Intent intent = new Intent(MainActivity.this, BacklogActivity.class);
             startActivity(intent);
+        }else if(v == mButton_Gauntlet){
+            Intent intent = new Intent(MainActivity.this, GauntletActivity.class);
+            startActivity(intent);
         }
     }
 
