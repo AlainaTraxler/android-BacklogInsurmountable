@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".BacklogActivity" />
-        <activity android:name=".GauntletActivity"></activity>
+        <activity android:name=".GauntletActivity" />
+        <activity android:name=".Profile"></activity>
     </application>
 
 </manifest>
