@@ -24,19 +24,21 @@
         android:layout_marginTop="39dp"
         android:layout_below="@+id/textView_Completed"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:background="#78ffffff" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Completed"
-        android:id="@+id/textView"
+        android:id="@+id/textView_CompletedHeader"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textSize="19sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,11 +46,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="NUM"
         android:id="@+id/textView_Remaining"
-        android:layout_below="@+id/textView4"
-        android:layout_alignLeft="@+id/textView4"
-        android:layout_alignStart="@+id/textView4"
-        android:layout_marginLeft="31dp"
-        android:layout_marginStart="31dp" />
+        android:layout_below="@+id/textView_RemainingHeader"
+        android:layout_alignLeft="@+id/textView_RemainingHeader"
+        android:layout_alignStart="@+id/textView_RemainingHeader"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -57,11 +58,12 @@
         android:text="Remaining"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
-        android:id="@+id/textView4"
+        android:id="@+id/textView_RemainingHeader"
 
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textSize="19sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -69,11 +71,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="NUM"
         android:id="@+id/textView_Completed"
-        android:layout_below="@+id/textView"
-        android:layout_alignRight="@+id/textView"
-        android:layout_alignEnd="@+id/textView"
-        android:layout_marginRight="33dp"
-        android:layout_marginEnd="33dp" />
+        android:layout_below="@+id/textView_CompletedHeader"
+        android:layout_alignRight="@+id/textView_CompletedHeader"
+        android:layout_alignEnd="@+id/textView_CompletedHeader"
+        android:textSize="20sp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -81,7 +82,8 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="NUM"
         android:id="@+id/textView_PercentCompleted"
-        android:layout_above="@+id/textView_Remaining"
+        android:textSize="19sp"
+        android:layout_below="@+id/textView_Completed"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

@@ -2,6 +2,7 @@ package com.example.backloginsurmountable;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,11 +26,15 @@ import java.util.ArrayList;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+import static android.graphics.Typeface.createFromAsset;
+
 public class BacklogActivity extends AppCompatActivity {
     @Bind(R.id.listView_NESGameList) ListView mListView_NESGameList;
     @Bind(R.id.textView_Completed) TextView mTextView_Completed;
     @Bind(R.id.textView_Remaining) TextView mTextView_Remaining;
     @Bind(R.id.textView_PercentCompleted) TextView mTextView_PercentCompleted;
+    @Bind(R.id.textView_CompletedHeader) TextView mTextView_CompletedHeader;
+    @Bind(R.id.textView_RemainingHeader) TextView mTextView_RemainingHeader;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -76,6 +81,13 @@ public class BacklogActivity extends AppCompatActivity {
             }
         }
 
+        Typeface erbosDraco = createFromAsset(getAssets(), "fonts/erbosdraco_nova_open_nbp.ttf");
+        mTextView_Completed.setTypeface(erbosDraco);
+        mTextView_Remaining.setTypeface(erbosDraco);
+        mTextView_PercentCompleted.setTypeface(erbosDraco);
+        mTextView_CompletedHeader.setTypeface(erbosDraco);
+        mTextView_RemainingHeader.setTypeface(erbosDraco);
+
 
         ArrayAdapter NESGameListAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mNESGameList);
         mListView_NESGameList.setAdapter(NESGameListAdapter);
@@ -99,7 +111,7 @@ public class BacklogActivity extends AppCompatActivity {
                 mTextView_Completed.setText(String.valueOf(mCompleted));
                 mTextView_Remaining.setText(String.valueOf(mRemaining));
 
-                mPercentCompleted = String.valueOf(String.format( "%.2f", ((double) mCompleted / (double) mRemaining) * 100));
+                mPercentCompleted = String.valueOf(String.format( "%.2f", ((double) mCompleted / (double) mRemaining) * 100))+ "%";
                 mTextView_PercentCompleted.setText(String.valueOf(mPercentCompleted));
             }
         });
