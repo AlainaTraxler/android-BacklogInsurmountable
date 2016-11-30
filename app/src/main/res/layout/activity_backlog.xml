@@ -17,7 +17,7 @@
         android:foregroundTintMode="add"
         android:foregroundTint="#383838" />
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listView_NESGameList"
@@ -25,7 +25,17 @@
         android:layout_below="@+id/textView_Completed"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="#78ffffff" />
+        android:background="#78ffffff"/>
+
+    <!--<ListView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/listView_NESGameList"-->
+        <!--android:layout_marginTop="39dp"-->
+        <!--android:layout_below="@+id/textView_Completed"-->
+        <!--android:layout_alignParentLeft="true"-->
+        <!--android:layout_alignParentStart="true"-->
+        <!--android:background="#78ffffff" />-->
 
     <TextView
         android:layout_width="wrap_content"
