@@ -59,28 +59,7 @@ public class BacklogActivity extends AppCompatActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(
-                    new InputStreamReader(getAssets().open("gamelists/nes_game_list.txt")));
-            // do reading, usually loop until end of file reading
-            String mLine;
-            while ((mLine = reader.readLine()) != null) {
-                //process line
-                mNESGameList.add(mLine);
-            }
-
-        } catch (IOException e) {
-            //log the exception
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    //log the exception
-                }
-            }
-        }
+        mNESGameList = getGames();
 
         Typeface erbosDraco = createFromAsset(getAssets(), "fonts/erbosdraco_nova_open_nbp.ttf");
         mTextView_Completed.setTypeface(erbosDraco);
@@ -89,9 +68,8 @@ public class BacklogActivity extends AppCompatActivity {
         mTextView_CompletedHeader.setTypeface(erbosDraco);
         mTextView_RemainingHeader.setTypeface(erbosDraco);
 
-
-        ArrayAdapter NESGameListAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mNESGameList);
-        mListView_NESGameList.setAdapter(NESGameListAdapter);
+//        ArrayAdapter NESGameListAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mNESGameList);
+//        mListView_NESGameList.setAdapter(NESGameListAdapter);
 
         mListView_NESGameList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -125,6 +103,36 @@ public class BacklogActivity extends AppCompatActivity {
         mTextView_Completed.setText(String.valueOf(mCompleted));
         mTextView_Remaining.setText(String.valueOf(mRemaining));
         mTextView_PercentCompleted.setText(String.valueOf(mPercentCompleted));
+    }
+
+    public ArrayList<String> getGames(){
+
+        ArrayList<String> catcher = new ArrayList<String>();
+
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(
+                    new InputStreamReader(getAssets().open("gamelists/nes_game_list.txt")));
+            // do reading, usually loop until end of file reading
+            String mLine;
+            while ((mLine = reader.readLine()) != null) {
+                //process line
+                catcher.add(mLine);
+            }
+
+        } catch (IOException e) {
+            //log the exception
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    //log the exception
+                }
+            }
+        }
+
+        return catcher;
     }
 
     @Override
