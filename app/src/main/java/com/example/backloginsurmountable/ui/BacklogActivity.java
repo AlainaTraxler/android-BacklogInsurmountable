@@ -1,4 +1,4 @@
-package com.example.backloginsurmountable;
+package com.example.backloginsurmountable.ui;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.backloginsurmountable.R;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
