@@ -16,4 +16,13 @@
         android:foregroundTintMode="add"
         android:foregroundTint="#383838" />
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="125dp"
+        android:text="Here&apos;s some placeholder text. This space will eventually make use of a news feed pulled from a database, updated via a website." />
+
 </RelativeLayout>
