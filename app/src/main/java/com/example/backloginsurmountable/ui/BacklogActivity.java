@@ -142,7 +142,7 @@ public class BacklogActivity extends AppCompatActivity {
                 //process line
                 counter++;
                 Log.v(mLine, String.valueOf(counter));
-                Game game = new Game(mLine, "Unknown", "Unknown");
+                Game game = new Game(mLine, "Not Processed", "Not Processed", "https://image.freepik.com/free-icon/question-mark_318-52837.jpg");
                 catcher.add(game);
             }
 

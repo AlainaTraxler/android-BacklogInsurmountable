@@ -1,5 +1,6 @@
 package com.example.backloginsurmountable.GiantBombService;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.backloginsurmountable.Constants;
@@ -18,13 +19,15 @@ import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import android.os.Handler;
+
 /**
  * Created by Guest on 12/1/16.
  */
 public class GiantBombService {
 
-    public static void findGameByName(String name, Callback callback) {
-        OkHttpClient client = new OkHttpClient.Builder()
+    public void findGameByName(String name, final Callback callback) {
+        final OkHttpClient client = new OkHttpClient.Builder()
                 .build();
 
         HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.API_BASE_URL).newBuilder();
@@ -38,19 +41,21 @@ public class GiantBombService {
 
         Log.v("URL:", url);
 
-        Request request = new Request.Builder()
+        final Request request = new Request.Builder()
                 .url(url)
                 .build();
 
         Call call = client.newCall(request);
         call.enqueue(callback);
+
     }
 
     public Game processResultByName(Response response) {
         String name;
         String genre = "Unknown";
         String deck;
-        Game game = new Game("Not Found", "Not Found", "Not Found");
+        String imageURL;
+        Game game = new Game("Not Found", "Not Found", "Not Found", "https://image.freepik.com/free-icon/question-mark_318-52837.jpg");
 
         try {
             String jsonData = response.body().string();
@@ -63,7 +68,9 @@ public class GiantBombService {
                 Log.v("Name: ", name);
                 deck = gameJSON.getString("deck");
                 Log.v("Deck: ", deck);
-                game = new Game(name, genre, deck);
+                imageURL = gameJSON.getJSONObject("image").getString("screen_url");
+                Log.v("ImageURL: ", imageURL);
+                game = new Game(name, genre, deck, imageURL);
 
             }
         } catch (IOException e) {

@@ -9,14 +9,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Name"
-        android:id="@+id/textView_Name"
-        android:layout_gravity="center_horizontal|top" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Genre"
         android:id="@+id/textView_Genre"
@@ -29,4 +21,10 @@
         android:text="Deck"
         android:id="@+id/textView_Deck"
         android:layout_gravity="center_horizontal|bottom" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView_Splash"
+        android:layout_gravity="center_horizontal|top" />
 </FrameLayout>

@@ -11,13 +11,15 @@ public class Game {
     private String mName;
     private String mGenre;
     private String mDeck;
+    private String mImageURL;
 
     public Game() {}
 
-    public Game(String _name, String _genre, String _deck){
+    public Game(String _name, String _genre, String _deck, String _imageURL){
         mName = _name;
         mGenre = _genre;
         mDeck = _deck;
+        mImageURL = _imageURL;
     }
 
     public String getName(){
@@ -27,4 +29,6 @@ public class Game {
     public String getGenre(){ return mGenre; }
 
     public String getDeck(){ return mDeck; }
+
+    public String getImageURL(){ return mImageURL; }
 }
