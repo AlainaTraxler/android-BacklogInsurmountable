@@ -41,7 +41,7 @@ public class GameDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mGame = Parcels.unwrap(getArguments().getParcelable("Game"));
+        mGame = Parcels.unwrap(getArguments().getParcelable("game"));
     }
 
     @Override
