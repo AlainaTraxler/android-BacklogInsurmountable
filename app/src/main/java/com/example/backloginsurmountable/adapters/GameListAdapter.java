@@ -1,6 +1,7 @@
 package com.example.backloginsurmountable.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,9 @@ import android.widget.TextView;
 
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.models.Game;
+import com.example.backloginsurmountable.ui.GameDetailActivity;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -44,7 +48,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
         return mGames.size();
     }
 
-    public class GameViewHolder extends RecyclerView.ViewHolder {
+    public class GameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @Bind(R.id.textView_Name) TextView mTextView_Name;
         @Bind(R.id.textView_Genre) TextView mTextView_Genre;
 
@@ -54,11 +58,21 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
             super(itemView);
             ButterKnife.bind(this, itemView);
             mContext = itemView.getContext();
+            itemView.setOnClickListener(this);
         }
 
         public void bindGame(Game game) {
             mTextView_Name.setText(game.getName());
             mTextView_Genre.setText(game.getGenre());
+        }
+
+        @Override
+        public void onClick(View v) {
+            int itemPosition = getLayoutPosition();
+            Intent intent = new Intent(mContext, GameDetailActivity.class);
+            intent.putExtra("position", itemPosition);
+            intent.putExtra("restaurants", Parcels.wrap(mGames));
+            mContext.startActivity(intent);
         }
     }
 }
