@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.backloginsurmountable.GiantBombService.GiantBombService;
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.models.Game;
 
@@ -42,6 +43,9 @@ public class GameDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mGame = Parcels.unwrap(getArguments().getParcelable("game"));
+
+        GiantBombService tester = new GiantBombService();
+        tester.findGameByName(mGame.getName());
     }
 
     @Override
