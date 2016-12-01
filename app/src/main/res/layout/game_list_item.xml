@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:background="#ffffff"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="10dp">
 
         <TextView
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="Genre"
             android:id="@+id/textView_Genre"
-            android:layout_below="@+id/restaurantNameTextView"
+            android:layout_below="@+id/textView_Name"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:textStyle="italic"/>
@@ -42,6 +42,6 @@
                 <!--android:layout_alignParentRight="true"-->
                 <!--android:textColor="@color/colorAccent"/>-->
         <!--</RelativeLayout>-->
-    </LinearLayout>
+    </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

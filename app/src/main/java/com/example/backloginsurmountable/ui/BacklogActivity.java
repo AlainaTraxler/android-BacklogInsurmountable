@@ -6,6 +6,8 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.backloginsurmountable.R;
+import com.example.backloginsurmountable.adapters.GameListAdapter;
+import com.example.backloginsurmountable.models.Game;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -30,7 +34,7 @@ import butterknife.ButterKnife;
 import static android.graphics.Typeface.createFromAsset;
 
 public class BacklogActivity extends AppCompatActivity {
-    @Bind(R.id.listView_NESGameList) ListView mListView_NESGameList;
+//    @Bind(R.id.listView_NESGameList) ListView mListView_NESGameList;
     @Bind(R.id.textView_Completed) TextView mTextView_Completed;
     @Bind(R.id.textView_Remaining) TextView mTextView_Remaining;
     @Bind(R.id.textView_PercentCompleted) TextView mTextView_PercentCompleted;
@@ -43,11 +47,14 @@ public class BacklogActivity extends AppCompatActivity {
      */
     private GoogleApiClient client;
 
-    ArrayList<String> mNESGameList = new ArrayList<String>();
+    ArrayList<Game> mNESGameList = new ArrayList<Game>();
     int mNumberOfGames;
     int mRemaining;
     int mCompleted;
     String mPercentCompleted;
+
+    @Bind(R.id.listView_NESGameList) RecyclerView mListView_NESGameList;
+    private GameListAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,29 +78,36 @@ public class BacklogActivity extends AppCompatActivity {
 //        ArrayAdapter NESGameListAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mNESGameList);
 //        mListView_NESGameList.setAdapter(NESGameListAdapter);
 
-        mListView_NESGameList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                TextView tileView;
-                tileView = (TextView) v.findViewById(android.R.id.text1);
+        mAdapter = new GameListAdapter(getApplicationContext(), mNESGameList);
+        mListView_NESGameList.setAdapter(mAdapter);
+        RecyclerView.LayoutManager layoutManager =
+                new LinearLayoutManager(BacklogActivity.this);
+        mListView_NESGameList.setLayoutManager(layoutManager);
+        mListView_NESGameList.setHasFixedSize(true);
 
-                if(!(String.valueOf(tileView.getCurrentTextColor()).equals("-1703936"))){
-                    mRemaining--;
-                    mCompleted++;
-                    tileView.setTextColor(0xffe60000);
-                    tileView.setPaintFlags(tileView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                } else {
-                    mRemaining++;
-                    mCompleted--;
-                    tileView.setTextColor(0xff000000);
-                    tileView.setPaintFlags( tileView.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
-                }
-                mTextView_Completed.setText(String.valueOf(mCompleted));
-                mTextView_Remaining.setText(String.valueOf(mRemaining));
-
-                mPercentCompleted = String.valueOf(String.format( "%.2f", ((double) mCompleted / (double) mRemaining) * 100))+ "%";
-                mTextView_PercentCompleted.setText(String.valueOf(mPercentCompleted));
-            }
-        });
+//        mListView_NESGameList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+//                TextView tileView;
+//                tileView = (TextView) v.findViewById(android.R.id.text1);
+//
+//                if(!(String.valueOf(tileView.getCurrentTextColor()).equals("-1703936"))){
+//                    mRemaining--;
+//                    mCompleted++;
+//                    tileView.setTextColor(0xffe60000);
+//                    tileView.setPaintFlags(tileView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//                } else {
+//                    mRemaining++;
+//                    mCompleted--;
+//                    tileView.setTextColor(0xff000000);
+//                    tileView.setPaintFlags( tileView.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+//                }
+//                mTextView_Completed.setText(String.valueOf(mCompleted));
+//                mTextView_Remaining.setText(String.valueOf(mRemaining));
+//
+//                mPercentCompleted = String.valueOf(String.format( "%.2f", ((double) mCompleted / (double) mRemaining) * 100))+ "%";
+//                mTextView_PercentCompleted.setText(String.valueOf(mPercentCompleted));
+//            }
+//        });
 
         mNumberOfGames = mNESGameList.size();
         mRemaining = mNumberOfGames;
@@ -105,9 +119,11 @@ public class BacklogActivity extends AppCompatActivity {
         mTextView_PercentCompleted.setText(String.valueOf(mPercentCompleted));
     }
 
-    public ArrayList<String> getGames(){
+    public ArrayList<Game> getGames(){
 
-        ArrayList<String> catcher = new ArrayList<String>();
+        ArrayList<Game> catcher = new ArrayList<Game>();
+
+        int counter = 0;
 
         BufferedReader reader = null;
         try {
@@ -117,7 +133,10 @@ public class BacklogActivity extends AppCompatActivity {
             String mLine;
             while ((mLine = reader.readLine()) != null) {
                 //process line
-                catcher.add(mLine);
+                counter++;
+                Log.v(mLine, String.valueOf(counter));
+                Game game = new Game(mLine, "Unknown");
+                catcher.add(game);
             }
 
         } catch (IOException e) {
