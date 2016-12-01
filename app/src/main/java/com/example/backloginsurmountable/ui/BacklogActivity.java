@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.backloginsurmountable.GiantBombService.GiantBombService;
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.adapters.GameListAdapter;
 import com.example.backloginsurmountable.models.Game;
@@ -30,6 +31,10 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 import static android.graphics.Typeface.createFromAsset;
 
@@ -46,6 +51,8 @@ public class BacklogActivity extends AppCompatActivity {
      * See https://g.co/AppIndexing/AndroidStudio for more information.
      */
     private GoogleApiClient client;
+
+    public static final String TAG = BacklogActivity.class.getSimpleName();
 
     ArrayList<Game> mNESGameList = new ArrayList<Game>();
     int mNumberOfGames;
@@ -135,7 +142,7 @@ public class BacklogActivity extends AppCompatActivity {
                 //process line
                 counter++;
                 Log.v(mLine, String.valueOf(counter));
-                Game game = new Game(mLine, "Unknown");
+                Game game = new Game(mLine, "Unknown", "Unknown");
                 catcher.add(game);
             }
 

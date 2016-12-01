@@ -3,6 +3,7 @@ package com.example.backloginsurmountable.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +15,13 @@ import com.example.backloginsurmountable.models.Game;
 
 import org.parceler.Parcels;
 
+import java.io.IOException;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,8 +50,35 @@ public class GameDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mGame = Parcels.unwrap(getArguments().getParcelable("game"));
 
-        GiantBombService tester = new GiantBombService();
-        tester.findGameByName(mGame.getName());
+        getGame(mGame.getName());
+//        GiantBombService tester = new GiantBombService();
+//        tester.findGameByName(mGame.getName());
+    }
+
+    private void getGame(final String name) {
+        final GiantBombService giantBombService = new GiantBombService();
+        giantBombService.findGameByName(name, new Callback() {
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                mGame = giantBombService.processResultByName(response);
+//                try {
+//                    String jsonData = response.body().string();
+//                    if (response.isSuccessful()) {
+//                        Log.v(name, jsonData);
+//                        mGame = GiantBombService.processResults(response);
+//                    }
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+            }
+
+        });
     }
 
     @Override

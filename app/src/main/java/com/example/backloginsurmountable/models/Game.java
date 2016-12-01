@@ -10,19 +10,21 @@ import org.parceler.Parcel;
 public class Game {
     private String mName;
     private String mGenre;
+    private String mDeck;
 
     public Game() {}
 
-    public Game(String _name, String _genre){
+    public Game(String _name, String _genre, String _deck){
         mName = _name;
         mGenre = _genre;
+        mDeck = _deck;
     }
 
     public String getName(){
         return mName;
     }
 
-    public String getGenre(){
-        return mGenre;
-    }
+    public String getGenre(){ return mGenre; }
+
+    public String getDeck(){ return mDeck; }
 }
