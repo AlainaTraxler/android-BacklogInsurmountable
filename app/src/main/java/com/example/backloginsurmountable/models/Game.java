@@ -1,8 +1,12 @@
 package com.example.backloginsurmountable.models;
 
+import org.parceler.Parcel;
+
 /**
  * Created by Guest on 11/30/16.
  */
+
+@Parcel
 public class Game {
     private String mName;
     private String mGenre;
