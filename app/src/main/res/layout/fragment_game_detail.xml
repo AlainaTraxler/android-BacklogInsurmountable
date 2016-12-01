@@ -19,6 +19,6 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Genre"
-        android:id="@+id/textView2_Genre"
+        android:id="@+id/textView_Genre"
         android:layout_gravity="center" />
 </FrameLayout>
