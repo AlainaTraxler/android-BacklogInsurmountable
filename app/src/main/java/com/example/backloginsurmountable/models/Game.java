@@ -11,6 +11,8 @@ public class Game {
     private String mName;
     private String mGenre;
 
+    public Game() {}
+
     public Game(String _name, String _genre){
         mName = _name;
         mGenre = _genre;
