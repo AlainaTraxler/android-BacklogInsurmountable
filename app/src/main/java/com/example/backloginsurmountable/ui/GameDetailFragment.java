@@ -29,6 +29,7 @@ import okhttp3.Response;
 public class GameDetailFragment extends Fragment {
     @Bind(R.id.textView_Name) TextView mTextView_Name;
     @Bind(R.id.textView_Genre) TextView mTextView_Genre;
+    @Bind(R.id.textView_Deck) TextView mTextView_Deck;
 
     private Game mGame;
 
@@ -50,12 +51,12 @@ public class GameDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mGame = Parcels.unwrap(getArguments().getParcelable("game"));
 
-        getGame(mGame.getName());
+        mGame = getGame(mGame.getName());
 //        GiantBombService tester = new GiantBombService();
 //        tester.findGameByName(mGame.getName());
     }
 
-    private void getGame(final String name) {
+    private Game getGame(final String name) {
         final GiantBombService giantBombService = new GiantBombService();
         giantBombService.findGameByName(name, new Callback() {
 
@@ -79,6 +80,7 @@ public class GameDetailFragment extends Fragment {
             }
 
         });
+        return mGame;
     }
 
     @Override
@@ -88,6 +90,9 @@ public class GameDetailFragment extends Fragment {
 
         mTextView_Name.setText(mGame.getName());
         mTextView_Genre.setText(mGame.getGenre());
+        mTextView_Deck.setText(mGame.getDeck());
+
+        Log.v("onCreateView Name:", mGame.getName());
 
         return view;
     }

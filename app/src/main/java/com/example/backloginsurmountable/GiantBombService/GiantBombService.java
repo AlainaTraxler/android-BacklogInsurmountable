@@ -50,7 +50,7 @@ public class GiantBombService {
         String name;
         String genre = "Unknown";
         String deck;
-        Game game = new Game("Error", "Error", "Error");
+        Game game = new Game("Not Found", "Not Found", "Not Found");
 
         try {
             String jsonData = response.body().string();
@@ -63,7 +63,7 @@ public class GiantBombService {
                 Log.v("Name: ", name);
                 deck = gameJSON.getString("deck");
                 Log.v("Deck: ", deck);
-                game = new Game("x", genre, deck);
+                game = new Game(name, genre, deck);
 
             }
         } catch (IOException e) {
