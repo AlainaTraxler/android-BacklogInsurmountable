@@ -50,7 +50,6 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
 
     public class GameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @Bind(R.id.textView_Name) TextView mTextView_Name;
-        @Bind(R.id.textView_Genre) TextView mTextView_Genre;
 
         private Context mContext;
 
@@ -63,7 +62,6 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
 
         public void bindGame(Game game) {
             mTextView_Name.setText(game.getName());
-            mTextView_Genre.setText(game.getGenre());
         }
 
         @Override
