@@ -19,6 +19,7 @@ import static android.graphics.Typeface.*;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     @Bind(R.id.textView_Backlog) TextView mTextView_Backlog;
     @Bind(R.id.textView_Insurmountable) TextView mTextView_Insurmountable;
+    @Bind(R.id.textView_Info) TextView mTextView_Info;
 
     @Bind(R.id.button_Backlog) Button mButton_Backlog;
     @Bind(R.id.button_Gauntlet) Button mButton_Gauntlet;
@@ -45,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mButton_Backlog.setOnClickListener(this);
         mButton_Gauntlet.setOnClickListener(this);
         mButton_SignUp.setOnClickListener(this);
+        mTextView_Info.setOnClickListener(this);
 
         if(mIsLoggedIn){
             mButton_Backlog.setVisibility(View.VISIBLE);
@@ -68,6 +70,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }else if(v == mButton_SignUp && !(mIsLoggedIn)){
             Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+            startActivity(intent);
+        }else if(v == mTextView_Info){
+            Intent intent = new Intent(MainActivity.this, InfoActivity.class);
             startActivity(intent);
         }else{
             Intent intent = new Intent(MainActivity.this, ProfileActivity.class);

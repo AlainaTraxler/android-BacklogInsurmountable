@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.backloginsurmountable">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -31,7 +31,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".ui.SignUpActivity" />
-        <activity android:name=".ui.GameDetailActivity"></activity>
+        <activity android:name=".ui.GameDetailActivity" />
+        <activity android:name=".ui.InfoActivity"></activity>
     </application>
 
 </manifest>
