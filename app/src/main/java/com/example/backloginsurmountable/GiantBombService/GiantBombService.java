@@ -55,7 +55,9 @@ public class GiantBombService {
         String genre = "Unknown";
         String deck;
         String imageURL;
-        Game game = new Game("Not Found", "Not Found", "Not Found", "https://image.freepik.com/free-icon/question-mark_318-52837.jpg");
+        String id;
+
+        Game game = new Game("Not Found", "Not Found", "Not Found", "https://image.freepik.com/free-icon/question-mark_318-52837.jpg", "Not Found");
 
         try {
             String jsonData = response.body().string();
@@ -65,12 +67,14 @@ public class GiantBombService {
                 Log.v("JSON String", gameJSON.toString());
 
                 name = gameJSON.getString("name");
-                Log.v("Name: ", name);
+//                Log.v("Name: ", name);
                 deck = gameJSON.getString("deck");
-                Log.v("Deck: ", deck);
+//                Log.v("Deck: ", deck);
                 imageURL = gameJSON.getJSONObject("image").getString("super_url");
-                Log.v("ImageURL: ", imageURL);
-                game = new Game(name, genre, deck, imageURL);
+//                Log.v("ImageURL: ", imageURL);
+                id = gameJSON.getString("id");
+                Log.v("ID: ", id);
+                game = new Game(name, genre, deck, imageURL, id);
 
             }
         } catch (IOException e) {
