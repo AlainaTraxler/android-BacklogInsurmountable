@@ -11,9 +11,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.GiantBombService.GiantBombService;
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.models.Game;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -38,6 +41,7 @@ public class GameDetailFragment extends Fragment {
 //    private TextView mTextView_Deck;
 
     private Game mGame;
+    private String mReserveName;
 
     public GameDetailFragment() {
         // Required empty public constructor
@@ -57,6 +61,7 @@ public class GameDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mGame = Parcels.unwrap(getArguments().getParcelable("game"));
 
+        mReserveName = mGame.getName();
         mGame = getGame(mGame.getName());
 
     }
@@ -95,7 +100,15 @@ public class GameDetailFragment extends Fragment {
             mTextView_Deck.setText(game.getDeck());
             Picasso.with(getActivity().getApplicationContext()).load(game.getImageURL()).into(mImageView_Splash);
 
+            DatabaseReference gameNode;
 
+            if(game.getName().equals("Not Found")){
+                gameNode = FirebaseDatabase.getInstance().getReference().child(Constants.FIREBASE_GAMELISTS_NODE).child(Constants.FIREBASE_NES_NODE).child(mReserveName);
+            }else{
+                gameNode = FirebaseDatabase.getInstance().getReference().child(Constants.FIREBASE_GAMELISTS_NODE).child(Constants.FIREBASE_NES_NODE).child(game.getName());
+            }
+
+            gameNode.setValue(game.getId());
         }
     }
 
@@ -103,9 +116,6 @@ public class GameDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_detail, container, false);
         ButterKnife.bind(this, view);
-
-//        mTextView_Deck = (TextView) view.findViewById(R.id.textView_Deck);
-//        mTextView_Genre.setText(mGame.getGenre());
 
         mTextView_Deck.setText(mGame.getDeck());
 
