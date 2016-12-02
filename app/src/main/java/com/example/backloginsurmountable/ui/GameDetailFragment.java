@@ -74,8 +74,8 @@ public class GameDetailFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                mGame = giantBombService.processResultByName(response);
-
+//                mGame = giantBombService.processResultByName(response);
+                new getGameTask().execute(response);
 
             }
 
@@ -84,37 +84,21 @@ public class GameDetailFragment extends Fragment {
         return mGame;
     }
 
-//    private class getGameTask extends AsyncTask<String, Void, Game> {
-//        /** The system calls this to perform work in a worker thread and
-//         * delivers it the parameters given to AsyncTask.execute() */
-//        protected Game doInBackground(String... name) {
-//            final GiantBombService giantBombService = new GiantBombService(); //pass in activity?
-//            giantBombService.findGameByName(name[0], getActivity(), new Callback() {
-//
-//                @Override
-//                public void onFailure(Call call, IOException e) {
-//                    e.printStackTrace();
-//                }
-//
-//                @Override
-//                public void onResponse(Call call, Response response) throws IOException {
-//                    mGame = giantBombService.processResultByName(response);
-//
-//
-//                }
-//
-//            });
-//
-//            return mGame;
-//        }
-//
-//
-//        /** The system calls this to perform work in the UI thread and delivers
-//         * the result from doInBackground() */
-//        protected void onPostExecute(Game game) {
-//            mTextView_Deck.setText("Test");
-//        }
-//    }
+    private class getGameTask extends AsyncTask<Response, Void, Game> {
+        /** The system calls this to perform work in a worker thread and
+         * delivers it the parameters given to AsyncTask.execute() */
+        protected Game doInBackground(Response... response) {
+            final GiantBombService giantBombService = new GiantBombService(); //pass in activity?
+            return giantBombService.processResultByName(response[0]);
+        }
+
+
+        /** The system calls this to perform work in the UI thread and delivers
+         * the result from doInBackground() */
+        protected void onPostExecute(Game game) {
+            mTextView_Deck.setText(game.getDeck());
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
