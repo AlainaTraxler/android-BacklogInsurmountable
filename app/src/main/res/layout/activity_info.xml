@@ -90,4 +90,28 @@
         android:layout_marginBottom="108dp"
         android:textColor="#ffffff"
         android:textAlignment="center" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Special Thanks"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:id="@+id/textView8"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/textView5"
+        android:layout_marginBottom="35dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="No Intro"
+        android:id="@+id/textView9"
+        android:layout_marginTop="-35dp"
+        android:layout_below="@+id/textView8"
+        android:layout_centerHorizontal="true"
+        android:textColor="#ffffff"
+        android:textAlignment="center" />
 </RelativeLayout>

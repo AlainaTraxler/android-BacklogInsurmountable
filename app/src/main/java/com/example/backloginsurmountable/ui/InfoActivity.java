@@ -26,6 +26,8 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.textView5) TextView mTextView5;
     @Bind(R.id.textView6) TextView mTextView6;
     @Bind(R.id.textView7) TextView mTextView7;
+    @Bind(R.id.textView8) TextView mTextView8;
+    @Bind(R.id.textView9) TextView mTextView9;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,8 @@ public class InfoActivity extends AppCompatActivity implements View.OnClickListe
         mTextView5.setTypeface(PressStart2P);
         mTextView6.setTypeface(PressStart2P);
         mTextView7.setTypeface(PressStart2P);
+        mTextView8.setTypeface(PressStart2P);
+        mTextView9.setTypeface(PressStart2P);
 
         mTextView5.setOnClickListener(this);
 
