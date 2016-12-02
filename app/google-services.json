@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "154087224",
+    "firebase_url": "https://backloginsurmountable.firebaseio.com",
+    "project_id": "backloginsurmountable",
+    "storage_bucket": "backloginsurmountable.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154087224:android:93c10369007f251f",
+        "android_client_info": {
+          "package_name": "com.example.backloginsurmountable"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "154087224-8mu4m9teevdm7lcbri6qhcjg1ljr23j9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.backloginsurmountable",
+            "certificate_hash": "66DE068B9BE944334D61F0714C48E1DC6D7FD158"
+          }
+        },
+        {
+          "client_id": "154087224-3qpelgacmec12i5p0b0e6r0f5qla4t6p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3NC4XzQeO02Lcz7O__fjp0VznU_jPwq0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "154087224-3qpelgacmec12i5p0b0e6r0f5qla4t6p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

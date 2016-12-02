@@ -9,7 +9,10 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -29,8 +32,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Boolean mIsLoggedIn;
     String mUsername;
 
+    private DatabaseReference mSearchedLocationReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        mSearchedLocationReference = FirebaseDatabase.getInstance().getReference().child(Constants.FIREBASE_TEST_LOCATION);
+
+        mSearchedLocationReference.setValue("Success!!");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
