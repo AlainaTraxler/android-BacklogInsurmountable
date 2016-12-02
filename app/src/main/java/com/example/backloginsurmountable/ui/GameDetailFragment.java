@@ -33,7 +33,7 @@ public class GameDetailFragment extends Fragment {
 //    @Bind(R.id.textView_Name) TextView mTextView_Name;
 //    @Bind(R.id.textView_Genre) TextView mTextView_Genre;
     @Bind(R.id.textView_Deck) TextView mTextView_Deck;
-//    @Bind(R.id.imageView_Splash) ImageView mImageView_Splash;
+    @Bind(R.id.imageView_Splash) ImageView mImageView_Splash;
 
 //    private TextView mTextView_Deck;
 
@@ -57,8 +57,6 @@ public class GameDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mGame = Parcels.unwrap(getArguments().getParcelable("game"));
 
-//        String[] tester = {mGame.getName()};
-//        new getGameTask().execute(mGame.getName());
         mGame = getGame(mGame.getName());
 
     }
@@ -74,9 +72,7 @@ public class GameDetailFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-//                mGame = giantBombService.processResultByName(response);
                 new getGameTask().execute(response);
-
             }
 
         });
@@ -97,6 +93,7 @@ public class GameDetailFragment extends Fragment {
          * the result from doInBackground() */
         protected void onPostExecute(Game game) {
             mTextView_Deck.setText(game.getDeck());
+            Picasso.with(getActivity().getApplicationContext()).load(game.getImageURL()).into(mImageView_Splash);
         }
     }
 
@@ -107,8 +104,6 @@ public class GameDetailFragment extends Fragment {
 
 //        mTextView_Deck = (TextView) view.findViewById(R.id.textView_Deck);
 //        mTextView_Genre.setText(mGame.getGenre());
-
-//        Picasso.with(getActivity()).load(mGame.getImageURL()).into(mImageView_Splash);
 
         mTextView_Deck.setText(mGame.getDeck());
 

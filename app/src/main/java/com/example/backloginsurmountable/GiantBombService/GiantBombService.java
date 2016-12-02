@@ -68,7 +68,7 @@ public class GiantBombService {
                 Log.v("Name: ", name);
                 deck = gameJSON.getString("deck");
                 Log.v("Deck: ", deck);
-                imageURL = gameJSON.getJSONObject("image").getString("screen_url");
+                imageURL = gameJSON.getJSONObject("image").getString("super_url");
                 Log.v("ImageURL: ", imageURL);
                 game = new Game(name, genre, deck, imageURL);
 
