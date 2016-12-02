@@ -53,7 +53,7 @@ Balloon Fight
 Bandai Golf: Challenge Pebble Beach
 Bandit Kings of Ancient China
 Barbie
-Bard's Tale, The
+The Bard's Tale
 Barker Bill's Trick Shooting
 Base Wars – Cyber Stadium Series
 Baseball
@@ -88,7 +88,7 @@ Bomberman
 Bomberman II
 Bonk's Adventure
 Boulder Dash
-Break Time, The National Pool Tour
+Break Time: The National Pool Tour
 Breakthru
 Bubble Bobble
 Bubble Bobble Part 2
@@ -140,10 +140,10 @@ Cowboy Kid
 Crash 'n' the Boys: Street Challenge
 Crystalis
 Cyberball
-Cybernoid, The Fighting Machine
+Cybernoid: The Fighting Machine
 Dance Aerobics
 Darkman
-Darkwing Duck, Disney's
+Darkwing Duck
 Dash Galaxy in the Alien Asylum
 Day Dreamin' Davey
 Days of Thunder
@@ -158,8 +158,8 @@ Destination Earthstar
 Destiny of an Emperor
 Dick Tracy
 Die Hard
-Dig Dug II - Trouble in Paradise
-Digger T. Rock - The Legend of the Lost City
+Dig Dug II: Trouble in Paradise
+Digger T. Rock: The Legend of the Lost City
 Dirty Harry: The War Against Drugs
 Donkey Kong
 Donkey Kong 3
@@ -178,7 +178,7 @@ Bram Stoker's Dracula
 Dragon's Lair
 Dragon Fighter
 Dragon Power
-Dragon Spirit - The New Legend
+Dragon Spirit: The New Legend
 Dragon Warrior
 Dragon Warrior II
 Dragon Warrior III
@@ -188,14 +188,14 @@ Duck Tales
 Duck Tales 2
 Dungeon Magic – Sword of the Elements
 Dusty Diamond's All-Star Softball
-Dynowarz - The Destruction of Spondylus
+Dynowarz: The Destruction of Spondylus
 Elevator Action
 Eliminator Boat Duel
 Excitebike
 F-117A Stealth Fighter
 F-15 Strike Eagle
 Family Feud
-Faria - A World of Mystery & Danger!
+Faria: A World of Mystery & Danger!
 Magic Johnson's Fast Break
 Faxanadu
 Felix the Cat
@@ -211,7 +211,7 @@ Fist of the North Star
 Flight of the Intruder
 The Flintstones – Rescue of Dino & Hoppy
 The Flintstones – The Surprise at Dinosaur Peak
-Flying Dragon - The Secret Scroll
+Flying Dragon: The Secret Scroll
 Flying Warriors
 Formula One: Built to Win
 Frankenstein: The Monster Returns
@@ -273,12 +273,12 @@ Ikari Warriors
 Ikari Warriors II: Victory Road
 Ikari Warriors III: The Rescue
 Image Fight
-Immortal, The
+The Immortal
 The Incredible Crash Dummies
 Indiana Jones and the Last Crusade (Taito)
 Indiana Jones and the Last Crusade (Ubi)
 Indiana Jones and the Temple of Doom
-Indy Heat, Danny Sullivan's
+Danny Sullivan's Indy Heat
 Infiltrator
 Iron Tank – The Invasion of Normandy
 Ironsword – Wizards & Warriors II
@@ -291,7 +291,7 @@ Jaws
 Jeopardy!
 Jeopardy! 25th Anniversary Edition
 Jeopardy! Jr. Edition
-Jetsons, The – Cogswell's Caper
+The Jetsons – Cogswell's Caper
 Jimmy Connors Tennis
 Joe & Mac
 John Elway's Quarterback
@@ -314,17 +314,17 @@ King's Knight
 King's Quest V
 Kings of the Beach Professional Beach Volleyball
 Kirby's Adventure
-Kiwi Kraze, A Bird-Brained Adventure!
+Kiwi Kraze: A Bird-Brained Adventure!
 Klash Ball
 Knight Rider
-KO Boxing, George Foreman's
+George Foreman's KO Boxing
 The Krion Conquest
 Kung Fu
 Kung Fu Heroes
 L'Empereur
 Laser Invasion
 Last Action Hero
-Last Ninja, The
+The Last Ninja
 The Last Starfighter
 Legacy of the Wizard
 The Legend of Kage
@@ -346,7 +346,7 @@ Low G Man: The Low Gravity Man
 Lunar Pool
 M.C. Kids
 M.U.L.E.
-M.U.S.C.L.E. - Tag Team Match
+M.U.S.C.L.E.: Tag Team Match
 Mach Rider
 Mad Max
 The Mafat Conspiracy
@@ -406,18 +406,18 @@ Ninja Kid
 Nobunaga's Ambition
 Nobunaga's Ambition II
 North and South
-Operation Wolf, Take No Prisoners
+Operation Wolf: Take No Prisoners
 ORB 3-D
 Othello
 Overlord
-P.O.W. - Prisoners of War
+P.O.W.: Prisoners of War
 Pac-Man (Namco)
 Pac-Man (Tengen)
 Palamedes
 Panic Restaurant
 Paperboy
 Paperboy 2
-Peter Pan & The Pirates: The Revenge of Captain Hook, Fox's
+Peter Pan & The Pirates: The Revenge of Captain Hook
 Phantom Fighter
 Pictionary
 Pin-Bot
@@ -426,7 +426,7 @@ Pinball Quest
 Pipe Dream
 Pirates!
 Platoon
-Play Action Football, NES
+NES Play Action Football
 Popeye
 Power Blade
 Power Blade 2
@@ -437,7 +437,7 @@ Princess Tomato in the Salad Kingdom
 Pro Sport Hockey
 Pro Wrestling
 Punch-Out!!
-Punisher, The
+The Punisher
 Puss N' Boots: Pero's Great Adventure
 Puzznic
 Q*Bert
@@ -445,7 +445,7 @@ Qix
 R.B.I. Baseball
 R.C. Pro-Am
 R.C. Pro-Am II
-Race America, Alex DeMeo's
+Alex DeMeo's Race America
 Racket Attack
 Rad Racer
 Rad Racer II
@@ -456,7 +456,7 @@ Rambo
 Rampage
 Rampart
 Remote Control
-Ren & Stimpy Show, The: Buckeroo$!
+The Ren & Stimpy Show: Buckeroo$!
 Renegade
 Rescue – The Embassy Mission
 Ring King
@@ -469,7 +469,7 @@ RoboCop 3
 RoboWarrior
 Rock 'n Ball
 Rocket Ranger
-Rocketeer, The
+The Rocketeer
 Rockin' Kats
 Roger Clemens' MVP Baseball
 Rollerball
@@ -483,8 +483,6 @@ Rygar
 S.C.A.T.
 Section-Z
 Seicross
-Sesame Street: 123
-Sesame Street: ABC
 Sesame Street: ABC/123
 Sesame Street: Big Bird's Hide & Speak
 Sesame Street: Countdown
@@ -498,12 +496,12 @@ Side Pocket
 Silent Service
 Silk Worm
 Silver Surfer
-Simpsons, The – Bart Vs. the Space Mutants
-Simpsons, The – Bart Vs. the World
-Simpsons, The – Bartman Meets Radioactive Man
-Simpsons, The – Krusty's Fun House
+The Simpsons – Bart Vs. the Space Mutants
+The Simpsons – Bart Vs. the World
+The Simpsons – Bartman Meets Radioactive Man
+The Simpsons – Krusty's Fun House
 Skate or Die
-Skate or Die 2, The Search for Double Trouble
+Skate or Die 2: The Search for Double Trouble
 Ski or Die
 Sky Kid
 Sky Shark
@@ -514,12 +512,12 @@ Snake Rattle n Roll
 Snoopy's Silly Sports Spectacular
 Snow Brothers
 Soccer
-Solar Jetman – Hunt for the Golden Warship
+Solar Jetman: Hunt for the Golden Warship
 Solomon's Key
-Solstice – The Quest for the Staff of Demnos
+Solstice: The Quest for the Staff of Demnos
 Space Shuttle Project
 Spelunker
-Spider-Man – Return of the Sinister Six
+Spider-Man: Return of the Sinister Six
 Spot: The Videogame!
 Spy Hunter
 Spy vs. Spy
@@ -546,16 +544,13 @@ Super C
 Super Cars
 Super Dodge Ball
 Super Glove Ball
-Super Jeopardy!, Talking
+Super Jeopardy!: Talking
 Super Mario Bros.
-Super Mario Bros. - Duck Hunt
-Super Mario Bros. - Duck Hunt – World Class Track Meet
 Super Mario Bros. 2
 Super Mario Bros. 3
-Super Off Road, Ivan “Ironman” Stewart's
+Ivan “Ironman” Stewart's Super Off Road
 Super Pitfall
 Super Spike V'Ball
-Super Spike V'Ball / World Cup Soccer
 Super Spy Hunter
 Super Team Games
 Superman
@@ -584,7 +579,7 @@ Terminator
 Terra Cresta
 Tetris
 Tetris 2
-Three Stooges, The
+The Three Stooges
 Thunder and Lightning
 Thunderbirds
 Thundercade
@@ -600,7 +595,7 @@ Tom & Jerry – The Ultimate Game of Cat and Mouse!
 Tombs & Treasure
 Top Gun
 Top Gun – The Second Mission
-Top Players' Tennis, Chris Evert & Ivan Lendl in
+Top Players' Tennis
 Total Recall
 Totally Rad
 Touchdown Fever
@@ -620,7 +615,7 @@ Ultimate Basketball
 The Uncanny X-Men
 Uncharted Waters
 Uninvited
-Untouchables, The
+Untouchables: The
 Urban Champion
 Vegas Dream
 Vice: Project Doom
@@ -644,17 +639,17 @@ Whomp 'Em
 Widget
 Wild Gunman
 Willow
-Win, Lose or Draw
+Win: Lose or Draw
 Winter Games
 Wizardry Master Series II: Knight of Diamonds
 Wizardry Master Series: The Proving Grounds of the Mad Overlord
 Wizards & Warriors
-Wizards & Warriors III, Kurosâ€¦Visions of Power
+Wizards & Warriors III: Kurosâ: Visions of Power
 Wolverine
 World Champ
-World Championship Racing, Nigel Mansell's
+Nigel Mansell's World Championship Racing
 World Class Track Meet
-World Cup, Nintendo
+Nintendo World Cup
 World Games
 Wrath of the Black Manta
 Wrecking Crew
@@ -669,7 +664,7 @@ Xexyz
 Yo! Noid
 Yoshi
 Yoshi's Cookie
-Young Indiana Jones Chronicles, The
+Young Indiana Jones Chronicles: The
 Zanac
 Zelda II – The Adventure of Link
 Zen – Intergalactic Ninja
