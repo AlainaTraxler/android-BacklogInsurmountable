@@ -12,6 +12,7 @@ public class Game {
     private String mGenre;
     private String mDeck;
     private String mImageURL;
+    private String mId;
 
     public Game() {}
 
@@ -31,4 +32,6 @@ public class Game {
     public String getDeck(){ return mDeck; }
 
     public String getImageURL(){ return mImageURL; }
+
+    public String getId(){ return mId; }
 }

@@ -94,6 +94,8 @@ public class GameDetailFragment extends Fragment {
         protected void onPostExecute(Game game) {
             mTextView_Deck.setText(game.getDeck());
             Picasso.with(getActivity().getApplicationContext()).load(game.getImageURL()).into(mImageView_Splash);
+
+
         }
     }
 

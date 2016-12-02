@@ -32,14 +32,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Boolean mIsLoggedIn;
     String mUsername;
 
-    private DatabaseReference mSearchedLocationReference;
+//    private DatabaseReference mSearchedLocationReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        mSearchedLocationReference = FirebaseDatabase.getInstance().getReference().child(Constants.FIREBASE_TEST_LOCATION);
+//        mSearchedLocationReference = FirebaseDatabase.getInstance().getReference().child(Constants.FIREBASE_GAMELISTS_NODE).child(Constants.FIREBASE_NES_NODE);
 
-        mSearchedLocationReference.setValue("Success!!");
+//        mSearchedLocationReference.setValue("Success!!");
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
