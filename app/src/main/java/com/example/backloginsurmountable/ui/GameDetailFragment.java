@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 import org.parceler.Parcels;
 
 import java.io.IOException;
+import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -60,6 +61,7 @@ public class GameDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mGame = Parcels.unwrap(getArguments().getParcelable("game"));
+
 
         mReserveName = mGame.getName();
         mGame = getGame(mGame.getName());
@@ -103,12 +105,16 @@ public class GameDetailFragment extends Fragment {
             DatabaseReference gameNode;
 
             if(game.getName().equals("Not Found")){
-                gameNode = FirebaseDatabase.getInstance().getReference().child(Constants.FIREBASE_GAMELISTS_NODE).child(Constants.FIREBASE_NES_NODE).child(mReserveName);
+                Random rand = new Random();
+                int  rnd = rand.nextInt(100000);
+
+                gameNode = FirebaseDatabase.getInstance().getReference().child(Constants.FIREBASE_GAMELISTS_NODE).child(Constants.FIREBASE_NES_NODE).child(game.getId() + String.valueOf(rnd)).child("name");
+                gameNode.setValue(mReserveName);
             }else{
-                gameNode = FirebaseDatabase.getInstance().getReference().child(Constants.FIREBASE_GAMELISTS_NODE).child(Constants.FIREBASE_NES_NODE).child(game.getName());
+                gameNode = FirebaseDatabase.getInstance().getReference().child(Constants.FIREBASE_GAMELISTS_NODE).child(Constants.FIREBASE_NES_NODE).child(game.getId()).child("name");
+                gameNode.setValue(game.getName());
             }
 
-            gameNode.setValue(game.getId());
         }
     }
 

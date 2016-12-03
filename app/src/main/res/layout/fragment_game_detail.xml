@@ -7,11 +7,11 @@
     <!-- TODO: Update blank fragment layout -->
 
     <ImageView
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="fill_parent"
         android:alpha=".10"
         android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
+        android:scaleType="centerCrop"
         android:id="@+id/imageView_Splash"
         android:layout_gravity="center_horizontal|top"
         android:layout_centerHorizontal="true"
