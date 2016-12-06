@@ -14,7 +14,7 @@ _An app that allows the tracking of retro games (NES only, at the moment) and wh
 
 ## Known Bugs
 
-_Functionality is largely limited,w ith most elements serving as placeholders. Data persistance and database integration are both lacking. Recycling of views in BacklogActivity causes a bug in which games are marked completed when they are not. Database integration will solve this, as currently the only way to track the list items is by id._
+_Placeholder is still in place on Gauntlet page. Authentication is in, but is lacking in the feedback department. Be sure to use something that looks like a real email address._
 
 ## Support and contact details
 
