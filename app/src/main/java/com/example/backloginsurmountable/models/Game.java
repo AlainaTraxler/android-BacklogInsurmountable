@@ -8,31 +8,23 @@ import org.parceler.Parcel;
 
 @Parcel
 public class Game {
-    private String mName;
-    private String mGenre;
-    private String mDeck;
-    private String mImageURL;
-    private String mId;
+    private String name;
+    private String deck;
+    private String imageURL;
+    private String pushId;
 
     public Game() {}
 
-    public Game(String _name, String _genre, String _deck, String _imageURL, String _id){
-        mName = _name;
-        mGenre = _genre;
-        mDeck = _deck;
-        mImageURL = _imageURL;
-        mId = _id;
+    public Game(String _name, String _genre, String _deck, String _imageURL){
+        name = _name;
+        deck = _deck;
+        imageURL = _imageURL;
     }
 
     public String getName(){
-        return mName;
+        return name;
     }
-
-    public String getGenre(){ return mGenre; }
-
-    public String getDeck(){ return mDeck; }
-
-    public String getImageURL(){ return mImageURL; }
-
-    public String getId(){ return mId; }
+    public String getDeck(){ return deck; }
+    public String getImageURL(){ return imageURL; }
+    public String getId(){ return pushId; }
 }

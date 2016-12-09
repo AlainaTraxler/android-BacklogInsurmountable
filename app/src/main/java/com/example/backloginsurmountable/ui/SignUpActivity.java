@@ -116,42 +116,17 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
             if(mCheckBox_Returning.isChecked()) {
                 signIn(mUsername, mPassword);
-//                mAuth.signInWithEmailAndPassword(mUsername, mPassword)
-//                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-//                            @Override
-//                            public void onComplete(@NonNull Task<AuthResult> task) {
-//                                Log.d("", "signInWithEmail:onComplete:" + task.isSuccessful());
-//
-//                                if (task.isSuccessful()) {
-//                                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-//                                    intent.putExtra("isLoggedIn", true);
-//                                    intent.putExtra("username", mUsername);
-//                                    startActivity(intent);
-//                                }
-//
-//                                // If sign in fails, display a message to the user. If sign in succeeds
-//                                // the auth state listener will be notified and logic to handle the
-//                                // signed in user can be handled in the listener.
-//                                if (!task.isSuccessful()) {
-//                                    Log.w("", "signInWithEmail:failed", task.getException());
-//                                }
-//
-//                                // ...
-//                            }
-//                        });
             }else{
                 mAuth.createUserWithEmailAndPassword(mUsername, mPassword)
                         .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                Log.d("", "createUserWithEmail:onComplete:" + task.isSuccessful());
-
                                 if (task.isSuccessful()) {
-                                    Log.v("", "Yes");
                                     Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                                     intent.putExtra("isLoggedIn", true);
                                     intent.putExtra("username", mUsername);
                                     startActivity(intent);
+
                                 }
 
                                 // If sign in fails, display a message to the user. If sign in succeeds
@@ -170,11 +145,11 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         }else{
             if(mUsername.equals("")){
-                Toast.makeText(SignUpActivity.this, "Please enter a username", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
             }
 
             if(mPassword.equals("")){
-                Toast.makeText(SignUpActivity.this, "Please enter a password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignUpActivity.this, "Please enter a password longer than 6 characters", Toast.LENGTH_SHORT).show();
             }
         }
 
