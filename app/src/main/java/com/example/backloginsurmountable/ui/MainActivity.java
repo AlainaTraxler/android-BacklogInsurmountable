@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -11,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.R;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -19,7 +23,7 @@ import butterknife.ButterKnife;
 
 import static android.graphics.Typeface.*;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.textView_Backlog) TextView mTextView_Backlog;
     @Bind(R.id.textView_Insurmountable) TextView mTextView_Insurmountable;
     @Bind(R.id.textView_Info) TextView mTextView_Info;
@@ -31,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     Boolean mIsLoggedIn;
     String mUsername;
+
+//    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 //    private DatabaseReference mSearchedLocationReference;
 
@@ -57,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mButton_SignUp.setOnClickListener(this);
         mTextView_Info.setOnClickListener(this);
 
-        if(mIsLoggedIn){
+        if(mAuth.getCurrentUser() != null){
             mButton_Backlog.setVisibility(View.VISIBLE);
             mButton_Gauntlet.setVisibility(View.VISIBLE);
             mButton_SignUp.setText("Profile");
@@ -66,6 +72,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             mButton_Gauntlet.setVisibility(View.INVISIBLE);
             mButton_SignUp.setText("Sign Up / Log In");
         }
+//
+        setTitle("");
+//        Log.v(">>>>>", mAuth.getCurrentUser().getEmail());
 
     }
 
