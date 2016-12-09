@@ -36,19 +36,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 import static android.graphics.Typeface.createFromAsset;
 
@@ -74,10 +66,7 @@ public class BacklogActivity extends AppCompatActivity {
     int mRemaining;
     int mCompleted;
     String mPercentCompleted;
-    int mCounter = 0;
 
-    Query mQuery;
-    private GameListAdapter mAdapter;
     private DatabaseReference mGameListReference;
     private FirebaseRecyclerAdapter mFirebaseAdapter;
 
@@ -212,12 +201,6 @@ public class BacklogActivity extends AppCompatActivity {
         mListView_NESGameList.setAdapter(mFirebaseAdapter);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//
-//
-//        return true;
-//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

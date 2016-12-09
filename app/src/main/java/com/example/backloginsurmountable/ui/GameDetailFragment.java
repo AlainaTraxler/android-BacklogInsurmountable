@@ -3,6 +3,7 @@ package com.example.backloginsurmountable.ui;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.GiantBombService.GiantBombService;
@@ -17,6 +19,7 @@ import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.models.Game;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -34,8 +37,6 @@ import okhttp3.Response;
  * A simple {@link Fragment} subclass.
  */
 public class GameDetailFragment extends Fragment {
-//    @Bind(R.id.textView_Name) TextView mTextView_Name;
-//    @Bind(R.id.textView_Genre) TextView mTextView_Genre;
     @Bind(R.id.textView_Deck) TextView mTextView_Deck;
     @Bind(R.id.imageView_Splash) ImageView mImageView_Splash;
 
@@ -61,69 +62,6 @@ public class GameDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mGame = Parcels.unwrap(getArguments().getParcelable("game"));
-
-
-        mReserveName = mGame.getName();
-        mGame = getGame(mGame.getName());
-
-    }
-
-    private Game getGame(String name) {
-        final GiantBombService giantBombService = new GiantBombService();
-        giantBombService.findGameByName(name, new Callback() {
-
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                new getGameTask().execute(response);
-            }
-
-        });
-
-        return mGame;
-    }
-
-    private class getGameTask extends AsyncTask<Response, Void, Game> {
-        /** The system calls this to perform work in a worker thread and
-         * delivers it the parameters given to AsyncTask.execute() */
-        protected Game doInBackground(Response... response) {
-            final GiantBombService giantBombService = new GiantBombService(); //pass in activity?
-            return giantBombService.processResultByName(response[0]);
-        }
-
-
-        /** The system calls this to perform work in the UI thread and delivers
-         * the result from doInBackground() */
-        protected void onPostExecute(Game game) {
-            mTextView_Deck.setText(game.getDeck());
-            Picasso.with(getActivity().getApplicationContext()).load(game.getImageURL()).into(mImageView_Splash);
-
-//            DatabaseReference gameNode = FirebaseDatabase.getInstance().getReference("games");
-//            DatabaseReference gamelistNode = FirebaseDatabase.getInstance().getReference("gamelists").child("NES");
-//
-//            if(game.getName().equals("Not Found")){
-//                // Hollow and push
-//                DatabaseReference mypostref = gameNode.push();
-//                game.setPushId(mypostref.getKey());
-//                game.setName(mReserveName);
-//                mypostref.setValue(game);
-//                gamelistNode.child(mypostref.getKey()).setValue(true);
-//
-//            }else{
-//                //Hollow and push
-//                DatabaseReference mypostref = gameNode.push();
-//                game.setPushId(mypostref.getKey());
-//                game.setName(game.getName());
-//                mypostref.setValue(game);
-//                mypostref.setValue(game);
-//                gamelistNode.child(mypostref.getKey()).setValue(true);
-//            }
-
-        }
     }
 
     @Override
@@ -132,10 +70,10 @@ public class GameDetailFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         mTextView_Deck.setText(mGame.getDeck());
+        Picasso.with(getActivity().getApplicationContext()).load(mGame.getImageURL()).into(mImageView_Splash);
 
         Log.v("onCreateView ImageURL:", mGame.getImageURL());
 
         return view;
     }
-
 }
