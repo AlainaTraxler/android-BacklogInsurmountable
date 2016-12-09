@@ -18,6 +18,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -78,13 +80,12 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
                             if(mCheckBox_Remember.isChecked()){
                                 mEditor.putString("Remember", "true").apply();
                             }
-
+                            FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid()).setValue(true);
                         }
 
                         if (!task.isSuccessful()) {
                             Toast.makeText(SignUpActivity.this, "Account creation unsuccessful", Toast.LENGTH_SHORT).show();
                         }
-
                     }
                 });
     }
