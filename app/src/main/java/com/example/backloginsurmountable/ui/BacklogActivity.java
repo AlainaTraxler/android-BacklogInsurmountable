@@ -18,11 +18,20 @@ import android.widget.Toast;
 
 import com.example.backloginsurmountable.GiantBombService.GiantBombService;
 import com.example.backloginsurmountable.R;
+import com.example.backloginsurmountable.adapters.FirebaseGameViewHolder;
 import com.example.backloginsurmountable.adapters.GameListAdapter;
 import com.example.backloginsurmountable.models.Game;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,12 +48,12 @@ import okhttp3.Response;
 import static android.graphics.Typeface.createFromAsset;
 
 public class BacklogActivity extends AppCompatActivity {
-//    @Bind(R.id.listView_NESGameList) ListView mListView_NESGameList;
     @Bind(R.id.textView_Completed) TextView mTextView_Completed;
     @Bind(R.id.textView_Remaining) TextView mTextView_Remaining;
     @Bind(R.id.textView_PercentCompleted) TextView mTextView_PercentCompleted;
     @Bind(R.id.textView_CompletedHeader) TextView mTextView_CompletedHeader;
     @Bind(R.id.textView_RemainingHeader) TextView mTextView_RemainingHeader;
+    @Bind(R.id.listView_NESGameList) RecyclerView mListView_NESGameList;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -60,8 +69,10 @@ public class BacklogActivity extends AppCompatActivity {
     int mCompleted;
     String mPercentCompleted;
 
-    @Bind(R.id.listView_NESGameList) RecyclerView mListView_NESGameList;
+    Query mQuery;
     private GameListAdapter mAdapter;
+    private DatabaseReference mGameListReference;
+    private FirebaseRecyclerAdapter mFirebaseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +84,11 @@ public class BacklogActivity extends AppCompatActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
-        mNESGameList = getGames();
+        mGameListReference = FirebaseDatabase.getInstance()
+                .getReference("games");
+
+//        mGameListReference = FirebaseDatabase.getInstance().getReference("games");
+        setUpFirebaseAdapter();
 
         Typeface erbosDraco = createFromAsset(getAssets(), "fonts/erbosdraco_nova_open_nbp.ttf");
         mTextView_Completed.setTypeface(erbosDraco);
@@ -82,39 +97,12 @@ public class BacklogActivity extends AppCompatActivity {
         mTextView_CompletedHeader.setTypeface(erbosDraco);
         mTextView_RemainingHeader.setTypeface(erbosDraco);
 
-//        ArrayAdapter NESGameListAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, mNESGameList);
-//        mListView_NESGameList.setAdapter(NESGameListAdapter);
-
-        mAdapter = new GameListAdapter(getApplicationContext(), mNESGameList);
-        mListView_NESGameList.setAdapter(mAdapter);
-        RecyclerView.LayoutManager layoutManager =
-                new LinearLayoutManager(BacklogActivity.this);
-        mListView_NESGameList.setLayoutManager(layoutManager);
-        mListView_NESGameList.setHasFixedSize(true);
-
-//        mListView_NESGameList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-//                TextView tileView;
-//                tileView = (TextView) v.findViewById(android.R.id.text1);
-//
-//                if(!(String.valueOf(tileView.getCurrentTextColor()).equals("-1703936"))){
-//                    mRemaining--;
-//                    mCompleted++;
-//                    tileView.setTextColor(0xffe60000);
-//                    tileView.setPaintFlags(tileView.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//                } else {
-//                    mRemaining++;
-//                    mCompleted--;
-//                    tileView.setTextColor(0xff000000);
-//                    tileView.setPaintFlags( tileView.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
-//                }
-//                mTextView_Completed.setText(String.valueOf(mCompleted));
-//                mTextView_Remaining.setText(String.valueOf(mRemaining));
-//
-//                mPercentCompleted = String.valueOf(String.format( "%.2f", ((double) mCompleted / (double) mRemaining) * 100))+ "%";
-//                mTextView_PercentCompleted.setText(String.valueOf(mPercentCompleted));
-//            }
-//        });
+//        mAdapter = new GameListAdapter(getApplicationContext(), mNESGameList);
+//        mListView_NESGameList.setAdapter(mAdapter);
+//        RecyclerView.LayoutManager layoutManager =
+//                new LinearLayoutManager(BacklogActivity.this);
+//        mListView_NESGameList.setLayoutManager(layoutManager);
+//        mListView_NESGameList.setHasFixedSize(true);
 
         mNumberOfGames = mNESGameList.size();
         mRemaining = mNumberOfGames;
@@ -126,40 +114,51 @@ public class BacklogActivity extends AppCompatActivity {
         mTextView_PercentCompleted.setText(String.valueOf(mPercentCompleted));
     }
 
-    public ArrayList<Game> getGames(){
+    private void setUpFirebaseAdapter() {
+        mFirebaseAdapter = new FirebaseRecyclerAdapter<Game, FirebaseGameViewHolder>
+                (Game.class, R.layout.game_list_item, FirebaseGameViewHolder.class,
+                        mGameListReference) {
 
-        ArrayList<Game> catcher = new ArrayList<Game>();
-
-        int counter = 0;
-
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(
-                    new InputStreamReader(getAssets().open("gamelists/nes_game_list.txt")));
-            // do reading, usually loop until end of file reading
-            String mLine;
-            while ((mLine = reader.readLine()) != null) {
-                //process line
-                counter++;
-                Log.v(mLine, String.valueOf(counter));
-                Game game = new Game(mLine, "Not Processed", "Not Processed", "https://image.freepik.com/free-icon/question-mark_318-52837.jpg", "Not Processed");
-                catcher.add(game);
+            @Override
+            protected void populateViewHolder(FirebaseGameViewHolder viewHolder,
+                                              Game model, int position) {
+//                Query queryRef = FirebaseDatabase.getInstance().getReference("gamelists").orderByKey().equalTo();
+                viewHolder.bindGame(model);
             }
+        };
 
-        } catch (IOException e) {
-            //log the exception
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    //log the exception
-                }
-            }
-        }
-
-        return catcher;
+        mListView_NESGameList.setHasFixedSize(true);
+        mListView_NESGameList.setLayoutManager(new LinearLayoutManager(this));
+        mListView_NESGameList.setAdapter(mFirebaseAdapter);
     }
+    
+//    public ArrayList<Game> getGames(){
+//
+//        ArrayList<Game> catcher = new ArrayList<Game>();
+//
+//        int counter = 0;
+//
+//        Toast.makeText(BacklogActivity.this, "In", Toast.LENGTH_SHORT).show();
+//        DatabaseReference gamelistNode = FirebaseDatabase.getInstance().getReference("games");
+//
+////        mGameListReference.addValueEventListener(new ValueEventListener() {
+////            @Override
+////            public void onDataChange(DataSnapshot snapshot) {
+////                Log.e("Count " ,""+snapshot.getChildrenCount());
+////                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+////                    Game game = postSnapshot.getValue(Game.class);
+////                    Log.e("Get Data", post.<YourMethod>());
+////                }
+////            }
+////            @Override
+////            public void onCancelled(FirebaseError firebaseError) {
+////                Log.e("The read failed: " ,firebaseError.getMessage());
+////            }
+////        });
+//
+//
+//        return catcher;
+//    }
 
     @Override
     public void onStart() {
