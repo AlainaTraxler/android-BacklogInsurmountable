@@ -2,6 +2,8 @@ package com.example.backloginsurmountable.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +22,8 @@ public class BaseActivity extends AppCompatActivity {
     public FirebaseAuth mAuth;
     public Context mContext;
     public FirebaseAuth.AuthStateListener mAuthListener;
+    public SharedPreferences mSharedPreferences;
+    public SharedPreferences.Editor mEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +49,13 @@ public class BaseActivity extends AppCompatActivity {
         };
 
         if(mAuth.getCurrentUser() != null){
-            Toast.makeText(BaseActivity.this, "Currently logged in: " + mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
+
         }else{
-            Toast.makeText(BaseActivity.this, "Nobody logged in", Toast.LENGTH_SHORT).show();
+
         }
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mSharedPreferences.edit();
+
     }
 
     @Override
@@ -69,6 +76,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     private void logout() {
+        mEditor.putString("Remember", null).apply();
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(mContext, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

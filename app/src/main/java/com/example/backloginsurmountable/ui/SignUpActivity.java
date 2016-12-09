@@ -23,10 +23,11 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class SignUpActivity extends BaseActivity implements View.OnClickListener  {
-    @Bind(R.id.button_LetsGo) Button mButton_LetsGo;
+    @Bind(R.id.button_SignUp) Button mButton_SignUp;
+    @Bind(R.id.button_SignIn) Button mButton_SignIn;
     @Bind(R.id.editText_Username) EditText mEditText_Username;
     @Bind(R.id.editText_Password) EditText mEditText_Password;
-    @Bind(R.id.checkBox_Returning) CheckBox mCheckBox_Returning;
+    @Bind(R.id.checkBox_Remember) CheckBox mCheckBox_Remember;
 
     String mUsername;
     String mPassword;
@@ -46,38 +47,9 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
 // ...
         mAuth = FirebaseAuth.getInstance();
 
-        mButton_LetsGo.setOnClickListener(this);
-
-//        mAuthListener = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                FirebaseUser user = firebaseAuth.getCurrentUser();
-//                if (user != null) {
-//                    // User is signed in
-//                    Log.d("", "onAuthStateChanged:signed_in:" + user.getUid());
-//                } else {
-//                    // User is signed out
-//                    Log.d("", "onAuthStateChanged:signed_out");
-//                }
-//                // ...
-//            }
-//        };
-        // ...
+        mButton_SignIn.setOnClickListener(this);
+        mButton_SignUp.setOnClickListener(this);
     }
-
-//    @Override
-//    public void onStart() {
-//        super.onStart();
-//        mAuth.addAuthStateListener(mAuthListener);
-//    }
-//
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        if (mAuthListener != null) {
-//            mAuth.removeAuthStateListener(mAuthListener);
-//        }
-//    }
 
     private void signIn(String email, String password) {
         Log.d(TAG, "signIn:" + email);
@@ -90,7 +62,9 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
 
                         if (task.isSuccessful() && mAuth.getCurrentUser() != null) {
                             Toast.makeText(SignUpActivity.this, "Sign in successful", Toast.LENGTH_SHORT).show();
-                            Toast.makeText(SignUpActivity.this, mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
+                            if(mCheckBox_Remember.isChecked()){
+                                mEditor.putString("Remember", "true").apply();
+                            }
                         }else{
                             Toast.makeText(SignUpActivity.this, "Sign in unsuccessful", Toast.LENGTH_SHORT).show();
                         }
@@ -106,7 +80,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
 
         if(!(mUsername.equals("")) && !(mPassword.equals(""))){
 
-            if(mCheckBox_Returning.isChecked()) {
+            if(v == mButton_SignIn) {
                 signIn(mUsername, mPassword);
             }else{
                 mAuth.createUserWithEmailAndPassword(mUsername, mPassword)
@@ -115,11 +89,12 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(SignUpActivity.this, "Account creation successful", Toast.LENGTH_SHORT).show();
+                                    if(mCheckBox_Remember.isChecked()){
+                                        mEditor.putString("Remember", "true").apply();
+                                    }
+
                                 }
 
-                                // If sign in fails, display a message to the user. If sign in succeeds
-                                // the auth state listener will be notified and logic to handle the
-                                // signed in user can be handled in the listener.
                                 if (!task.isSuccessful()) {
                                     Toast.makeText(SignUpActivity.this, "Account creation unsuccessful", Toast.LENGTH_SHORT).show();
                                 }

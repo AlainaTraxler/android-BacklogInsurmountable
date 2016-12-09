@@ -74,7 +74,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
 //
         setTitle("");
-//        Log.v(">>>>>", mAuth.getCurrentUser().getEmail());
+        if(mSharedPreferences.getString("Remember", null) != null)
+        Log.v(">>>>>", mSharedPreferences.getString("Remember", null));
 
     }
 

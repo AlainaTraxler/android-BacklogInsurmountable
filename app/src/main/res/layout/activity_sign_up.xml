@@ -43,8 +43,8 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Returning User"
-        android:id="@+id/checkBox_Returning"
+        android:text="Remember Me"
+        android:id="@+id/checkBox_Remember"
         android:layout_below="@+id/editText_Password"
         android:layout_alignLeft="@+id/editText_Password"
         android:layout_alignStart="@+id/editText_Password"
@@ -54,12 +54,33 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Let&apos;s Go"
-        android:id="@+id/button_LetsGo"
-        android:layout_below="@+id/checkBox_Returning"
-        android:layout_alignLeft="@+id/checkBox_Returning"
-        android:layout_alignStart="@+id/checkBox_Returning"
+        android:text="Sign Up"
+        android:id="@+id/button_SignUp"
+        android:layout_below="@+id/checkBox_Remember"
+        android:layout_alignLeft="@+id/checkBox_Remember"
+        android:layout_alignStart="@+id/checkBox_Remember"
         android:layout_alignRight="@+id/editText_Password"
         android:layout_alignEnd="@+id/editText_Password"
+        android:background="@color/accent_material_light" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="- OR -"
+        android:id="@+id/textView"
+        android:layout_below="@+id/button_SignUp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign In"
+        android:id="@+id/button_SignIn"
+        android:layout_below="@+id/textView"
+        android:layout_alignLeft="@+id/button_SignUp"
+        android:layout_alignStart="@+id/button_SignUp"
+        android:layout_alignRight="@+id/button_SignUp"
+        android:layout_alignEnd="@+id/button_SignUp"
         android:background="@color/accent_material_light" />
 </RelativeLayout>
