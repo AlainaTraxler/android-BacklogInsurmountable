@@ -102,17 +102,25 @@ public class GameDetailFragment extends Fragment {
             mTextView_Deck.setText(game.getDeck());
             Picasso.with(getActivity().getApplicationContext()).load(game.getImageURL()).into(mImageView_Splash);
 
-            DatabaseReference gameNode;
+            DatabaseReference gameNode = FirebaseDatabase.getInstance().getReference("games");
+            DatabaseReference gamelistNode = FirebaseDatabase.getInstance().getReference("gamelists").child("NES");
 
             if(game.getName().equals("Not Found")){
-                Random rand = new Random();
-                int  rnd = rand.nextInt(100000);
+                // Hollow and push
+                DatabaseReference mypostref = gameNode.push();
+                game.setPushId(mypostref.getKey());
+                game.setName(mReserveName);
+                mypostref.setValue(game);
+                gamelistNode.child(mypostref.getKey()).setValue(true);
 
-                gameNode = FirebaseDatabase.getInstance().getReference().child(Constants.FIREBASE_GAMELISTS_NODE).child(Constants.FIREBASE_NES_NODE).child(game.getId() + String.valueOf(rnd)).child("name");
-                gameNode.setValue(mReserveName);
             }else{
-                gameNode = FirebaseDatabase.getInstance().getReference().child(Constants.FIREBASE_GAMELISTS_NODE).child(Constants.FIREBASE_NES_NODE).child(game.getId()).child("name");
-                gameNode.setValue(game.getName());
+                //Hollow and push
+                DatabaseReference mypostref = gameNode.push();
+                game.setPushId(mypostref.getKey());
+                game.setName(game.getName());
+                mypostref.setValue(game);
+                mypostref.setValue(game);
+                gamelistNode.child(mypostref.getKey()).setValue(true);
             }
 
         }
