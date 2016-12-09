@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
 
 import static android.graphics.Typeface.createFromAsset;
 
-public class BacklogActivity extends AppCompatActivity {
+public class BacklogActivity extends BaseActivity {
     @Bind(R.id.textView_Completed) TextView mTextView_Completed;
     @Bind(R.id.textView_Remaining) TextView mTextView_Remaining;
     @Bind(R.id.textView_PercentCompleted) TextView mTextView_PercentCompleted;
@@ -79,7 +79,7 @@ public class BacklogActivity extends AppCompatActivity {
                         .getReference("games");
 
                 final DatabaseReference mSearch = FirebaseDatabase.getInstance()
-                        .getReference("search");
+                        .getReference("users").child(mAuth.getCurrentUser().getUid()).child("search");
 
                 mSearch.removeValue();
 
