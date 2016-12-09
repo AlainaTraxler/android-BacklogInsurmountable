@@ -7,11 +7,9 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.backloginsurmountable.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,7 +41,6 @@ public class BaseActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }else if(user != null){
-                    Log.v(">>>>> currentUser: ", mAuth.getCurrentUser().getUid());
                 }
             }
         };
@@ -71,6 +68,9 @@ public class BaseActivity extends AppCompatActivity {
         if (id == R.id.action_logout) {
             logout();
             return true;
+        }else if(id == R.id.action_credits){
+            goCredits();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -80,6 +80,12 @@ public class BaseActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
         Intent intent = new Intent(mContext, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
+    }
+
+    private void goCredits() {
+        Intent intent = new Intent(mContext, InfoActivity.class);
         startActivity(intent);
         finish();
     }

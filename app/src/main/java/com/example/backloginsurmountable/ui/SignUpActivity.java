@@ -32,9 +32,6 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
     String mUsername;
     String mPassword;
 
-//    private FirebaseAuth mAuth;
-//    private FirebaseAuth.AuthStateListener mAuthListener;
-
     private static final String TAG = "SignUp";
 
     @Override
@@ -43,8 +40,6 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
         setContentView(R.layout.activity_sign_up);
         ButterKnife.bind(this);
 
-
-// ...
         mAuth = FirebaseAuth.getInstance();
 
         mButton_SignIn.setOnClickListener(this);
@@ -73,45 +68,48 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
         // [END sign_in_with_email]
     }
 
+    private void signUp(String email, String password) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(SignUpActivity.this, "Account creation successful", Toast.LENGTH_SHORT).show();
+                            if(mCheckBox_Remember.isChecked()){
+                                mEditor.putString("Remember", "true").apply();
+                            }
+
+                        }
+
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(SignUpActivity.this, "Account creation unsuccessful", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+    }
+
     @Override
     public void onClick(View v) {
-        mUsername = mEditText_Username.getText().toString();
-        mPassword = mEditText_Password.getText().toString();
+        String email = mEditText_Username.getText().toString();
+        String password = mEditText_Password.getText().toString();
 
-        if(!(mUsername.equals("")) && !(mPassword.equals(""))){
+        if(!(email.equals("")) && !(password.equals(""))){
 
             if(v == mButton_SignIn) {
-                signIn(mUsername, mPassword);
+                signIn(email, password);
             }else{
-                mAuth.createUserWithEmailAndPassword(mUsername, mPassword)
-                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(SignUpActivity.this, "Account creation successful", Toast.LENGTH_SHORT).show();
-                                    if(mCheckBox_Remember.isChecked()){
-                                        mEditor.putString("Remember", "true").apply();
-                                    }
-
-                                }
-
-                                if (!task.isSuccessful()) {
-                                    Toast.makeText(SignUpActivity.this, "Account creation unsuccessful", Toast.LENGTH_SHORT).show();
-                                }
-
-                                // ...
-                            }
-                        });
+                signUp(email, password);
             }
 
 
 
         }else{
-            if(mUsername.equals("")){
+            if(email.equals("")){
                 Toast.makeText(SignUpActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
             }
 
-            if(mPassword.equals("")){
+            if(password.equals("")){
                 Toast.makeText(SignUpActivity.this, "Please enter a password longer than 6 characters", Toast.LENGTH_SHORT).show();
             }
         }

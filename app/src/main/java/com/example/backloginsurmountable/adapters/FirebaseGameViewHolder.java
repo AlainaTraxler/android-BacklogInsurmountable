@@ -3,15 +3,12 @@ package com.example.backloginsurmountable.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.models.Game;
 import com.example.backloginsurmountable.ui.GameDetailActivity;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,8 +18,6 @@ import com.google.firebase.database.ValueEventListener;
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
-
-import butterknife.ButterKnife;
 
 /**
  * Created by Guest on 12/9/16.
@@ -57,7 +52,6 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
                 }
 
                 int itemPosition = getLayoutPosition();
-                Log.v(">>>>> Array Size", String.valueOf(games.size()));
                 Intent intent = new Intent(mContext, GameDetailActivity.class);
                 intent.putExtra("position", itemPosition);
                 intent.putExtra("games", Parcels.wrap(games));

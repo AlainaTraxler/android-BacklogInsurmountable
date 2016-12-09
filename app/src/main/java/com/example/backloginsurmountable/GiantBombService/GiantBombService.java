@@ -1,12 +1,10 @@
 package com.example.backloginsurmountable.GiantBombService;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.models.Game;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,15 +65,10 @@ public class GiantBombService {
                 Log.v("JSON String", gameJSON.toString());
 
                 name = gameJSON.getString("name");
-//                Log.v("Name: ", name);
                 deck = gameJSON.getString("deck");
-//                Log.v("Deck: ", deck);
                 imageURL = gameJSON.getJSONObject("image").getString("super_url");
-//                Log.v("ImageURL: ", imageURL);
                 id = gameJSON.getString("id");
-                Log.v("ID: ", id);
                 game = new Game(name, genre, deck, imageURL, id);
-
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -5,12 +5,9 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.backloginsurmountable.PressStartTextView;
 import com.example.backloginsurmountable.R;
 
 import butterknife.Bind;

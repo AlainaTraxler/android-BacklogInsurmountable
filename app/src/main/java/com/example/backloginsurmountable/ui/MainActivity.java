@@ -26,7 +26,6 @@ import static android.graphics.Typeface.*;
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.textView_Backlog) TextView mTextView_Backlog;
     @Bind(R.id.textView_Insurmountable) TextView mTextView_Insurmountable;
-    @Bind(R.id.textView_Info) TextView mTextView_Info;
 
     @Bind(R.id.button_Backlog) Button mButton_Backlog;
     @Bind(R.id.button_Gauntlet) Button mButton_Gauntlet;
@@ -35,10 +34,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     Boolean mIsLoggedIn;
     String mUsername;
-
-//    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-
-//    private DatabaseReference mSearchedLocationReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +52,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mButton_Backlog.setOnClickListener(this);
         mButton_Gauntlet.setOnClickListener(this);
         mButton_SignUp.setOnClickListener(this);
-        mTextView_Info.setOnClickListener(this);
 
         if(mAuth.getCurrentUser() != null){
             mButton_Backlog.setVisibility(View.VISIBLE);
@@ -68,11 +62,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             mButton_Gauntlet.setVisibility(View.INVISIBLE);
             mButton_SignUp.setText("Sign Up / Log In");
         }
-//
         setTitle("");
-        if(mSharedPreferences.getString("Remember", null) != null)
-        Log.v(">>>>>", mSharedPreferences.getString("Remember", null));
-
     }
 
     @Override
@@ -85,9 +75,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             startActivity(intent);
         }else if(v == mButton_SignUp && !(mIsLoggedIn)){
             Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
-            startActivity(intent);
-        }else if(v == mTextView_Info){
-            Intent intent = new Intent(MainActivity.this, InfoActivity.class);
             startActivity(intent);
         }else{
             Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
