@@ -68,6 +68,7 @@ public class BacklogActivity extends AppCompatActivity {
     int mRemaining;
     int mCompleted;
     String mPercentCompleted;
+    int mCounter = 0;
 
     Query mQuery;
     private GameListAdapter mAdapter;
@@ -86,8 +87,6 @@ public class BacklogActivity extends AppCompatActivity {
 
         mGameListReference = FirebaseDatabase.getInstance()
                 .getReference("games");
-
-//        mGameListReference = FirebaseDatabase.getInstance().getReference("games");
         setUpFirebaseAdapter();
 
         Typeface erbosDraco = createFromAsset(getAssets(), "fonts/erbosdraco_nova_open_nbp.ttf");
@@ -97,12 +96,6 @@ public class BacklogActivity extends AppCompatActivity {
         mTextView_CompletedHeader.setTypeface(erbosDraco);
         mTextView_RemainingHeader.setTypeface(erbosDraco);
 
-//        mAdapter = new GameListAdapter(getApplicationContext(), mNESGameList);
-//        mListView_NESGameList.setAdapter(mAdapter);
-//        RecyclerView.LayoutManager layoutManager =
-//                new LinearLayoutManager(BacklogActivity.this);
-//        mListView_NESGameList.setLayoutManager(layoutManager);
-//        mListView_NESGameList.setHasFixedSize(true);
 
         mNumberOfGames = mNESGameList.size();
         mRemaining = mNumberOfGames;
@@ -120,9 +113,30 @@ public class BacklogActivity extends AppCompatActivity {
                         mGameListReference) {
 
             @Override
-            protected void populateViewHolder(FirebaseGameViewHolder viewHolder,
+            protected void populateViewHolder(final FirebaseGameViewHolder viewHolder,
                                               Game model, int position) {
-//                Query queryRef = FirebaseDatabase.getInstance().getReference("gamelists").orderByKey().equalTo();
+                String key = this.getRef(position).getKey();
+                Query queryRef = FirebaseDatabase.getInstance().getReference("games").orderByKey().equalTo(key);
+                //--------------
+                queryRef.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Game game = dataSnapshot.getValue(Game.class);
+                        viewHolder.bindGame(game);
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {}
+                });
                 viewHolder.bindGame(model);
             }
         };
