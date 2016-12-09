@@ -4,15 +4,20 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +59,7 @@ public class BacklogActivity extends AppCompatActivity {
     @Bind(R.id.textView_CompletedHeader) TextView mTextView_CompletedHeader;
     @Bind(R.id.textView_RemainingHeader) TextView mTextView_RemainingHeader;
     @Bind(R.id.listView_NESGameList) RecyclerView mListView_NESGameList;
+    @Bind(R.id.searchView) SearchView mSearchView;
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -85,9 +91,70 @@ public class BacklogActivity extends AppCompatActivity {
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
+
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(final String query) {
+                Toast.makeText(BacklogActivity.this, "Submitted", Toast.LENGTH_SHORT).show();
+
+                final DatabaseReference mGames = FirebaseDatabase.getInstance()
+                        .getReference("games");
+
+                final DatabaseReference mSearch = FirebaseDatabase.getInstance()
+                        .getReference("search");
+
+                mSearch.removeValue();
+
+                mGames.addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        Game game = dataSnapshot.getValue(Game.class);
+                        if(game.getName().toLowerCase().contains(query.toLowerCase())){
+                            mSearch.child(game.getpushId()).setValue(game);
+                        }
+                    }
+
+                    @Override
+                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                    }
+
+                    @Override
+                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+                setUpFirebaseAdapter(mSearch);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(newText.equals("")){
+                    mGameListReference = FirebaseDatabase.getInstance()
+                            .getReference("games");
+                    setUpFirebaseAdapter(mGameListReference);
+                }
+                return false;
+            }
+
+        });
+
+
         mGameListReference = FirebaseDatabase.getInstance()
                 .getReference("games");
-        setUpFirebaseAdapter();
+        setUpFirebaseAdapter(mGameListReference);
 
         Typeface erbosDraco = createFromAsset(getAssets(), "fonts/erbosdraco_nova_open_nbp.ttf");
         mTextView_Completed.setTypeface(erbosDraco);
@@ -107,10 +174,10 @@ public class BacklogActivity extends AppCompatActivity {
         mTextView_PercentCompleted.setText(String.valueOf(mPercentCompleted));
     }
 
-    private void setUpFirebaseAdapter() {
+    private void setUpFirebaseAdapter(DatabaseReference _list) {
         mFirebaseAdapter = new FirebaseRecyclerAdapter<Game, FirebaseGameViewHolder>
                 (Game.class, R.layout.game_list_item, FirebaseGameViewHolder.class,
-                        mGameListReference) {
+                        _list) {
 
             @Override
             protected void populateViewHolder(final FirebaseGameViewHolder viewHolder,
@@ -137,7 +204,6 @@ public class BacklogActivity extends AppCompatActivity {
                     @Override
                     public void onCancelled(DatabaseError databaseError) {}
                 });
-                viewHolder.bindGame(model);
             }
         };
 
@@ -145,34 +211,18 @@ public class BacklogActivity extends AppCompatActivity {
         mListView_NESGameList.setLayoutManager(new LinearLayoutManager(this));
         mListView_NESGameList.setAdapter(mFirebaseAdapter);
     }
-    
-//    public ArrayList<Game> getGames(){
-//
-//        ArrayList<Game> catcher = new ArrayList<Game>();
-//
-//        int counter = 0;
-//
-//        Toast.makeText(BacklogActivity.this, "In", Toast.LENGTH_SHORT).show();
-//        DatabaseReference gamelistNode = FirebaseDatabase.getInstance().getReference("games");
-//
-////        mGameListReference.addValueEventListener(new ValueEventListener() {
-////            @Override
-////            public void onDataChange(DataSnapshot snapshot) {
-////                Log.e("Count " ,""+snapshot.getChildrenCount());
-////                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-////                    Game game = postSnapshot.getValue(Game.class);
-////                    Log.e("Get Data", post.<YourMethod>());
-////                }
-////            }
-////            @Override
-////            public void onCancelled(FirebaseError firebaseError) {
-////                Log.e("The read failed: " ,firebaseError.getMessage());
-////            }
-////        });
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
 //
 //
-//        return catcher;
+//        return true;
 //    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onStart() {

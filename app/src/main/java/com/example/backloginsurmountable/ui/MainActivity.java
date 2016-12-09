@@ -42,10 +42,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        mSearchedLocationReference = FirebaseDatabase.getInstance().getReference().child(Constants.FIREBASE_GAMELISTS_NODE).child(Constants.FIREBASE_NES_NODE);
-
-//        mSearchedLocationReference.setValue("Success!!");
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
