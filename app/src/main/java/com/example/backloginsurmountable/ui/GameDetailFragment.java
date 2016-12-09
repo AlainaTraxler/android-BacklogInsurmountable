@@ -102,26 +102,26 @@ public class GameDetailFragment extends Fragment {
             mTextView_Deck.setText(game.getDeck());
             Picasso.with(getActivity().getApplicationContext()).load(game.getImageURL()).into(mImageView_Splash);
 
-            DatabaseReference gameNode = FirebaseDatabase.getInstance().getReference("games");
-            DatabaseReference gamelistNode = FirebaseDatabase.getInstance().getReference("gamelists").child("NES");
-
-            if(game.getName().equals("Not Found")){
-                // Hollow and push
-                DatabaseReference mypostref = gameNode.push();
-                game.setPushId(mypostref.getKey());
-                game.setName(mReserveName);
-                mypostref.setValue(game);
-                gamelistNode.child(mypostref.getKey()).setValue(true);
-
-            }else{
-                //Hollow and push
-                DatabaseReference mypostref = gameNode.push();
-                game.setPushId(mypostref.getKey());
-                game.setName(game.getName());
-                mypostref.setValue(game);
-                mypostref.setValue(game);
-                gamelistNode.child(mypostref.getKey()).setValue(true);
-            }
+//            DatabaseReference gameNode = FirebaseDatabase.getInstance().getReference("games");
+//            DatabaseReference gamelistNode = FirebaseDatabase.getInstance().getReference("gamelists").child("NES");
+//
+//            if(game.getName().equals("Not Found")){
+//                // Hollow and push
+//                DatabaseReference mypostref = gameNode.push();
+//                game.setPushId(mypostref.getKey());
+//                game.setName(mReserveName);
+//                mypostref.setValue(game);
+//                gamelistNode.child(mypostref.getKey()).setValue(true);
+//
+//            }else{
+//                //Hollow and push
+//                DatabaseReference mypostref = gameNode.push();
+//                game.setPushId(mypostref.getKey());
+//                game.setName(game.getName());
+//                mypostref.setValue(game);
+//                mypostref.setValue(game);
+//                gamelistNode.child(mypostref.getKey()).setValue(true);
+//            }
 
         }
     }
