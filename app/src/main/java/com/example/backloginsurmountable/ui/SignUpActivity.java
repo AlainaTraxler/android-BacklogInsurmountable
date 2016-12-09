@@ -80,7 +80,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
                             if(mCheckBox_Remember.isChecked()){
                                 mEditor.putString("Remember", "true").apply();
                             }
-                            FirebaseDatabase.getInstance().getReference().child(mAuth.getCurrentUser().getUid()).setValue(true);
+                            FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid()).setValue(true);
                         }
 
                         if (!task.isSuccessful()) {
