@@ -2,6 +2,7 @@ package com.example.backloginsurmountable.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +10,16 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.models.Game;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -60,6 +66,32 @@ public class GameDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game_detail, container, false);
         ButterKnife.bind(this, view);
+
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid());
+
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild("complete/" + mGame.getpushId())){
+                    mCheckBox_Complete.setChecked(true);
+                }
+                if(dataSnapshot.hasChild("100/" + mGame.getpushId())){
+                    mCheckBox_100.setChecked(true);
+                }
+                if(dataSnapshot.hasChild("blind/" + mGame.getpushId())){
+                    mCheckBox_Blind.setChecked(true);
+                }
+                if(dataSnapshot.hasChild("hardcore/" + mGame.getpushId())){
+                    mCheckBox_Hardcore.setChecked(true);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
 
         mCheckBox_Complete.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
         {
