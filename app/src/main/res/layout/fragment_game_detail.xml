@@ -38,14 +38,14 @@
         android:gravity="start"
         android:paddingLeft="10dp"
         android:layout_below="@+id/textView_Name"
-        android:layout_toRightOf="@+id/checkBox"
-        android:layout_toEndOf="@+id/checkBox" />
+        android:layout_toRightOf="@+id/checkBox_Complete"
+        android:layout_toEndOf="@+id/checkBox_Complete" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Complete"
-        android:id="@+id/checkBox"
+        android:id="@+id/checkBox_Complete"
         android:checked="false"
         android:layout_below="@+id/imageView_Screenshot"
         android:layout_alignParentLeft="true"
@@ -55,27 +55,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="100%"
-        android:id="@+id/checkBox2"
+        android:id="@+id/checkBox_100"
         android:checked="false"
-        android:layout_below="@+id/checkBox"
+        android:layout_below="@+id/checkBox_Complete"
         android:layout_alignParentLeft="true" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Unguided"
-        android:id="@+id/checkBox3"
+        android:text="Blind"
+        android:id="@+id/checkBox_Blind"
         android:checked="false"
-        android:layout_below="@+id/checkBox2"
+        android:layout_below="@+id/checkBox_100"
         android:layout_alignParentLeft="true" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hardcore"
-        android:id="@+id/checkBox4"
+        android:id="@+id/checkBox_Hardcore"
         android:checked="false"
-        android:layout_below="@+id/checkBox3"
+        android:layout_below="@+id/checkBox_Blind"
         android:layout_alignParentLeft="true" />
 
     <TextView
@@ -86,8 +86,8 @@
         android:id="@+id/textView_Name"
         android:paddingLeft="10dp"
         android:layout_below="@id/imageView_Screenshot"
-        android:layout_alignBottom="@+id/checkBox"
-        android:layout_toRightOf="@+id/checkBox"
-        android:layout_toEndOf="@+id/checkBox" />
+        android:layout_alignBottom="@+id/checkBox_Complete"
+        android:layout_toRightOf="@+id/checkBox_Complete"
+        android:layout_toEndOf="@+id/checkBox_Complete" />
 
 </RelativeLayout>
