@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
  */
 public class GameDetailFragment extends Fragment {
     @Bind(R.id.textView_Deck) TextView mTextView_Deck;
+    @Bind(R.id.textView_Name) TextView mTextView_Name;
     @Bind(R.id.imageView_Splash) ImageView mImageView_Splash;
 
 //    private TextView mTextView_Deck;
@@ -53,6 +54,7 @@ public class GameDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_game_detail, container, false);
         ButterKnife.bind(this, view);
 
+        mTextView_Name.setText(mGame.getName());
         mTextView_Deck.setText(mGame.getDeck());
         Picasso.with(getActivity().getApplicationContext()).load(mGame.getImageURL()).into(mImageView_Splash);
 
