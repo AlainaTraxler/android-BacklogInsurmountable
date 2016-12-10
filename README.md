@@ -14,7 +14,7 @@ _An app that allows the tracking of retro games (NES only, at the moment) and wh
 
 ## Known Bugs
 
-_Placeholder is still in place on Gauntlet page. Authentication is in, but is lacking in the feedback department. Be sure to use something that looks like a real email address._
+_Placeholder is still in place on Gauntlet page. Placeholder for screenshots on the new individual game views. Search is working, but directs wrong after the first dozen or so items. A fix is in the works._
 
 ## Support and contact details
 
