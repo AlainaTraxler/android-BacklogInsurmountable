@@ -1,5 +1,6 @@
 package com.example.backloginsurmountable.utils;
 
+import android.graphics.Canvas;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.widget.Toast;
 
 import com.example.backloginsurmountable.adapters.FirebaseGameViewHolder;
 import com.example.backloginsurmountable.models.Game;
+import com.example.backloginsurmountable.ui.BacklogActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -73,19 +75,34 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int i) {
         FirebaseGameViewHolder itemViewHolder = (FirebaseGameViewHolder) viewHolder;
-        Log.v("????", itemViewHolder.getGameHolder().getName());
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("users").child(auth.getCurrentUser().getUid()).child("complete").child(itemViewHolder.getGameHolder().getpushId());
         dbRef.setValue(true);
-        mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
+        Log.v("????", "Changed");
+//        mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
+    }
+
+    @Override
+    public void onChildDraw(Canvas c, RecyclerView recyclerView,
+                            RecyclerView.ViewHolder viewHolder, float dX, float dY,
+                            int actionState, boolean isCurrentlyActive) {
+
+        if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+            float width = (float) viewHolder.itemView.getWidth();
+            float alpha = 1.0f - Math.abs(dX) / width;
+            viewHolder.itemView.setAlpha(alpha);
+            viewHolder.itemView.setTranslationX(dX);
+        } else {
+            super.onChildDraw(c, recyclerView, viewHolder, dX, dY,
+                    actionState, isCurrentlyActive);
+        }
     }
 
     @Override
     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
 
         //  This conditional ensures we only change appearance of active items:
-
         if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
             if (viewHolder instanceof ItemTouchHelperViewHolder) {
 

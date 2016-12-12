@@ -302,9 +302,6 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
 
     @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
-        mItemTouchHelper.startDrag(viewHolder);
+//        mItemTouchHelper.startDrag(viewHolder);
     }
-
-
-
 }

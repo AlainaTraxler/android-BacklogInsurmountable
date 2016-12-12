@@ -85,18 +85,11 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
 
     @Override
     public void onItemSelected() {
-        AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(mContext,
-                R.animator.drag_scale_on);
-        set.setTarget(itemView);
-        set.start();
     }
 
     @Override
     public void onItemClear() {
-        AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(mContext,
-                R.animator.drag_scale_off);
-        set.setTarget(itemView);
-        set.start();
+
     }
 
 }
