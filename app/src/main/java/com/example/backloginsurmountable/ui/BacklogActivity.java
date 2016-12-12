@@ -61,14 +61,17 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
 
     ArrayList<Game> mNESGameList = new ArrayList<Game>();
     int mNumberOfGames;
-    int mRemaining;
-    int mCompleted;
-    String mPercentCompleted;
+    float mRemaining;
+    float mCompleted;
+    float mPercentCompleted;
     String mQuery = "";
 
-    private DatabaseReference mGameListReference;
     private FirebaseGameListAdapter mFirebaseAdapter;
     private ItemTouchHelper mItemTouchHelper;
+
+    private DatabaseReference mUserRef;
+    private DatabaseReference mGamesRef;
+    private DatabaseReference dbRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +83,9 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
+        mUserRef = FirebaseDatabase.getInstance().getReference("users/" + mAuth.getCurrentUser().getUid());
+        mGamesRef = FirebaseDatabase.getInstance().getReference("gamelists/NES");
+        dbRef = FirebaseDatabase.getInstance().getReference();
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -93,9 +99,8 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
             @Override
             public boolean onQueryTextChange(String newText) {
                 if(newText.equals("")){
-                    mGameListReference = FirebaseDatabase.getInstance()
-                            .getReference("games");
-                    setUpFirebaseAdapter(mGameListReference);
+                    mQuery = "";
+                    setUpFirebaseAdapter(filter(mQuery, mToggleButton.isChecked()));
                 }
                 return false;
             }
@@ -111,15 +116,7 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
         mTextView_CompletedHeader.setTypeface(erbosDraco);
         mTextView_RemainingHeader.setTypeface(erbosDraco);
 
-
-        mNumberOfGames = mNESGameList.size();
-        mRemaining = mNumberOfGames;
-        mCompleted = 0;
-        mPercentCompleted = "0%";
-
-        mTextView_Completed.setText(String.valueOf(mCompleted));
-        mTextView_Remaining.setText(String.valueOf(mRemaining));
-        mTextView_PercentCompleted.setText(String.valueOf(mPercentCompleted));
+        updateScoreboard();
 
         mToggleButton.setOnClickListener(this);
     }
@@ -184,6 +181,27 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
             }
         });
         return mUserRef.child("search");
+    }
+
+    private void updateScoreboard(){
+        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mCompleted = dataSnapshot.child("users").child(mAuth.getCurrentUser().getUid()).child("complete").getChildrenCount();
+                float totalGames = dataSnapshot.child("gamelists/NES").getChildrenCount();
+                mRemaining = totalGames - mCompleted;
+                mPercentCompleted = (mCompleted / totalGames) * 100;
+
+                mTextView_Completed.setText(String.valueOf(mCompleted));
+                mTextView_Remaining.setText(String.valueOf(mRemaining));
+                mTextView_PercentCompleted.setText(String.format("%.2f", mPercentCompleted) + "%");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void setUpFirebaseAdapter(DatabaseReference _list) {
