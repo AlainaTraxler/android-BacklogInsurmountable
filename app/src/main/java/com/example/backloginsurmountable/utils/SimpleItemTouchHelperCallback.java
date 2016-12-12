@@ -2,11 +2,20 @@ package com.example.backloginsurmountable.utils;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.example.backloginsurmountable.adapters.FirebaseGameViewHolder;
+import com.example.backloginsurmountable.models.Game;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by Guest on 12/12/16.
  */
 public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
+    private int gamePosition;
     private final ItemTouchHelperAdapter mAdapter;
 
     //  This constructor takes an ItemTouchHelperAdapter parameter. When implemented in
@@ -63,6 +72,12 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int i) {
+        FirebaseGameViewHolder itemViewHolder = (FirebaseGameViewHolder) viewHolder;
+        Log.v("????", itemViewHolder.getGameHolder().getName());
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("users").child(auth.getCurrentUser().getUid()).child("complete").child(itemViewHolder.getGameHolder().getpushId());
+        dbRef.setValue(true);
         mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
     }
 }

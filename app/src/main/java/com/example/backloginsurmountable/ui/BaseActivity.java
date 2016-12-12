@@ -45,11 +45,6 @@ public class BaseActivity extends AppCompatActivity {
             }
         };
 
-        if(mAuth.getCurrentUser() != null){
-
-        }else{
-
-        }
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
 

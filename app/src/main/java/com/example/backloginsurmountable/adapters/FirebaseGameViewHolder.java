@@ -71,4 +71,8 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
             }
         });
     }
+
+    public Game getGameHolder(){
+        return gameHolder;
+    }
 }
