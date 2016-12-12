@@ -21,11 +21,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/listView_NESGameList"
-        android:layout_marginTop="68dp"
-        android:layout_below="@+id/textView_Completed"
+        android:layout_marginTop="-190dp"
+        android:layout_below="@+id/divider"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:paddingTop="10dp"
         android:background="#78ffffff"/>
 
 
@@ -94,7 +93,28 @@
         android:layout_height="wrap_content"
         android:id="@+id/searchView"
         android:layout_below="@id/textView_PercentCompleted"
+        android:layout_toStartOf="@+id/toggleButton"
+        android:layout_toLeftOf="@+id/toggleButton" />
+
+    <ToggleButton
+        android:layout_width="110dp"
+        android:layout_height="wrap_content"
+        android:text="New ToggleButton"
+        android:id="@+id/toggleButton"
+        android:layout_alignBottom="@+id/searchView"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textOff="Remaining"
+        android:textOn="Completed" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/divider"
+        android:src="@drawable/greendivider"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="-60dp"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

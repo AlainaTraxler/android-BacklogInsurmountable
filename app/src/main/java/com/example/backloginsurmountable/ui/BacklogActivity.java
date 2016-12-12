@@ -158,9 +158,10 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
     }
 
     private void setUpFirebaseAdapter(DatabaseReference _list) {
+        Typeface PressStart2P = createFromAsset(getAssets(), "fonts/PressStart2P.ttf");
         mFirebaseAdapter = new FirebaseGameListAdapter
                 (Game.class, R.layout.game_list_item, FirebaseGameViewHolder.class,
-                        _list,this,this) {
+                        _list,this,this, PressStart2P) {
 
             @Override
             protected void populateViewHolder(final FirebaseGameViewHolder viewHolder,
@@ -172,7 +173,8 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                         Game game = dataSnapshot.getValue(Game.class);
-                        viewHolder.bindGame(game);
+                        Typeface PressStart2P = createFromAsset(getAssets(), "fonts/PressStart2P.ttf");
+                        viewHolder.bindGame(game, PressStart2P);
                     }
 
                     @Override

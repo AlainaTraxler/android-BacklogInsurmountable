@@ -1,7 +1,10 @@
 package com.example.backloginsurmountable.adapters;
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.Toast;
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.models.Game;
 import com.example.backloginsurmountable.ui.GameDetailActivity;
+import com.example.backloginsurmountable.utils.ItemTouchHelperViewHolder;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -21,10 +25,12 @@ import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
+import static android.graphics.Typeface.createFromAsset;
+
 /**
  * Created by Guest on 12/9/16.
  */
-public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, ItemTouchHelperViewHolder {
     View mView;
     Context mContext;
     Game gameHolder;
@@ -37,9 +43,10 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
         itemView.setOnClickListener(this);
     }
 
-    public void bindGame(Game game) {
+    public void bindGame(Game game, Typeface PressStart2P) {
         TextView TextView_Name = (TextView) mView.findViewById(R.id.textView_Name);
         TextView_Name.setText(game.getName());
+        TextView_Name.setTypeface(PressStart2P);
         gameHolder = game;
     }
     @Override
@@ -75,4 +82,21 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
     public Game getGameHolder(){
         return gameHolder;
     }
+
+    @Override
+    public void onItemSelected() {
+        AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(mContext,
+                R.animator.drag_scale_on);
+        set.setTarget(itemView);
+        set.start();
+    }
+
+    @Override
+    public void onItemClear() {
+        AnimatorSet set = (AnimatorSet) AnimatorInflater.loadAnimator(mContext,
+                R.animator.drag_scale_off);
+        set.setTarget(itemView);
+        set.start();
+    }
+
 }

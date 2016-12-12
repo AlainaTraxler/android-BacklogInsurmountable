@@ -80,5 +80,23 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
         dbRef.setValue(true);
         mAdapter.onItemDismiss(viewHolder.getAdapterPosition());
     }
+
+    @Override
+    public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+
+        //  This conditional ensures we only change appearance of active items:
+
+        if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
+            if (viewHolder instanceof ItemTouchHelperViewHolder) {
+
+                //  This tells the viewHolder that an item is being moved or dragged:
+
+                ItemTouchHelperViewHolder itemViewHolder = (ItemTouchHelperViewHolder) viewHolder;
+                itemViewHolder.onItemSelected();
+            }
+        }
+        super.onSelectedChanged(viewHolder, actionState);
+    }
+
 }
 

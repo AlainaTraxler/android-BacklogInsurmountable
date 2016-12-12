@@ -31,37 +31,6 @@ public class MyApplication extends Application {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
 
-//        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("gamelists/NES");
-//
-//        dbRef.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                mMasterNESList.add(dataSnapshot.getKey());
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-
-        Log.v("//////", "Triggered");
-
         if(mSharedPreferences.getString("Remember", null) == null){
             FirebaseAuth.getInstance().signOut();
         }

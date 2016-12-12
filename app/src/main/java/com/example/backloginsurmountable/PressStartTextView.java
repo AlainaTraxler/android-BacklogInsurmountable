@@ -25,9 +25,9 @@ public class PressStartTextView extends TextView {
     }
 
     private void init() {
-//        if (!isInEditMode()) {
+        if (!isInEditMode()) {
             Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "PressStart2P.ttf");
             setTypeface(tf);
-//        }
+        }
     }
 }
