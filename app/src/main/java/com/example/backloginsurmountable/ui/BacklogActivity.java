@@ -6,14 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.backloginsurmountable.R;
+import com.example.backloginsurmountable.adapters.FirebaseGameListAdapter;
 import com.example.backloginsurmountable.adapters.FirebaseGameViewHolder;
 import com.example.backloginsurmountable.models.Game;
+import com.example.backloginsurmountable.utils.OnStartDragListener;
+import com.example.backloginsurmountable.utils.SimpleItemTouchHelperCallback;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -32,7 +36,7 @@ import butterknife.ButterKnife;
 
 import static android.graphics.Typeface.createFromAsset;
 
-public class BacklogActivity extends BaseActivity {
+public class BacklogActivity extends BaseActivity implements OnStartDragListener {
     @Bind(R.id.textView_Completed) TextView mTextView_Completed;
     @Bind(R.id.textView_Remaining) TextView mTextView_Remaining;
     @Bind(R.id.textView_PercentCompleted) TextView mTextView_PercentCompleted;
@@ -56,7 +60,8 @@ public class BacklogActivity extends BaseActivity {
     String mPercentCompleted;
 
     private DatabaseReference mGameListReference;
-    private FirebaseRecyclerAdapter mFirebaseAdapter;
+    private FirebaseGameListAdapter mFirebaseAdapter;
+    private ItemTouchHelper mItemTouchHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,9 +157,9 @@ public class BacklogActivity extends BaseActivity {
     }
 
     private void setUpFirebaseAdapter(DatabaseReference _list) {
-        mFirebaseAdapter = new FirebaseRecyclerAdapter<Game, FirebaseGameViewHolder>
+        mFirebaseAdapter = new FirebaseGameListAdapter
                 (Game.class, R.layout.game_list_item, FirebaseGameViewHolder.class,
-                        _list) {
+                        _list,this,this) {
 
             @Override
             protected void populateViewHolder(final FirebaseGameViewHolder viewHolder,
@@ -187,6 +192,10 @@ public class BacklogActivity extends BaseActivity {
         mListView_NESGameList.setHasFixedSize(true);
         mListView_NESGameList.setLayoutManager(new LinearLayoutManager(this));
         mListView_NESGameList.setAdapter(mFirebaseAdapter);
+
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mFirebaseAdapter);
+        mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(mListView_NESGameList);
     }
 
 
@@ -234,4 +243,16 @@ public class BacklogActivity extends BaseActivity {
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mFirebaseAdapter.cleanup();
+    }
+
+    @Override
+    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+        mItemTouchHelper.startDrag(viewHolder);
+    }
+
 }
