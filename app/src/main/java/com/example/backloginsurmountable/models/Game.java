@@ -14,6 +14,7 @@ public class Game {
     private String pushId;
     private String giantBombId;
     private String system = "NES";
+    private int relativePosition;
 
     public Game() {}
 
@@ -31,7 +32,9 @@ public class Game {
     public String getImageURL(){ return imageURL; }
     public String getpushId(){ return pushId; }
     public String getGiantBombId(){ return giantBombId; }
+    public int getRelativePosition(){ return relativePosition; }
 
     public void setPushId(String _pushId){ pushId = _pushId; }
     public void setName(String _name){ name = _name; }
+    public void setRelativePosition(int _relativePosition){ relativePosition = _relativePosition; }
 }

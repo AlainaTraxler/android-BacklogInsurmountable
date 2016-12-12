@@ -78,7 +78,6 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
 
             @Override
             public boolean onQueryTextSubmit(final String query) {
-                Toast.makeText(BacklogActivity.this, "Submitted", Toast.LENGTH_SHORT).show();
 
                 final DatabaseReference mGames = FirebaseDatabase.getInstance()
                         .getReference("games");
@@ -91,6 +90,7 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
                 mGames.addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
                         Game game = dataSnapshot.getValue(Game.class);
                         if(game.getName().toLowerCase().contains(query.toLowerCase())){
                             mSearch.child(game.getpushId()).setValue(game);

@@ -3,8 +3,10 @@ package com.example.backloginsurmountable.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.models.Game;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
 public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
     View mView;
     Context mContext;
+    Game gameHolder;
 
     public FirebaseGameViewHolder(View itemView) {
         super(itemView);
@@ -37,10 +40,12 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
     public void bindGame(Game game) {
         TextView TextView_Name = (TextView) mView.findViewById(R.id.textView_Name);
         TextView_Name.setText(game.getName());
+        gameHolder = game;
     }
     @Override
     public void onClick(View view) {
         final ArrayList<Game> games = new ArrayList<>();
+        final ArrayList<String> indexArray = new ArrayList<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("games");
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -49,10 +54,12 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     games.add(snapshot.getValue(Game.class));
+                    indexArray.add(snapshot.getKey());
                 }
 
-                int itemPosition = getLayoutPosition();
+                int itemPosition = indexArray.indexOf(gameHolder.getpushId());
                 Intent intent = new Intent(mContext, GameDetailActivity.class);
+
                 intent.putExtra("position", itemPosition);
                 intent.putExtra("games", Parcels.wrap(games));
 
