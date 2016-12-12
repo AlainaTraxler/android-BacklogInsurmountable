@@ -9,9 +9,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.adapters.FirebaseGameListAdapter;
@@ -29,6 +31,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -37,7 +40,7 @@ import butterknife.ButterKnife;
 
 import static android.graphics.Typeface.createFromAsset;
 
-public class BacklogActivity extends BaseActivity implements OnStartDragListener {
+public class BacklogActivity extends BaseActivity implements OnStartDragListener, View.OnClickListener {
     @Bind(R.id.textView_Completed) TextView mTextView_Completed;
     @Bind(R.id.textView_Remaining) TextView mTextView_Remaining;
     @Bind(R.id.textView_PercentCompleted) TextView mTextView_PercentCompleted;
@@ -45,6 +48,8 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
     @Bind(R.id.textView_RemainingHeader) TextView mTextView_RemainingHeader;
     @Bind(R.id.listView_NESGameList) RecyclerView mListView_NESGameList;
     @Bind(R.id.searchView) SearchView mSearchView;
+    @Bind(R.id.toggleButton) ToggleButton mToggleButton;
+
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -59,6 +64,7 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
     int mRemaining;
     int mCompleted;
     String mPercentCompleted;
+    String mQuery = "";
 
     private DatabaseReference mGameListReference;
     private FirebaseGameListAdapter mFirebaseAdapter;
@@ -79,46 +85,8 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
 
             @Override
             public boolean onQueryTextSubmit(final String query) {
-
-                final DatabaseReference mGames = FirebaseDatabase.getInstance()
-                        .getReference("games");
-
-                final DatabaseReference mSearch = FirebaseDatabase.getInstance()
-                        .getReference("users").child(mAuth.getCurrentUser().getUid()).child("search");
-
-                mSearch.removeValue();
-
-                mGames.addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                        Game game = dataSnapshot.getValue(Game.class);
-                        if(game.getName().toLowerCase().contains(query.toLowerCase())){
-                            mSearch.child(game.getpushId()).setValue(game);
-                        }
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                    }
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-                setUpFirebaseAdapter(mSearch);
+                mQuery = query;
+                setUpFirebaseAdapter(filter(mQuery, mToggleButton.isChecked()));
                 return false;
             }
 
@@ -134,10 +102,7 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
 
         });
 
-
-        mGameListReference = FirebaseDatabase.getInstance()
-                .getReference("games");
-        setUpFirebaseAdapter(mGameListReference);
+        setUpFirebaseAdapter(filter(mQuery, mToggleButton.isChecked()));
 
         Typeface erbosDraco = createFromAsset(getAssets(), "fonts/erbosdraco_nova_open_nbp.ttf");
         mTextView_Completed.setTypeface(erbosDraco);
@@ -155,6 +120,70 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
         mTextView_Completed.setText(String.valueOf(mCompleted));
         mTextView_Remaining.setText(String.valueOf(mRemaining));
         mTextView_PercentCompleted.setText(String.valueOf(mPercentCompleted));
+
+        mToggleButton.setOnClickListener(this);
+    }
+
+    public void onClick(View v){
+        filter(mQuery, mToggleButton.isChecked());
+    }
+
+    private DatabaseReference filter(final String query, final Boolean isChecked){
+        final DatabaseReference mGames = FirebaseDatabase.getInstance()
+                .getReference("games");
+
+        final DatabaseReference mUserRef = FirebaseDatabase.getInstance()
+                .getReference("users").child(mAuth.getCurrentUser().getUid());
+
+        mUserRef.child("search").removeValue();
+
+        mGames.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                final Game game = dataSnapshot.getValue(Game.class);
+                if(game.getName().toLowerCase().contains(query.toLowerCase())){
+//                    final
+                    mUserRef.child("complete").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Boolean isThere = dataSnapshot.hasChild(game.getpushId());
+
+                            if(isChecked && isThere) {
+                                mUserRef.child("search").child(game.getpushId()).setValue(game);
+                            }else if(!isChecked && !isThere){
+                                mUserRef.child("search").child(game.getpushId()).setValue(game);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        return mUserRef.child("search");
     }
 
     private void setUpFirebaseAdapter(DatabaseReference _list) {
