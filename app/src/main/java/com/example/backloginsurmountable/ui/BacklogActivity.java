@@ -85,7 +85,7 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
 
         dbRef = FirebaseDatabase.getInstance().getReference();
 
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
             public boolean onQueryTextSubmit(final String query) {
@@ -98,7 +98,10 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
             public boolean onQueryTextChange(String newText) {
                 if(newText.equals("")){
                     mQuery = "";
-                    setUpFirebaseAdapter(filter(mQuery, mToggleButton.isChecked()));
+                    if(mToggleButton.isChecked()){
+                        setUpFirebaseAdapter(dbCurrentUser.child("complete"));
+                    }else setUpFirebaseAdapter(dbCurrentUser.child("remaining"));
+
                 }
                 return false;
             }
