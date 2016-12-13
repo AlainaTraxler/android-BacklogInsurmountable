@@ -71,8 +71,6 @@ public class GameDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_game_detail, container, false);
         ButterKnife.bind(this, view);
 
-//        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid());
-
         dbCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

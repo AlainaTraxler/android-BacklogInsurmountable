@@ -14,10 +14,7 @@ import com.google.firebase.auth.FirebaseUser;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ProfileActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
-    private FirebaseUser user;
-
+public class ProfileActivity extends BaseActivity {
     @Bind(R.id.textView_Username) TextView mTextView_Username;
 
     @Override
@@ -26,11 +23,6 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
-        mAuth = FirebaseAuth.getInstance();
-        user = mAuth.getCurrentUser();
-
-        Intent intent = getIntent();
-        String username = intent.getStringExtra("username");
-        mTextView_Username.setText(user.getEmail());
+        mTextView_Username.setText(mAuth.getCurrentUser().getEmail());
     }
 }

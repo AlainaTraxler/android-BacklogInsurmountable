@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -73,12 +74,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }else if(v == mButton_Gauntlet){
             Intent intent = new Intent(MainActivity.this, GauntletActivity.class);
             startActivity(intent);
-        }else if(v == mButton_SignUp && !(mIsLoggedIn)){
+        }else if(v == mButton_SignUp && mAuth.getCurrentUser() == null){
             Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
             startActivity(intent);
         }else{
             Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-            intent.putExtra("username", mUsername);
             startActivity(intent);
         }
     }
