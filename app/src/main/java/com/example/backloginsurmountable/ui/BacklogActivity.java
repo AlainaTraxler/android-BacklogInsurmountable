@@ -2,6 +2,7 @@ package com.example.backloginsurmountable.ui;
 
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -113,6 +114,7 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
 
         setUpFirebaseAdapter(filter(mQuery, mToggleButton.isChecked()));
 
+        //Updates scoreboard. On stable release, this call will be replaced with a constant for the total number of games, since it will not be changing.
         dbGameLists.child("NES").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -125,7 +127,7 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
 
             }
         });
-//        updateScoreboard();
+
         mToggleButton.setOnClickListener(this);
     }
 
@@ -134,38 +136,34 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
     }
 
     private DatabaseReference filter(final String query, final Boolean isChecked){
-        final DatabaseReference mGames = FirebaseDatabase.getInstance()
-                .getReference("games");
 
-        final DatabaseReference mUserRef = FirebaseDatabase.getInstance()
-                .getReference("users").child(mAuth.getCurrentUser().getUid());
+        dbCurrentUser.child("search").removeValue();
 
-        mUserRef.child("search").removeValue();
+        DatabaseReference dbSearch = dbCurrentUser.child("search");
+        DatabaseReference dbSearchArea;
 
-        mGames.addChildEventListener(new ChildEventListener() {
+        if(isChecked){
+            dbSearchArea = dbCurrentUser.child("complete");
+        }else dbSearchArea = dbCurrentUser.child("remaining");
+
+        dbSearchArea.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                final Game game = dataSnapshot.getValue(Game.class);
-                if(game.getName().toLowerCase().contains(query.toLowerCase())){
-//                    final
-                    mUserRef.child("complete").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            Boolean isThere = dataSnapshot.hasChild(game.getpushId());
-
-                            if(isChecked && isThere) {
-                                mUserRef.child("search").child(game.getpushId()).setValue(game);
-                            }else if(!isChecked && !isThere){
-                                mUserRef.child("search").child(game.getpushId()).setValue(game);
-                            }
+                Query queryRef = dbGames.child(dataSnapshot.getKey());
+                queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Game game = dataSnapshot.getValue(Game.class);
+                        if(game.getName().toLowerCase().contains(query.toLowerCase())){
+                            dbCurrentUser.child("search").child(game.getpushId()).setValue(game);
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
-                        }
-                    });
-                }
+                    }
+                });
             }
 
             @Override
@@ -188,7 +186,7 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
 
             }
         });
-        return mUserRef.child("search");
+        return dbSearch;
     }
 
     private void updateScoreboard(){

@@ -107,6 +107,9 @@ public class GameDetailFragment extends Fragment {
                     dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
                 }else{
                     dbCurrentUser.child("complete").child(mGame.getpushId()).removeValue();
+                    if(!checkIfOtherBoxesChecked()){
+                        dbCurrentUser.child("remaining").child(mGame.getpushId()).setValue(true);
+                    }
                 }
 
             }
@@ -122,6 +125,9 @@ public class GameDetailFragment extends Fragment {
                     dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
                 }else{
                     dbCurrentUser.child("100").child(mGame.getpushId()).removeValue();
+                    if(!checkIfOtherBoxesChecked()){
+                        dbCurrentUser.child("remaining").child(mGame.getpushId()).setValue(true);
+                    }
                 }
             }
         });
@@ -136,6 +142,9 @@ public class GameDetailFragment extends Fragment {
                     dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
                 }else{
                     dbCurrentUser.child("blind").child(mGame.getpushId()).removeValue();
+                    if(!checkIfOtherBoxesChecked()){
+                        dbCurrentUser.child("remaining").child(mGame.getpushId()).setValue(true);
+                    }
                 }
 
             }
@@ -151,6 +160,9 @@ public class GameDetailFragment extends Fragment {
                     dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
                 }else{
                     dbCurrentUser.child("hardcore").child(mGame.getpushId()).removeValue();
+                    if(!checkIfOtherBoxesChecked()){
+                        dbCurrentUser.child("remaining").child(mGame.getpushId()).setValue(true);
+                    }
                 }
 
             }
@@ -161,5 +173,11 @@ public class GameDetailFragment extends Fragment {
         Picasso.with(getActivity().getApplicationContext()).load(mGame.getImageURL()).into(mImageView_Splash);
 
         return view;
+    }
+
+    public Boolean checkIfOtherBoxesChecked(){
+        if(mCheckBox_Complete.isChecked() || mCheckBox_100.isChecked() || mCheckBox_Blind.isChecked() || mCheckBox_Hardcore.isChecked()){
+            return true;
+        }else return false;
     }
 }
