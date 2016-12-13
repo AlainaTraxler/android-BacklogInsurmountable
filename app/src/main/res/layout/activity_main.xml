@@ -3,20 +3,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.example.backloginsurmountable.ui.MainActivity"
     android:background="#000000">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/imageView"
-        android:src="@drawable/nes_splash_green"
+        android:src="@drawable/nes_splash_white"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:scaleType="centerCrop"
-        android:foregroundTintMode="add"
-        android:foregroundTint="#383838" />
+        android:scaleType="centerCrop" />
 
     <Button
         android:layout_width="wrap_content"
@@ -45,26 +53,14 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gauntlet"
-        android:id="@+id/button_Gauntlet"
-        android:layout_above="@+id/button_SignUp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:background="#8c8c8c" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:text="Backlog"
         android:id="@+id/button_Backlog"
-        android:layout_above="@+id/button_Gauntlet"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:background="#d9d9d9" />
+        android:background="#8c8c8c"
+        android:layout_above="@+id/button_SignUp" />
 
     <TextView
         android:layout_width="wrap_content"

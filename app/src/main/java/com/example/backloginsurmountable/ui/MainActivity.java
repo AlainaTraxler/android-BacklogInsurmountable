@@ -1,9 +1,13 @@
 package com.example.backloginsurmountable.ui;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,7 +33,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.textView_Insurmountable) TextView mTextView_Insurmountable;
 
     @Bind(R.id.button_Backlog) Button mButton_Backlog;
-    @Bind(R.id.button_Gauntlet) Button mButton_Gauntlet;
     @Bind(R.id.button_SignUp) Button mButton_SignUp;
     @Bind(R.id.button_Profile) Button mButton_Profile;
 
@@ -51,18 +54,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mTextView_Insurmountable.setTypeface(nintender);
 
         mButton_Backlog.setOnClickListener(this);
-        mButton_Gauntlet.setOnClickListener(this);
         mButton_SignUp.setOnClickListener(this);
 
         if(mAuth.getCurrentUser() != null){
             mButton_Backlog.setVisibility(View.VISIBLE);
-            mButton_Gauntlet.setVisibility(View.VISIBLE);
             mButton_SignUp.setText("Profile");
         }else {
             mButton_Backlog.setVisibility(View.INVISIBLE);
-            mButton_Gauntlet.setVisibility(View.INVISIBLE);
             mButton_SignUp.setText("Sign Up / Log In");
         }
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#d9d9d9"));
+        myToolbar.setBackgroundDrawable(colorDrawable);
+
         setTitle("");
     }
 
@@ -70,9 +76,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         if(v == mButton_Backlog){
             Intent intent = new Intent(MainActivity.this, BacklogActivity.class);
-            startActivity(intent);
-        }else if(v == mButton_Gauntlet){
-            Intent intent = new Intent(MainActivity.this, GauntletActivity.class);
             startActivity(intent);
         }else if(v == mButton_SignUp && mAuth.getCurrentUser() == null){
             Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
