@@ -26,9 +26,10 @@ public class BaseActivity extends AppCompatActivity {
     public SharedPreferences.Editor mEditor;
 
     DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference dbGameLists = FirebaseDatabase.getInstance().getReference("gamelists");
-    DatabaseReference dbGames = FirebaseDatabase.getInstance().getReference("games");
-    DatabaseReference dbUsers = FirebaseDatabase.getInstance().getReference("users");
+    DatabaseReference dbGameLists = db.child("gamelists");
+    DatabaseReference dbGames = db.child("games");
+    DatabaseReference dbUsers = db.child("users");
+    DatabaseReference dbCurrentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,8 @@ public class BaseActivity extends AppCompatActivity {
                 }
             }
         };
+
+        dbCurrentUser = dbUsers.child(mAuth.getCurrentUser().getUid());
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();

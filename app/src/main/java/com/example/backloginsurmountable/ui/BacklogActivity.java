@@ -61,17 +61,15 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
     public static final String TAG = BacklogActivity.class.getSimpleName();
 
     ArrayList<Game> mNESGameList = new ArrayList<Game>();
-    int mNumberOfGames;
-    float mRemaining;
-    float mCompleted;
-    float mPercentCompleted;
+    float mRemaining = 0;
+    float mCompleted = 0;
+    float mPercentCompleted = 0;
+    float mTotalGames = 0;
     String mQuery = "";
 
     private FirebaseGameListAdapter mFirebaseAdapter;
     private ItemTouchHelper mItemTouchHelper;
 
-    private DatabaseReference mUserRef;
-    private DatabaseReference mGamesRef;
     private DatabaseReference dbRef;
 
     @Override
@@ -84,8 +82,6 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 
-        mUserRef = FirebaseDatabase.getInstance().getReference("users/" + mAuth.getCurrentUser().getUid());
-        mGamesRef = FirebaseDatabase.getInstance().getReference("gamelists/NES");
         dbRef = FirebaseDatabase.getInstance().getReference();
 
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -117,7 +113,19 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
 
         setUpFirebaseAdapter(filter(mQuery, mToggleButton.isChecked()));
 
-        updateScoreboard();
+        dbGameLists.child("NES").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mTotalGames = dataSnapshot.getChildrenCount();
+                updateScoreboard();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+//        updateScoreboard();
         mToggleButton.setOnClickListener(this);
     }
 
@@ -184,16 +192,15 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
     }
 
     private void updateScoreboard(){
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        dbCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                mCompleted = dataSnapshot.child("users").child(mAuth.getCurrentUser().getUid()).child("complete").getChildrenCount();
-                float totalGames = dataSnapshot.child("gamelists/NES").getChildrenCount();
-                mRemaining = totalGames - mCompleted;
-                mPercentCompleted = (mCompleted / totalGames) * 100;
+                mCompleted = dataSnapshot.child("complete").getChildrenCount();
+                mRemaining = dataSnapshot.child("remaining").getChildrenCount();
+                mPercentCompleted = (mCompleted / mTotalGames) * 100;
 
-                mTextView_Completed.setText(String.valueOf(mCompleted));
-                mTextView_Remaining.setText(String.valueOf(mRemaining));
+                mTextView_Completed.setText(String.format("%.0f", mCompleted));
+                mTextView_Remaining.setText(String.format("%.0f", mRemaining));
                 mTextView_PercentCompleted.setText(String.format("%.2f", mPercentCompleted) + "%");
             }
 
