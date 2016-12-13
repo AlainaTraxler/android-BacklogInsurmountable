@@ -39,7 +39,8 @@ public class GameDetailFragment extends Fragment {
     @Bind(R.id.checkBox_Blind) CheckBox mCheckBox_Blind;
     @Bind(R.id.checkBox_Hardcore) CheckBox mCheckBox_Hardcore;
 
-    public FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    public FirebaseAuth mAuth;
+    private DatabaseReference dbCurrentUser;
 
     private Game mGame;
 
@@ -60,6 +61,9 @@ public class GameDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mGame = Parcels.unwrap(getArguments().getParcelable("game"));
+
+        mAuth = FirebaseAuth.getInstance();
+        dbCurrentUser = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid());
     }
 
     @Override
@@ -67,9 +71,9 @@ public class GameDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_game_detail, container, false);
         ButterKnife.bind(this, view);
 
-        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid());
+//        DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid());
 
-        dbRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        dbCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.hasChild("complete/" + mGame.getpushId())){
@@ -99,9 +103,10 @@ public class GameDetailFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if ( isChecked ) {
-                    FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid()).child("complete").child(mGame.getpushId()).setValue(true);
+                    dbCurrentUser.child("complete").child(mGame.getpushId()).setValue(true);
+                    dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
                 }else{
-                    FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid()).child("complete").child(mGame.getpushId()).removeValue();
+                    dbCurrentUser.child("complete").child(mGame.getpushId()).removeValue();
                 }
 
             }
@@ -113,9 +118,10 @@ public class GameDetailFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if ( isChecked ) {
-                    FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid()).child("100").child(mGame.getpushId()).setValue(true);
+                    dbCurrentUser.child("100").child(mGame.getpushId()).setValue(true);
+                    dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
                 }else{
-                    FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid()).child("100").child(mGame.getpushId()).removeValue();
+                    dbCurrentUser.child("100").child(mGame.getpushId()).removeValue();
                 }
             }
         });
@@ -126,9 +132,10 @@ public class GameDetailFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if ( isChecked ) {
-                    FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid()).child("blind").child(mGame.getpushId()).setValue(true);
+                    dbCurrentUser.child("blind").child(mGame.getpushId()).setValue(true);
+                    dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
                 }else{
-                    FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid()).child("blind").child(mGame.getpushId()).removeValue();
+                    dbCurrentUser.child("blind").child(mGame.getpushId()).removeValue();
                 }
 
             }
@@ -140,9 +147,10 @@ public class GameDetailFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if ( isChecked ) {
-                    FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid()).child("hardcore").child(mGame.getpushId()).setValue(true);
+                    dbCurrentUser.child("hardcore").child(mGame.getpushId()).setValue(true);
+                    dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
                 }else{
-                    FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid()).child("hardcore").child(mGame.getpushId()).removeValue();
+                    dbCurrentUser.child("hardcore").child(mGame.getpushId()).removeValue();
                 }
 
             }
