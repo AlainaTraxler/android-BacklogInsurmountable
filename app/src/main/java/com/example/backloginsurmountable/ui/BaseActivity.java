@@ -53,7 +53,12 @@ public class BaseActivity extends AppCompatActivity {
             }
         };
 
-        dbCurrentUser = dbUsers.child(mAuth.getCurrentUser().getUid());
+        FirebaseUser user = mAuth.getCurrentUser();
+
+        if(user != null){
+            dbCurrentUser = dbUsers.child(mAuth.getCurrentUser().getUid());
+        }
+
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();

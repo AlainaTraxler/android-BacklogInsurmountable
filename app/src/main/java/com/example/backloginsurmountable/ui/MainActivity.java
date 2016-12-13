@@ -36,6 +36,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.button_SignUp) Button mButton_SignUp;
     @Bind(R.id.button_Profile) Button mButton_Profile;
 
+    FirebaseUser mUser = null;
+
     Boolean mIsLoggedIn;
     String mUsername;
 
@@ -56,7 +58,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mButton_Backlog.setOnClickListener(this);
         mButton_SignUp.setOnClickListener(this);
 
-        if(mAuth.getCurrentUser() != null){
+        mUser = mAuth.getCurrentUser();
+
+        if(mUser != null){
             mButton_Backlog.setVisibility(View.VISIBLE);
             mButton_SignUp.setText("Profile");
         }else {
@@ -77,7 +81,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if(v == mButton_Backlog){
             Intent intent = new Intent(MainActivity.this, BacklogActivity.class);
             startActivity(intent);
-        }else if(v == mButton_SignUp && mAuth.getCurrentUser() == null){
+        }else if(v == mButton_SignUp && mUser == null){
             Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
             startActivity(intent);
         }else{

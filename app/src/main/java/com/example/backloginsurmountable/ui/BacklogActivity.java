@@ -254,9 +254,6 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mFirebaseAdapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(mListView_NESGameList);
-        Toast.makeText(BacklogActivity.this, "Attached", Toast.LENGTH_SHORT).show();
-
-
     }
 
 
