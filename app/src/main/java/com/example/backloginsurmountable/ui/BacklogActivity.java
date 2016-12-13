@@ -145,8 +145,10 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
                 }else{
                     if(isChecked){
                         mItemTouchHelper.attachToRecyclerView(null);
+                        filter(mQuery, mToggleButton.isChecked());
                     }else{
                         mItemTouchHelper.attachToRecyclerView(mListView_NESGameList);
+                        filter(mQuery, mToggleButton.isChecked());
                     }
                 }
 
