@@ -98,9 +98,10 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
             public boolean onQueryTextChange(String newText) {
                 if(newText.equals("")){
                     mQuery = "";
-                    if(mToggleButton.isChecked()){
-                        setUpFirebaseAdapter(dbCurrentUser.child("complete"));
-                    }else setUpFirebaseAdapter(dbCurrentUser.child("remaining"));
+                    setUpFirebaseAdapter(filter(mQuery, mToggleButton.isChecked()));
+//                    if(mToggleButton.isChecked()){
+//                        setUpFirebaseAdapter(dbCurrentUser.child("complete"));
+//                    }else setUpFirebaseAdapter(dbCurrentUser.child("remaining"));
 
                 }
                 return false;
@@ -115,6 +116,11 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
         mTextView_CompletedHeader.setTypeface(erbosDraco);
         mTextView_RemainingHeader.setTypeface(erbosDraco);
 
+//        if(mQuery.equals("")){
+//            if(mToggleButton.isChecked()){
+//                setUpFirebaseAdapter(dbCurrentUser.child("complete"));
+//            }else setUpFirebaseAdapter(dbCurrentUser.child("remaining"));
+//        }else setUpFirebaseAdapter(filter(mQuery, mToggleButton.isChecked()));
         setUpFirebaseAdapter(filter(mQuery, mToggleButton.isChecked()));
 
         //Updates scoreboard. On stable release, this call will be replaced with a constant for the total number of games, since it will not be changing.
