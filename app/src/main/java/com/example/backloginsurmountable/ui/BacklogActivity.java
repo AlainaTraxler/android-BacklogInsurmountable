@@ -20,6 +20,7 @@ import com.example.backloginsurmountable.adapters.FirebaseGameListAdapter;
 import com.example.backloginsurmountable.adapters.FirebaseGameViewHolder;
 import com.example.backloginsurmountable.models.Game;
 import com.example.backloginsurmountable.utils.OnStartDragListener;
+import com.example.backloginsurmountable.utils.OnSwipeTouchListener;
 import com.example.backloginsurmountable.utils.SimpleItemTouchHelperCallback;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.appindexing.Action;
@@ -107,8 +108,6 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
 
         });
 
-        setUpFirebaseAdapter(filter(mQuery, mToggleButton.isChecked()));
-
         Typeface erbosDraco = createFromAsset(getAssets(), "fonts/erbosdraco_nova_open_nbp.ttf");
         mTextView_Completed.setTypeface(erbosDraco);
         mTextView_Remaining.setTypeface(erbosDraco);
@@ -116,8 +115,9 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
         mTextView_CompletedHeader.setTypeface(erbosDraco);
         mTextView_RemainingHeader.setTypeface(erbosDraco);
 
-        updateScoreboard();
+        setUpFirebaseAdapter(filter(mQuery, mToggleButton.isChecked()));
 
+        updateScoreboard();
         mToggleButton.setOnClickListener(this);
     }
 
