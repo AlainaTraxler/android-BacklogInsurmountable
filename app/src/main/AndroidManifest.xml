@@ -32,7 +32,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".ui.SignUpActivity" />
-        <activity android:name=".ui.GameDetailActivity" />
+        <activity android:name=".ui.GameDetailActivity"
+            android:noHistory="true"/>
         <activity android:name=".ui.InfoActivity" />
         <activity android:name=".ui.BaseActivity"></activity>
     </application>
