@@ -23,7 +23,28 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/textView_Username"
+        android:paddingTop="10dp"
         android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="NES"
+        android:id="@+id/textView_NES"
+        android:paddingTop="20dp"
+        android:layout_below="@+id/textView_Username"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text=""
+        android:id="@+id/textView_NESvs"
+        android:paddingTop="10dp"
+        android:layout_below="@+id/textView_NES"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

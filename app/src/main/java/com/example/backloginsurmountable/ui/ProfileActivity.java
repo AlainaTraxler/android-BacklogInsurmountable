@@ -1,6 +1,7 @@
 package com.example.backloginsurmountable.ui;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
@@ -10,12 +11,20 @@ import android.widget.Toast;
 import com.example.backloginsurmountable.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+import static android.graphics.Typeface.createFromAsset;
+
 public class ProfileActivity extends BaseActivity {
     @Bind(R.id.textView_Username) TextView mTextView_Username;
+    @Bind(R.id.textView_NES) TextView mTextView_NES;
+    @Bind(R.id.textView_NESvs) TextView mTextView_NESvs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +32,40 @@ public class ProfileActivity extends BaseActivity {
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
+        final Typeface PressStart2P = createFromAsset(getAssets(), "fonts/PressStart2P.ttf");
+        final Typeface nintender = createFromAsset(getAssets(), "fonts/Nintender.ttf");
+
+        dbGameLists.child("NES").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final float totalNESGames = dataSnapshot.getChildrenCount();
+                dbCurrentUser.child("complete").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        float completed = 0;
+                        completed = dataSnapshot.getChildrenCount();
+                        float percentCompleted = (completed / totalNESGames) * 100;
+
+                        mTextView_NESvs.setTypeface(PressStart2P);
+                        mTextView_NESvs.setText(String.format("%.0f", completed) + "/" + String.format("%.0f", totalNESGames));
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mTextView_NES.setTypeface(nintender);
+
+        mTextView_Username.setTypeface(PressStart2P);
         mTextView_Username.setText(mAuth.getCurrentUser().getEmail());
     }
 }
