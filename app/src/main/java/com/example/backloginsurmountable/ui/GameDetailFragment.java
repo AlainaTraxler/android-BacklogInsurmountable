@@ -107,9 +107,10 @@ public class GameDetailFragment extends Fragment {
                     dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
                 }else{
                     dbCurrentUser.child("complete").child(mGame.getpushId()).removeValue();
-                    if(!checkIfOtherBoxesChecked()){
-                        dbCurrentUser.child("remaining").child(mGame.getpushId()).setValue(true);
-                    }
+                    mCheckBox_Hardcore.setChecked(false);
+                    mCheckBox_100.setChecked(false);
+                    mCheckBox_Blind.setChecked(false);
+                    checkBoxCleanup();
                 }
 
             }
@@ -125,9 +126,7 @@ public class GameDetailFragment extends Fragment {
                     dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
                 }else{
                     dbCurrentUser.child("100").child(mGame.getpushId()).removeValue();
-                    if(!checkIfOtherBoxesChecked()){
-                        dbCurrentUser.child("remaining").child(mGame.getpushId()).setValue(true);
-                    }
+                    checkBoxCleanup();
                 }
             }
         });
@@ -142,9 +141,7 @@ public class GameDetailFragment extends Fragment {
                     dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
                 }else{
                     dbCurrentUser.child("blind").child(mGame.getpushId()).removeValue();
-                    if(!checkIfOtherBoxesChecked()){
-                        dbCurrentUser.child("remaining").child(mGame.getpushId()).setValue(true);
-                    }
+                    checkBoxCleanup();
                 }
 
             }
@@ -160,9 +157,7 @@ public class GameDetailFragment extends Fragment {
                     dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
                 }else{
                     dbCurrentUser.child("hardcore").child(mGame.getpushId()).removeValue();
-                    if(!checkIfOtherBoxesChecked()){
-                        dbCurrentUser.child("remaining").child(mGame.getpushId()).setValue(true);
-                    }
+                    checkBoxCleanup();
                 }
 
             }
@@ -179,5 +174,11 @@ public class GameDetailFragment extends Fragment {
         if(mCheckBox_Complete.isChecked() || mCheckBox_100.isChecked() || mCheckBox_Blind.isChecked() || mCheckBox_Hardcore.isChecked()){
             return true;
         }else return false;
+    }
+
+    public void checkBoxCleanup(){
+        if(!mCheckBox_Complete.isChecked() && !mCheckBox_100.isChecked() && !mCheckBox_Blind.isChecked() && !mCheckBox_Hardcore.isChecked()){
+            dbCurrentUser.child("remaining").child(mGame.getpushId()).setValue(true);
+        }
     }
 }
