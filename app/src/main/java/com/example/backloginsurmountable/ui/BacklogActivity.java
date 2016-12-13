@@ -227,29 +227,8 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
             @Override
             protected void populateViewHolder(final FirebaseGameViewHolder viewHolder,
                                               Game model, int position) {
-                String key = this.getRef(position).getKey();
-                Query queryRef = FirebaseDatabase.getInstance().getReference("games").orderByKey().equalTo(key);
-                //--------------
-                queryRef.addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                        Game game = dataSnapshot.getValue(Game.class);
-                        Typeface PressStart2P = createFromAsset(getAssets(), "fonts/PressStart2P.ttf");
-                        viewHolder.bindGame(game, PressStart2P);
-                    }
-
-                    @Override
-                    public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
-
-                    @Override
-                    public void onChildRemoved(DataSnapshot dataSnapshot) {}
-
-                    @Override
-                    public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {}
-                });
+                Typeface PressStart2P = createFromAsset(getAssets(), "fonts/PressStart2P.ttf");
+                viewHolder.bindGame(model, PressStart2P);
             }
         };
 
