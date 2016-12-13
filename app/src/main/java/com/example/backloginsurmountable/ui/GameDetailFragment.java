@@ -124,6 +124,7 @@ public class GameDetailFragment extends Fragment {
                 if ( isChecked ) {
                     dbCurrentUser.child("100").child(mGame.getpushId()).setValue(true);
                     dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
+                    mCheckBox_Complete.setChecked(true);
                 }else{
                     dbCurrentUser.child("100").child(mGame.getpushId()).removeValue();
                     checkBoxCleanup();
@@ -139,6 +140,7 @@ public class GameDetailFragment extends Fragment {
                 if ( isChecked ) {
                     dbCurrentUser.child("blind").child(mGame.getpushId()).setValue(true);
                     dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
+                    mCheckBox_Complete.setChecked(true);
                 }else{
                     dbCurrentUser.child("blind").child(mGame.getpushId()).removeValue();
                     checkBoxCleanup();
@@ -155,6 +157,7 @@ public class GameDetailFragment extends Fragment {
                 if ( isChecked ) {
                     dbCurrentUser.child("hardcore").child(mGame.getpushId()).setValue(true);
                     dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
+                    mCheckBox_Complete.setChecked(true);
                 }else{
                     dbCurrentUser.child("hardcore").child(mGame.getpushId()).removeValue();
                     checkBoxCleanup();
