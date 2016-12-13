@@ -11,6 +11,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +43,7 @@ import butterknife.ButterKnife;
 
 import static android.graphics.Typeface.createFromAsset;
 
-public class BacklogActivity extends BaseActivity implements OnStartDragListener, View.OnClickListener {
+public class BacklogActivity extends BaseActivity implements OnStartDragListener {
     @Bind(R.id.textView_Completed) TextView mTextView_Completed;
     @Bind(R.id.textView_Remaining) TextView mTextView_Remaining;
     @Bind(R.id.textView_PercentCompleted) TextView mTextView_PercentCompleted;
@@ -69,7 +70,7 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
     String mQuery = "";
 
     private FirebaseGameListAdapter mFirebaseAdapter;
-    private ItemTouchHelper mItemTouchHelper;
+    private ItemTouchHelper mItemTouchHelper = null;
 
     private DatabaseReference dbRef;
 
@@ -136,13 +137,27 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
 
             }
         });
+        mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(mItemTouchHelper == null){
+                    filter(mQuery, mToggleButton.isChecked());
+                }else{
+                    if(isChecked){
+                        mItemTouchHelper.attachToRecyclerView(null);
+                    }else{
+                        mItemTouchHelper.attachToRecyclerView(mListView_NESGameList);
+                    }
+                }
 
-        mToggleButton.setOnClickListener(this);
+            }
+        });
     }
 
-    public void onClick(View v){
-        filter(mQuery, mToggleButton.isChecked());
-    }
+//    public void onClick(View v){
+//        mItemTouchHelper.attachToRecyclerView(null);
+//        filter(mQuery, mToggleButton.isChecked());
+//    }
 
     private DatabaseReference filter(final String query, final Boolean isChecked){
 
@@ -238,10 +253,10 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mFirebaseAdapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(mListView_NESGameList);
+        Toast.makeText(BacklogActivity.this, "Attached", Toast.LENGTH_SHORT).show();
 
-        if(mToggleButton.isChecked()){
-            mItemTouchHelper.attachToRecyclerView(mListView_NESGameList);
-        }else mItemTouchHelper.attachToRecyclerView(null);
+
     }
 
 
