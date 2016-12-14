@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,10 +22,11 @@ import butterknife.ButterKnife;
 
 import static android.graphics.Typeface.createFromAsset;
 
-public class ProfileActivity extends BaseActivity {
+public class ProfileActivity extends BaseActivity implements View.OnClickListener{
     @Bind(R.id.textView_Username) TextView mTextView_Username;
     @Bind(R.id.textView_NES) TextView mTextView_NES;
     @Bind(R.id.textView_NESvs) TextView mTextView_NESvs;
+    @Bind(R.id.button_Scraper) Button mButton_Scraper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,5 +69,12 @@ public class ProfileActivity extends BaseActivity {
 
         mTextView_Username.setTypeface(PressStart2P);
         mTextView_Username.setText(mAuth.getCurrentUser().getEmail());
+
+        mButton_Scraper.setOnClickListener(this);
+    }
+
+    public void onClick(View v){
+        Intent intent = new Intent(ProfileActivity.this, ScraperActivity.class);
+        startActivity(intent);
     }
 }
