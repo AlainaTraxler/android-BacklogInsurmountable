@@ -25,8 +25,8 @@ public class GamesDBService {
         final OkHttpClient client = new OkHttpClient.Builder()
                 .build();
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.API_BASE_URL).newBuilder();
-        urlBuilder.addQueryParameter("api_key", Constants.GIANTBOMB_API_KEY);
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.GAMESDB_API_BASE_URL).newBuilder();
+        urlBuilder.addQueryParameter("name", name);
         String url = urlBuilder.build().toString();
 
         Log.v("URL:", url);

@@ -37,7 +37,8 @@
             android:noHistory="true" />
         <activity android:name=".ui.InfoActivity" />
         <activity android:name=".ui.BaseActivity" />
-        <activity android:name=".ui.ScraperActivity"></activity>
+        <activity android:name=".ui.ScraperActivity" />
+        <activity android:name=".ui.ScraperDetailActivity"></activity>
     </application>
 
 </manifest>
