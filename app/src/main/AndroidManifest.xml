@@ -5,10 +5,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="com.example.backloginsurmountable.MyApplication"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label= "Backlog Insurmountable"
+        android:label="Backlog Insurmountable"
         android:supportsRtl="true"
         android:theme="@style/NoActionBarTheme">
         <activity
@@ -32,10 +32,12 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".ui.SignUpActivity" />
-        <activity android:name=".ui.GameDetailActivity"
-            android:noHistory="true"/>
+        <activity
+            android:name=".ui.GameDetailActivity"
+            android:noHistory="true" />
         <activity android:name=".ui.InfoActivity" />
-        <activity android:name=".ui.BaseActivity"></activity>
+        <activity android:name=".ui.BaseActivity" />
+        <activity android:name=".ui.ScraperActivity"></activity>
     </application>
 
 </manifest>
