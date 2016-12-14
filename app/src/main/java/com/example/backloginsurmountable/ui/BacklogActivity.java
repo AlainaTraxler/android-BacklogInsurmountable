@@ -69,6 +69,10 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
     float mTotalGames = 0;
     String mQuery = "";
 
+    Boolean updateNeeded = false;
+
+    float mCurrentCompleted;
+
     private FirebaseGameListAdapter mFirebaseAdapter;
     private ItemTouchHelper mItemTouchHelper = null;
 
@@ -132,9 +136,10 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
             }
         });
 
-        dbCurrentUser.child("search").addValueEventListener(new ValueEventListener() {
+        dbCurrentUser.child("complete").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                //add filter?
                 updateScoreboard();
             }
 
@@ -164,6 +169,7 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
     }
 
     private DatabaseReference filter(final String query, final Boolean isChecked){
+        updateNeeded = false;
 
         dbCurrentUser.child("search").removeValue();
 
@@ -225,9 +231,15 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
                 mRemaining = dataSnapshot.child("remaining").getChildrenCount();
                 mPercentCompleted = (mCompleted / mTotalGames) * 100;
 
+                Log.v("updateScoreboard", "triggered");
+
+                mCurrentCompleted = mCompleted;
+
                 mTextView_Completed.setText(String.format("%.0f", mCompleted));
                 mTextView_Remaining.setText(String.format("%.0f", mRemaining));
                 mTextView_PercentCompleted.setText(String.format("%.2f", mPercentCompleted) + "%");
+
+                updateNeeded = true;
             }
 
             @Override
@@ -313,5 +325,26 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
     @Override
     public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
 //        mItemTouchHelper.startDrag(viewHolder);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        dbCurrentUser.child("complete").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(updateNeeded){
+                    filter(mQuery, mToggleButton.isChecked());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //Do your code here
     }
 }
