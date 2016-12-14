@@ -63,7 +63,15 @@ public class ScraperDetailFragment extends Fragment {
                 JSONObject jsonObj = null;
                 try {
                     jsonObj = XML.toJSONObject(response.body().string());
-                    catcher = jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(0).getString("GameTitle");
+                    int arraySize = jsonObj.getJSONObject("Data").getJSONArray("Game").length();
+                    for(int i = 0; i < arraySize; i++){
+                        String gameTitle = jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(0).getString("GameTitle");
+                        String overview = jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(0).getString("overview");
+                        String coop = jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(0).getString("coop");
+                        String developer = jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(0).getString("developer");
+                        String publisher = jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(0).getString("publisher");
+                    }
+                    jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(0).getString("GameTitle");
                 } catch (JSONException e) {
                     Log.e("JSON exception", e.getMessage());
                     e.printStackTrace();
@@ -71,7 +79,7 @@ public class ScraperDetailFragment extends Fragment {
 
                 Log.d("XML", response.body().string());
 
-                Log.d("JSON", catcher);
+                Log.d("JSON", jsonObj.toString());
             }
         });
 
