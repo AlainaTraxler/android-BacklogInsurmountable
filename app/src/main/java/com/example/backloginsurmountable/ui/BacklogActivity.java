@@ -43,7 +43,7 @@ import butterknife.ButterKnife;
 
 import static android.graphics.Typeface.createFromAsset;
 
-public class BacklogActivity extends BaseActivity implements OnStartDragListener {
+public class BacklogActivity extends BaseActivity implements OnStartDragListener, View.OnClickListener {
     @Bind(R.id.textView_Completed) TextView mTextView_Completed;
     @Bind(R.id.textView_Remaining) TextView mTextView_Remaining;
     @Bind(R.id.textView_PercentCompleted) TextView mTextView_PercentCompleted;
@@ -91,6 +91,7 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
             @Override
             public boolean onQueryTextSubmit(final String query) {
                 mQuery = query;
+                Log.e(">>QueryTextSubmit", "!!!");
                 setUpFirebaseAdapter(filter(mQuery, mToggleButton.isChecked()));
                 return false;
             }
@@ -99,11 +100,8 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
             public boolean onQueryTextChange(String newText) {
                 if(newText.equals("")){
                     mQuery = "";
+                    Log.e(">>QueryTextChange", "!!!");
                     setUpFirebaseAdapter(filter(mQuery, mToggleButton.isChecked()));
-//                    if(mToggleButton.isChecked()){
-//                        setUpFirebaseAdapter(dbCurrentUser.child("complete"));
-//                    }else setUpFirebaseAdapter(dbCurrentUser.child("remaining"));
-
                 }
                 return false;
             }
@@ -117,11 +115,7 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
         mTextView_CompletedHeader.setTypeface(erbosDraco);
         mTextView_RemainingHeader.setTypeface(erbosDraco);
 
-//        if(mQuery.equals("")){
-//            if(mToggleButton.isChecked()){
-//                setUpFirebaseAdapter(dbCurrentUser.child("complete"));
-//            }else setUpFirebaseAdapter(dbCurrentUser.child("remaining"));
-//        }else setUpFirebaseAdapter(filter(mQuery, mToggleButton.isChecked()));
+        Log.e(">>onCreate", "!!!");
         setUpFirebaseAdapter(filter(mQuery, mToggleButton.isChecked()));
 
         //Updates scoreboard. On stable release, this call will be replaced with a constant for the total number of games, since it will not be changing.
@@ -138,23 +132,10 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
             }
         });
 
-        dbCurrentUser.child("complete").addChildEventListener(new ChildEventListener() {
+        dbCurrentUser.child("search").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {}
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 updateScoreboard();
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
             }
 
             @Override
@@ -163,50 +144,23 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
             }
         });
 
-        dbCurrentUser.child("remaining").addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mFirebaseAdapter);
+        mItemTouchHelper = new ItemTouchHelper(callback);
+        mItemTouchHelper.attachToRecyclerView(mListView_NESGameList);
 
-            }
+        mToggleButton.setOnClickListener(this);
+    }
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                updateScoreboard();
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-        mToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(mItemTouchHelper == null){
-                    filter(mQuery, mToggleButton.isChecked());
-                }else{
-                    if(isChecked){
-                        mItemTouchHelper.attachToRecyclerView(null);
-                        filter(mQuery, mToggleButton.isChecked());
-                    }else{
-                        mItemTouchHelper.attachToRecyclerView(mListView_NESGameList);
-                        filter(mQuery, mToggleButton.isChecked());
-                    }
-                }
-
-            }
-        });
+    public void onClick(View v){
+        if(mToggleButton.isChecked()){
+            mItemTouchHelper.attachToRecyclerView(null);
+            Log.e(">>onClick is checked", "!!!");
+            filter(mQuery, mToggleButton.isChecked());
+        }else{
+            mItemTouchHelper.attachToRecyclerView(mListView_NESGameList);
+            Log.e(">>onClick not checked", "!!!");
+            filter(mQuery, mToggleButton.isChecked());
+        }
     }
 
     private DatabaseReference filter(final String query, final Boolean isChecked){
@@ -301,9 +255,7 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
         mListView_NESGameList.setLayoutManager(new LinearLayoutManager(this));
         mListView_NESGameList.setAdapter(mFirebaseAdapter);
 
-        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mFirebaseAdapter);
-        mItemTouchHelper = new ItemTouchHelper(callback);
-        mItemTouchHelper.attachToRecyclerView(mListView_NESGameList);
+
     }
 
 
@@ -315,7 +267,7 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
     @Override
     public void onStart() {
         super.onStart();
-
+        ////
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client.connect();

@@ -1,6 +1,7 @@
 package com.example.backloginsurmountable.utils;
 
 import android.graphics.Canvas;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
@@ -74,13 +75,19 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int i) {
-        FirebaseGameViewHolder itemViewHolder = (FirebaseGameViewHolder) viewHolder;
+        final FirebaseGameViewHolder itemViewHolder = (FirebaseGameViewHolder) viewHolder;
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        DatabaseReference dbCurrentUser = FirebaseDatabase.getInstance().getReference("users").child(auth.getCurrentUser().getUid());
+        final DatabaseReference dbCurrentUser = FirebaseDatabase.getInstance().getReference("users").child(auth.getCurrentUser().getUid());
         dbCurrentUser.child("complete").child(itemViewHolder.getGameHolder().getpushId()).setValue(true);
         dbCurrentUser.child("remaining").child(itemViewHolder.getGameHolder().getpushId()).removeValue();
-        dbCurrentUser.child("search").child(itemViewHolder.getGameHolder().getpushId()).removeValue();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                dbCurrentUser.child("search").child(itemViewHolder.getGameHolder().getpushId()).removeValue();
+            }
+        }, 250);
     }
 
     @Override
