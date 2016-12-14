@@ -2,18 +2,27 @@ package com.example.backloginsurmountable.ui;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.example.backloginsurmountable.R;
+import com.example.backloginsurmountable.adapters.ScraperListAdapter;
+import com.example.backloginsurmountable.models.ScraperListItem;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ScraperActivity extends AppCompatActivity {
+public class ScraperActivity extends BaseActivity {
+    @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
+
+    private ScraperListAdapter mAdapter;
+    private ArrayList<ScraperListItem> mScrapedGames = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +33,18 @@ public class ScraperActivity extends AppCompatActivity {
         readFile("NES");
     }
 
-    public ArrayList<String> readFile(String _system){
-        ArrayList<String> catcher = new ArrayList<String>();
+    public void setAdapter(){
+        Log.d("Adapter! ", "In!");
+        mAdapter = new ScraperListAdapter(getApplicationContext(), mScrapedGames);
+        mRecyclerView.setAdapter(mAdapter);
+        RecyclerView.LayoutManager layoutManager =
+                new LinearLayoutManager(ScraperActivity.this);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setHasFixedSize(true);
+    }
+
+    public void readFile(String _system){
+        ArrayList<ScraperListItem> catcher = new ArrayList<ScraperListItem>();
 
         int counter = 0;
 
@@ -39,7 +58,8 @@ public class ScraperActivity extends AppCompatActivity {
                 //process line
                 counter+=10;
                 Log.v(mLine, String.valueOf(counter));
-                catcher.add(mLine);
+                ScraperListItem scraperListItem = new ScraperListItem(mLine, counter);
+                mScrapedGames.add(scraperListItem);
             }
 
         } catch (IOException e) {
@@ -54,6 +74,6 @@ public class ScraperActivity extends AppCompatActivity {
             }
         }
 
-        return catcher;
+        setAdapter();
     }
 }
