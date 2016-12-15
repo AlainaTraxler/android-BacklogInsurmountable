@@ -3,12 +3,17 @@ package com.example.backloginsurmountable.ui;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.backloginsurmountable.R;
+import com.example.backloginsurmountable.adapters.GameletListAdapter;
+import com.example.backloginsurmountable.adapters.ScraperListAdapter;
+import com.example.backloginsurmountable.models.GamesDBGamelet;
 import com.example.backloginsurmountable.models.ScraperListItem;
 import com.example.backloginsurmountable.services.GamesDBService;
 
@@ -18,7 +23,9 @@ import org.json.XML;
 import org.parceler.Parcels;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import butterknife.Bind;
 import butterknife.ButterKnife;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -28,7 +35,11 @@ import okhttp3.Response;
  * A simple {@link Fragment} subclass.
  */
 public class ScraperDetailFragment extends Fragment {
+//    @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
+
     private ScraperListItem mScraperListItem;
+    private GameletListAdapter mAdapter;
+    private ArrayList<GamesDBGamelet> mGameletArray = new ArrayList<GamesDBGamelet>();
 
     public static ScraperDetailFragment newInstance(ScraperListItem scraperListItem) {
         ScraperDetailFragment scraperDetailFragment = new ScraperDetailFragment();
@@ -44,9 +55,13 @@ public class ScraperDetailFragment extends Fragment {
         mScraperListItem = Parcels.unwrap(getArguments().getParcelable("scraperListItem"));
     }
 
+    public void setAdapter(){
+
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_scraper_detail, container, false);
+        final View view = inflater.inflate(R.layout.fragment_scraper_detail, container, false);
         ButterKnife.bind(this, view);
 
         GamesDBService apiService = new GamesDBService();
@@ -65,13 +80,28 @@ public class ScraperDetailFragment extends Fragment {
                     jsonObj = XML.toJSONObject(response.body().string());
                     int arraySize = jsonObj.getJSONObject("Data").getJSONArray("Game").length();
                     for(int i = 0; i < arraySize; i++){
-                        String gameTitle = jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(0).getString("GameTitle");
-                        String overview = jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(0).getString("overview");
-                        String coop = jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(0).getString("coop");
-                        String developer = jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(0).getString("developer");
-                        String publisher = jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(0).getString("publisher");
+                        String gameTitle = jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(i).getString("GameTitle");
+                        String releaseDate = jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(i).getString("ReleaseDate");
+                        String platform = jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(i).getString("Platform");
+                        String id = jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(i).getString("id");
+
+                        GamesDBGamelet gamelet = new GamesDBGamelet(gameTitle, releaseDate, platform, id);
+                        mGameletArray.add(gamelet);
+//                        Log.v("????", mGameletArray.size() + "");
                     }
-                    jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(0).getString("GameTitle");
+                  getActivity().runOnUiThread(new Runnable() {
+                      @Override
+                      public void run() {
+                          RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+                          mAdapter = new GameletListAdapter(getActivity(), mGameletArray);
+                          mRecyclerView.setAdapter(mAdapter);
+                          RecyclerView.LayoutManager layoutManager =
+                                  new LinearLayoutManager(getActivity());
+                          mRecyclerView.setLayoutManager(layoutManager);
+                          mRecyclerView.setHasFixedSize(true);
+                      }
+                  });
+                    Log.v("!!!!", mGameletArray.size() + "");
                 } catch (JSONException e) {
                     Log.e("JSON exception", e.getMessage());
                     e.printStackTrace();
@@ -82,6 +112,10 @@ public class ScraperDetailFragment extends Fragment {
                 Log.d("JSON", jsonObj.toString());
             }
         });
+
+
+
+        Log.v("!!!!!!!!", mGameletArray.size() + "");
 
         return view;
     }
