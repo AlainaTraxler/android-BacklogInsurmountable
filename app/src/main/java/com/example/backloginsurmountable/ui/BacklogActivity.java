@@ -21,6 +21,7 @@ import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.adapters.FirebaseGameListAdapter;
 import com.example.backloginsurmountable.adapters.FirebaseGameViewHolder;
 import com.example.backloginsurmountable.models.Game;
+import com.example.backloginsurmountable.models.GamesDBGame;
 import com.example.backloginsurmountable.utils.OnStartDragListener;
 import com.example.backloginsurmountable.utils.OnSwipeTouchListener;
 import com.example.backloginsurmountable.utils.SimpleItemTouchHelperCallback;
@@ -76,8 +77,6 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
     private FirebaseGameListAdapter mFirebaseAdapter;
     private ItemTouchHelper mItemTouchHelper = null;
 
-    private DatabaseReference dbRef;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,8 +86,6 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
-
-        dbRef = FirebaseDatabase.getInstance().getReference();
 
                 mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -187,9 +184,9 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
                 queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        Game game = dataSnapshot.getValue(Game.class);
-                        if(game.getName().toLowerCase().contains(query.toLowerCase())){
-                            dbCurrentUser.child("search").child(game.getpushId()).setValue(game);
+                        GamesDBGame game = dataSnapshot.getValue(GamesDBGame.class);
+                        if(game.getGameTitle().toLowerCase().contains(query.toLowerCase())){
+                            dbCurrentUser.child("search").child(game.getPushId()).setValue(game);
                         }
                     }
 

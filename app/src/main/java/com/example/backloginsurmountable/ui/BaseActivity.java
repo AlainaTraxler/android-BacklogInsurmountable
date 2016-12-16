@@ -30,7 +30,7 @@ public class BaseActivity extends AppCompatActivity {
     DatabaseReference db = FirebaseDatabase.getInstance().getReference();
     DatabaseReference dbGameLists = db.child(Constants.DB_GAMELISTS_NODE);
     DatabaseReference dbGames = db.child(Constants.DB_GAMES_NODE);
-    DatabaseReference dbUsers = db.child(Constants.DB_GAMELISTS_NODE);
+    DatabaseReference dbUsers = db.child(Constants.DB_USERS_NODE);
     DatabaseReference dbCurrentUser;
 
     @Override

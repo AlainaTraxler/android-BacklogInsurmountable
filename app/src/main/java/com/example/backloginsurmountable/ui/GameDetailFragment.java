@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.models.Game;
 import com.google.firebase.auth.FirebaseAuth;
@@ -63,7 +64,7 @@ public class GameDetailFragment extends Fragment {
         mGame = Parcels.unwrap(getArguments().getParcelable("game"));
 
         mAuth = FirebaseAuth.getInstance();
-        dbCurrentUser = FirebaseDatabase.getInstance().getReference("users").child(mAuth.getCurrentUser().getUid());
+        dbCurrentUser = FirebaseDatabase.getInstance().getReference(Constants.DB_USERS_NODE).child(mAuth.getCurrentUser().getUid());
     }
 
     @Override

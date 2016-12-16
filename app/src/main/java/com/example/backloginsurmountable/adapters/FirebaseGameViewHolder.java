@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.models.Game;
 import com.example.backloginsurmountable.ui.GameDetailActivity;
@@ -53,7 +54,7 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
     public void onClick(View view) {
         final ArrayList<Game> games = new ArrayList<>();
         final ArrayList<String> indexArray = new ArrayList<>();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("games");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.DB_GAMES_NODE);
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
 

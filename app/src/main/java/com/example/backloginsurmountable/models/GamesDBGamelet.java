@@ -10,6 +10,8 @@ public class GamesDBGamelet {
     public String gameTitle;
     public int counter;
 
+    public GamesDBGamelet(){}
+
     public GamesDBGamelet(String gameTitle, String releaseDate, String platform, String gamesDBId, int _counter) {
         this.gameTitle = gameTitle;
         this.releaseDate = releaseDate;

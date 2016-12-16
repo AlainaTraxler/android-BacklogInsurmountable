@@ -20,6 +20,8 @@ public class GamesDBGame {
     int index;
     String pushId;
 
+    public GamesDBGame(){}
+
     public GamesDBGame(String _gameTitle, String _overview, String _coop, String _developer, String _publisher, String _players, String _boxArt, int _index, List<String> _screenshots, List<String> _genres){
         screenshots = _screenshots;
         genres = _genres;

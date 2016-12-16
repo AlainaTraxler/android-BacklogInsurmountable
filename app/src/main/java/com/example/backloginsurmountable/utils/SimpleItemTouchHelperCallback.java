@@ -7,6 +7,7 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.adapters.FirebaseGameViewHolder;
 import com.example.backloginsurmountable.models.Game;
 import com.example.backloginsurmountable.ui.BacklogActivity;
@@ -78,7 +79,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
         final FirebaseGameViewHolder itemViewHolder = (FirebaseGameViewHolder) viewHolder;
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
-        final DatabaseReference dbCurrentUser = FirebaseDatabase.getInstance().getReference("users").child(auth.getCurrentUser().getUid());
+        final DatabaseReference dbCurrentUser = FirebaseDatabase.getInstance().getReference(Constants.DB_USERS_NODE).child(auth.getCurrentUser().getUid());
         dbCurrentUser.child("complete").child(itemViewHolder.getGameHolder().getpushId()).setValue(true);
         dbCurrentUser.child("remaining").child(itemViewHolder.getGameHolder().getpushId()).removeValue();
 

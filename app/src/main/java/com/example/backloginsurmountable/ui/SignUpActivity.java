@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -85,7 +86,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
                             }
                             final DatabaseReference newUserRef = dbUsers.child(mAuth.getCurrentUser().getUid());
                             newUserRef.setValue(true);
-                            FirebaseDatabase.getInstance().getReference("gamelists/NES").addChildEventListener(new ChildEventListener() {
+                            FirebaseDatabase.getInstance().getReference(Constants.DB_GAMELISTS_NODE).addChildEventListener(new ChildEventListener() {
                                 @Override
                                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                     newUserRef.child("remaining").child(dataSnapshot.getKey()).setValue(true);
