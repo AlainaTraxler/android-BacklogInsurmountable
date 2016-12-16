@@ -9,13 +9,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.adapters.GameletListAdapter;
 import com.example.backloginsurmountable.adapters.ScraperListAdapter;
+import com.example.backloginsurmountable.models.GamesDBGame;
 import com.example.backloginsurmountable.models.GamesDBGamelet;
 import com.example.backloginsurmountable.models.ScraperListItem;
 import com.example.backloginsurmountable.services.GamesDBService;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,8 +40,9 @@ import okhttp3.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ScraperDetailFragment extends Fragment {
-//    @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
+public class ScraperDetailFragment extends Fragment implements View.OnClickListener{
+    @Bind(R.id.editText_Search) EditText mEditText_Search;
+    @Bind(R.id.button_Search) Button mButton_Search;
 
     private ScraperListItem mScraperListItem;
     private GameletListAdapter mAdapter;
@@ -61,6 +68,7 @@ public class ScraperDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         final View view = inflater.inflate(R.layout.fragment_scraper_detail, container, false);
         ButterKnife.bind(this, view);
 
@@ -113,11 +121,32 @@ public class ScraperDetailFragment extends Fragment {
             }
         });
 
-
+        mButton_Search.setOnClickListener(this);
 
         Log.v("!!!!!!!!", mGameletArray.size() + "");
 
         return view;
+    }
+
+    public void onClick(View v){
+        final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+
+        final GamesDBService apiServcice = new GamesDBService();
+        apiServcice.findGameById(mEditText_Search.getText().toString(), new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.e("GamesDBService: ", "Failed!");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                GamesDBGame game = apiServcice.processResultById(response, mScraperListItem.getIndex());
+                DatabaseReference pushRef =  dbRef.child("ngames").push();
+                game.setPushId(pushRef.getKey());
+                pushRef.setValue(game);
+
+            }
+        });
     }
 
 }
