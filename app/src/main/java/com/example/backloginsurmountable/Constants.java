@@ -12,6 +12,7 @@ public class Constants {
 
     public static final String FIREBASE_NES_NODE = "NES";
 
-    public static final String GAMESDB_API_BASE_URL = "http://thegamesdb.net/api/GetGamesList.php?";
+    public static final String GAMESDB_GAMESLIST_BASE_URL = "http://thegamesdb.net/api/GetGamesList.php?";
+    public static final String GAMESDB_GAME_BASE_URL = "http://thegamesdb.net/api/GetGame.php?";
 
 }

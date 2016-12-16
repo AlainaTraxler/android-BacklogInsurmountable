@@ -17,10 +17,11 @@ public class GamesDBGame {
     public String overview;
     public String gameTitle;
     public String boxArt;
+    int index;
 
-    public GamesDBGame(String _gameTitle, String _overview, String _coop, String _developer, String _publisher, String _players, String _boxArt){
-        screenshots = new ArrayList<String>();
-        genres = new ArrayList<String>();
+    public GamesDBGame(String _gameTitle, String _overview, String _coop, String _developer, String _publisher, String _players, String _boxArt, int _index, List<String> _screenshots, List<String> _genres){
+        screenshots = _screenshots;
+        genres = _genres;
         gameTitle = _gameTitle;
         overview = _overview;
         coop = _coop;
@@ -28,6 +29,7 @@ public class GamesDBGame {
         publisher = _publisher;
         players = _players;
         boxArt = _boxArt;
+        index = _index;
     }
 
     public String getGameTitle() { return gameTitle; }

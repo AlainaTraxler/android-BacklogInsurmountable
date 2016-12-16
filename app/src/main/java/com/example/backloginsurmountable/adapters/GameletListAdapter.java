@@ -8,17 +8,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.models.GamesDBGamelet;
+import com.example.backloginsurmountable.services.GamesDBService;
 import com.example.backloginsurmountable.ui.ScraperDetailActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.parceler.Parcels;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by Guest on 12/14/16.
@@ -54,6 +62,8 @@ public class GameletListAdapter extends RecyclerView.Adapter<GameletListAdapter.
         @Bind(R.id.textView_Id) TextView mTextView_Id;
         @Bind(R.id.textView_Platform) TextView mTextView_Platform;
 
+        private String mId;
+
         private Context mContext;
 
         public GameletViewHolder(View itemView) {
@@ -67,10 +77,29 @@ public class GameletListAdapter extends RecyclerView.Adapter<GameletListAdapter.
         @Override
         public void onClick(View v) {
             int itemPosition = getLayoutPosition();
-            //add to database
+
+            DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+
+            final GamesDBService apiServcice = new GamesDBService();
+            apiServcice.findGameById(mId, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.e("GamesDBService: ", "Failed!");
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    apiServcice.processResultById(response, Integer.parseInt(mId));
+                }
+            });
+
+            dbRef.child("ngames").push();
+
         }
 
         public void bindGamesDBGamelet(GamesDBGamelet gameletListItem) {
+            mId = gameletListItem.getGamesDBId();
+
             mTextView_GameTitle.setText(gameletListItem.getGameTitle());
             mTextView_Id.setText(String.valueOf(gameletListItem.getGamesDBId()));
             mTextView_Platform.setText(String.valueOf(gameletListItem.getPlatform()));
