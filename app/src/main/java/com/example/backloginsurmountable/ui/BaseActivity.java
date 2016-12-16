@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,9 +28,9 @@ public class BaseActivity extends AppCompatActivity {
     public SharedPreferences.Editor mEditor;
 
     DatabaseReference db = FirebaseDatabase.getInstance().getReference();
-    DatabaseReference dbGameLists = db.child("gamelists");
-    DatabaseReference dbGames = db.child("games");
-    DatabaseReference dbUsers = db.child("users");
+    DatabaseReference dbGameLists = db.child(Constants.DB_GAMELISTS_NODE);
+    DatabaseReference dbGames = db.child(Constants.DB_GAMES_NODE);
+    DatabaseReference dbUsers = db.child(Constants.DB_GAMELISTS_NODE);
     DatabaseReference dbCurrentUser;
 
     @Override

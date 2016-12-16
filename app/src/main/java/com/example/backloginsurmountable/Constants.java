@@ -15,4 +15,8 @@ public class Constants {
     public static final String GAMESDB_GAMESLIST_BASE_URL = "http://thegamesdb.net/api/GetGamesList.php?";
     public static final String GAMESDB_GAME_BASE_URL = "http://thegamesdb.net/api/GetGame.php?";
 
+    public static final String DB_GAMES_NODE = "ngames";
+    public static final String DB_GAMELISTS_NODE = "ngamelists";
+    public static final String DB_USERS_NODE = "nusers";
+
 }

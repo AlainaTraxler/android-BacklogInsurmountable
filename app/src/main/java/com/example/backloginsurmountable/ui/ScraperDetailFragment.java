@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.adapters.GameletListAdapter;
 import com.example.backloginsurmountable.adapters.ScraperListAdapter;
@@ -141,10 +142,11 @@ public class ScraperDetailFragment extends Fragment implements View.OnClickListe
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 GamesDBGame game = apiServcice.processResultById(response, mScraperListItem.getIndex());
-                DatabaseReference pushRef =  dbRef.child("ngames").push();
+                DatabaseReference pushRef =  dbRef.child(Constants.DB_GAMES_NODE).push();
                 game.setPushId(pushRef.getKey());
                 pushRef.setValue(game);
 
+                dbRef.child(Constants.DB_GAMELISTS_NODE).child(pushRef.getKey()).setValue(true);
             }
         });
     }
