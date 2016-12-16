@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.backloginsurmountable.R;
+import com.example.backloginsurmountable.models.GamesDBGame;
 import com.example.backloginsurmountable.models.GamesDBGamelet;
 import com.example.backloginsurmountable.services.GamesDBService;
 import com.example.backloginsurmountable.ui.ScraperDetailActivity;
@@ -63,6 +64,7 @@ public class GameletListAdapter extends RecyclerView.Adapter<GameletListAdapter.
         @Bind(R.id.textView_Platform) TextView mTextView_Platform;
 
         private String mId;
+        private int mCounter;
 
         private Context mContext;
 
@@ -78,7 +80,7 @@ public class GameletListAdapter extends RecyclerView.Adapter<GameletListAdapter.
         public void onClick(View v) {
             int itemPosition = getLayoutPosition();
 
-            DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
+            final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference();
 
             final GamesDBService apiServcice = new GamesDBService();
             apiServcice.findGameById(mId, new Callback() {
@@ -89,16 +91,19 @@ public class GameletListAdapter extends RecyclerView.Adapter<GameletListAdapter.
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
-                    apiServcice.processResultById(response, Integer.parseInt(mId));
+                    GamesDBGame game = apiServcice.processResultById(response, mCounter);
+                    DatabaseReference pushRef =  dbRef.child("ngames").push();
+                    game.setPushId(pushRef.getKey());
+                    pushRef.setValue(game);
+
                 }
             });
-
-            dbRef.child("ngames").push();
 
         }
 
         public void bindGamesDBGamelet(GamesDBGamelet gameletListItem) {
             mId = gameletListItem.getGamesDBId();
+            mCounter = gameletListItem.getCounter();
 
             mTextView_GameTitle.setText(gameletListItem.getGameTitle());
             mTextView_Id.setText(String.valueOf(gameletListItem.getGamesDBId()));

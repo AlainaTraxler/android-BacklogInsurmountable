@@ -57,7 +57,7 @@ public class ScraperActivity extends BaseActivity {
             while ((mLine = reader.readLine()) != null) {
                 //process line
                 counter+=10;
-                Log.v(mLine, String.valueOf(counter));
+//                Log.v(mLine, String.valueOf(counter));
                 ScraperListItem scraperListItem = new ScraperListItem(mLine, counter);
                 mScrapedGames.add(scraperListItem);
             }

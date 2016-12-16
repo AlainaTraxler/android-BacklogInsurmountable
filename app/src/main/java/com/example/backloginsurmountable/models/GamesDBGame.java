@@ -18,6 +18,7 @@ public class GamesDBGame {
     public String gameTitle;
     public String boxArt;
     int index;
+    String pushId;
 
     public GamesDBGame(String _gameTitle, String _overview, String _coop, String _developer, String _publisher, String _players, String _boxArt, int _index, List<String> _screenshots, List<String> _genres){
         screenshots = _screenshots;
@@ -44,4 +45,12 @@ public class GamesDBGame {
 
     public void addGenre(String _genre) { genres.add(_genre); }
     public void addScreenshot(String _screenshot){ screenshots.add(_screenshot); }
+
+    public String getPushId() {
+        return pushId;
+    }
+
+    public void setPushId(String pushId) {
+        this.pushId = pushId;
+    }
 }

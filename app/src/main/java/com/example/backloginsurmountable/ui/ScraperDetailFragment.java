@@ -85,7 +85,7 @@ public class ScraperDetailFragment extends Fragment {
                         String platform = jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(i).getString("Platform");
                         String id = jsonObj.getJSONObject("Data").getJSONArray("Game").getJSONObject(i).getString("id");
 
-                        GamesDBGamelet gamelet = new GamesDBGamelet(gameTitle, releaseDate, platform, id);
+                        GamesDBGamelet gamelet = new GamesDBGamelet(gameTitle, releaseDate, platform, id, mScraperListItem.getIndex());
                         mGameletArray.add(gamelet);
 //                        Log.v("????", mGameletArray.size() + "");
                     }
