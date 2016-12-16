@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.models.Game;
+import com.example.backloginsurmountable.models.GamesDBGame;
 import com.example.backloginsurmountable.ui.GameDetailActivity;
 
 import org.parceler.Parcels;
@@ -23,10 +24,10 @@ import butterknife.ButterKnife;
  * Created by Guest on 11/30/16.
  */
 public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameViewHolder> {
-    private ArrayList<Game> mGames = new ArrayList<>();
+    private ArrayList<GamesDBGame> mGames = new ArrayList<>();
     private Context mContext;
 
-    public GameListAdapter(Context context, ArrayList<Game> games) {
+    public GameListAdapter(Context context, ArrayList<GamesDBGame> games) {
         mContext = context;
         mGames = games;
     }
@@ -60,8 +61,8 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
             itemView.setOnClickListener(this);
         }
 
-        public void bindGame(Game game) {
-            mTextView_Name.setText(game.getName());
+        public void bindGame(GamesDBGame game) {
+            mTextView_Name.setText(game.getGameTitle());
         }
 
         @Override

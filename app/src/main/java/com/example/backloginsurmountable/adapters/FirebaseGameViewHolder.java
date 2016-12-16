@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.models.Game;
+import com.example.backloginsurmountable.models.GamesDBGame;
 import com.example.backloginsurmountable.ui.GameDetailActivity;
 import com.example.backloginsurmountable.utils.ItemTouchHelperViewHolder;
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +35,7 @@ import static android.graphics.Typeface.createFromAsset;
 public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, ItemTouchHelperViewHolder {
     View mView;
     Context mContext;
-    Game gameHolder;
+    GamesDBGame gameHolder;
 
     public FirebaseGameViewHolder(View itemView) {
         super(itemView);
@@ -44,9 +45,9 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
         itemView.setOnClickListener(this);
     }
 
-    public void bindGame(Game game, Typeface PressStart2P) {
+    public void bindGame(GamesDBGame game, Typeface PressStart2P) {
         TextView TextView_Name = (TextView) mView.findViewById(R.id.textView_Name);
-        TextView_Name.setText(game.getName());
+        TextView_Name.setText(game.getGameTitle());
         TextView_Name.setTypeface(PressStart2P);
         gameHolder = game;
     }
@@ -65,7 +66,7 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
                     indexArray.add(snapshot.getKey());
                 }
 
-                int itemPosition = indexArray.indexOf(gameHolder.getpushId());
+                int itemPosition = indexArray.indexOf(gameHolder.getPushId());
                 Intent intent = new Intent(mContext, GameDetailActivity.class);
 
                 intent.putExtra("position", itemPosition);
@@ -80,7 +81,7 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
         });
     }
 
-    public Game getGameHolder(){
+    public GamesDBGame getGameHolder(){
         return gameHolder;
     }
 

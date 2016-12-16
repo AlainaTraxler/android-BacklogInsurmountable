@@ -44,6 +44,7 @@ public class GamesDBGame {
     public List<String> getScreenshots() { return screenshots; }
     public String getPlayers() { return players; }
     public String getBoxArt() { return boxArt; }
+    public int getIndex() { return index; }
 
     public void addGenre(String _genre) { genres.add(_genre); }
     public void addScreenshot(String _screenshot){ screenshots.add(_screenshot); }

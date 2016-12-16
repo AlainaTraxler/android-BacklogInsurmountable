@@ -146,7 +146,7 @@ public class ScraperDetailFragment extends Fragment implements View.OnClickListe
                 game.setPushId(pushRef.getKey());
                 pushRef.setValue(game);
 
-                dbRef.child(Constants.DB_GAMELISTS_NODE).child(pushRef.getKey()).setValue(true);
+                dbRef.child(Constants.DB_GAMELISTS_NODE).child(pushRef.getKey()).setValue(game.getIndex());
             }
         });
     }

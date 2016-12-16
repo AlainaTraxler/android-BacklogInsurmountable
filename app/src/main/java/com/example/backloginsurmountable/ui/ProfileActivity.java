@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.backloginsurmountable.R;
+import com.example.backloginsurmountable.models.GamesDBGame;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -74,6 +75,33 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
     }
 
     public void onClick(View v){
+
+//        dbGames.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                dbGameLists.child(dataSnapshot.getKey()).setValue(dataSnapshot.getValue(GamesDBGame.class).getIndex());
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
         Intent intent = new Intent(ProfileActivity.this, ScraperActivity.class);
         startActivity(intent);
     }

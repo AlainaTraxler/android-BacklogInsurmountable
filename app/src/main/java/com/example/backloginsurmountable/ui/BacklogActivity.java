@@ -63,7 +63,6 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
 
     public static final String TAG = BacklogActivity.class.getSimpleName();
 
-    ArrayList<Game> mNESGameList = new ArrayList<Game>();
     float mRemaining = 0;
     float mCompleted = 0;
     float mPercentCompleted = 0;
@@ -71,8 +70,6 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
     String mQuery = "";
 
     Boolean updateNeeded = false;
-
-    float mCurrentCompleted;
 
     private FirebaseGameListAdapter mFirebaseAdapter;
     private ItemTouchHelper mItemTouchHelper = null;
@@ -119,25 +116,25 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
         Log.e(">>onCreate", "!!!");
         setUpFirebaseAdapter(filter(mQuery, mToggleButton.isChecked()));
 
-        //Updates scoreboard. On stable release, this call will be replaced with a constant for the total number of games, since it will not be changing.
-        dbGameLists.child("NES").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mTotalGames = dataSnapshot.getChildrenCount();
-                updateScoreboard();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
         dbCurrentUser.child("complete").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //add filter?
-                updateScoreboard();
+                mCompleted = dataSnapshot.child("complete").getChildrenCount();
+                dbCurrentUser.child("remaining").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        mRemaining = dataSnapshot.getChildrenCount();
+                        mTotalGames = mCompleted + mRemaining;
+                        updateScoreboard();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+
             }
 
             @Override
@@ -173,19 +170,23 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
         DatabaseReference dbSearch = dbCurrentUser.child("search");
         DatabaseReference dbSearchArea;
 
-        if(isChecked){
-            dbSearchArea = dbCurrentUser.child("complete");
-        }else dbSearchArea = dbCurrentUser.child("remaining");
+        Query queryRef;
 
-        dbSearchArea.addChildEventListener(new ChildEventListener() {
+        if(isChecked){
+            queryRef = dbCurrentUser.child("complete");
+        }else queryRef = dbCurrentUser.child("remaining");
+
+
+        queryRef.orderByValue().startAt(0).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Query queryRef = dbGames.child(dataSnapshot.getKey());
-                queryRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                Log.v("::::", dataSnapshot.getValue() + "");
+                dbGames.child(dataSnapshot.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         GamesDBGame game = dataSnapshot.getValue(GamesDBGame.class);
                         if(game.getGameTitle().toLowerCase().contains(query.toLowerCase())){
+                            Log.v("----", dataSnapshot.getValue(GamesDBGame.class).getIndex() + "");
                             dbCurrentUser.child("search").child(game.getPushId()).setValue(game);
                         }
                     }
@@ -221,40 +222,30 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
     }
 
     private void updateScoreboard(){
-        dbCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mCompleted = dataSnapshot.child("complete").getChildrenCount();
-                mRemaining = dataSnapshot.child("remaining").getChildrenCount();
-                mPercentCompleted = (mCompleted / mTotalGames) * 100;
+        if(mCompleted == 0){
+            mPercentCompleted = 0;
+        }else if(mRemaining == 0){
+            mPercentCompleted = 100;
+        }else{
+            mPercentCompleted = (mCompleted / mTotalGames) * 100;
+        }
 
-                Log.v("updateScoreboard", "triggered");
+        Log.v("updateScoreboard", "triggered");
 
-                mCurrentCompleted = mCompleted;
-
-                mTextView_Completed.setText(String.format("%.0f", mCompleted));
-                mTextView_Remaining.setText(String.format("%.0f", mRemaining));
-                mTextView_PercentCompleted.setText(String.format("%.2f", mPercentCompleted) + "%");
-
-                updateNeeded = true;
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+        mTextView_Completed.setText(String.format("%.0f", mCompleted));
+        mTextView_Remaining.setText(String.format("%.0f", mRemaining));
+        mTextView_PercentCompleted.setText(String.format("%.2f", mPercentCompleted) + "%");
     }
 
     private void setUpFirebaseAdapter(DatabaseReference _list) {
         Typeface PressStart2P = createFromAsset(getAssets(), "fonts/PressStart2P.ttf");
         mFirebaseAdapter = new FirebaseGameListAdapter
-                (Game.class, R.layout.game_list_item, FirebaseGameViewHolder.class,
-                        _list,this,this, PressStart2P) {
+                (GamesDBGame.class, R.layout.game_list_item, FirebaseGameViewHolder.class,
+                        _list.orderByChild("index").startAt(0),this,this, PressStart2P) {
 
             @Override
             protected void populateViewHolder(final FirebaseGameViewHolder viewHolder,
-                                              Game model, int position) {
+                                              GamesDBGame model, int position) {
                 Typeface PressStart2P = createFromAsset(getAssets(), "fonts/PressStart2P.ttf");
                 viewHolder.bindGame(model, PressStart2P);
             }

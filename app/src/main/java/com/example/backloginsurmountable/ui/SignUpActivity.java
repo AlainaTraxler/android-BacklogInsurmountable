@@ -89,7 +89,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
                             FirebaseDatabase.getInstance().getReference(Constants.DB_GAMELISTS_NODE).addChildEventListener(new ChildEventListener() {
                                 @Override
                                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                    newUserRef.child("remaining").child(dataSnapshot.getKey()).setValue(true);
+                                    newUserRef.child("remaining").child(dataSnapshot.getKey()).setValue(dataSnapshot.getValue());
                                 }
 
                                 @Override
