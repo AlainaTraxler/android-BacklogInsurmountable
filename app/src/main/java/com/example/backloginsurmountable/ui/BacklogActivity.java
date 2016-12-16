@@ -20,7 +20,6 @@ import android.widget.ToggleButton;
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.adapters.FirebaseGameListAdapter;
 import com.example.backloginsurmountable.adapters.FirebaseGameViewHolder;
-import com.example.backloginsurmountable.models.Game;
 import com.example.backloginsurmountable.models.GamesDBGame;
 import com.example.backloginsurmountable.utils.OnStartDragListener;
 import com.example.backloginsurmountable.utils.OnSwipeTouchListener;
@@ -34,13 +33,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import okhttp3.internal.DiskLruCache;
 
 import static android.graphics.Typeface.createFromAsset;
 
@@ -176,17 +178,17 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
             queryRef = dbCurrentUser.child("complete");
         }else queryRef = dbCurrentUser.child("remaining");
 
+        //-- CLEAN THIS UP --//
 
         queryRef.orderByValue().startAt(0).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Log.v("::::", dataSnapshot.getValue() + "");
                 dbGames.child(dataSnapshot.getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         GamesDBGame game = dataSnapshot.getValue(GamesDBGame.class);
+
                         if(game.getGameTitle().toLowerCase().contains(query.toLowerCase())){
-                            Log.v("----", dataSnapshot.getValue(GamesDBGame.class).getIndex() + "");
                             dbCurrentUser.child("search").child(game.getPushId()).setValue(game);
                         }
                     }

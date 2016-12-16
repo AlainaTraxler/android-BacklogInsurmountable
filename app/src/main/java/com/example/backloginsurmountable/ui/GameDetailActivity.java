@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.adapters.GamePagerAdapter;
-import com.example.backloginsurmountable.models.Game;
+import com.example.backloginsurmountable.models.GamesDBGame;
 
 import android.support.v4.view.ViewPager;
 
@@ -20,7 +20,7 @@ import butterknife.ButterKnife;
 public class GameDetailActivity extends AppCompatActivity {
     @Bind(R.id.viewPager) ViewPager mViewPager;
     private GamePagerAdapter adapterViewPager;
-    ArrayList<Game> mGames = new ArrayList<>();
+    ArrayList<GamesDBGame> mGames = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

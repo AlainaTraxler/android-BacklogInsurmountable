@@ -13,10 +13,10 @@ import android.widget.Toast;
 
 import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.R;
-import com.example.backloginsurmountable.models.Game;
 import com.example.backloginsurmountable.models.GamesDBGame;
 import com.example.backloginsurmountable.ui.GameDetailActivity;
 import com.example.backloginsurmountable.utils.ItemTouchHelperViewHolder;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,19 +53,16 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
     }
     @Override
     public void onClick(View view) {
-        final ArrayList<Game> games = new ArrayList<>();
+        final ArrayList<GamesDBGame> games = new ArrayList<>();
         final ArrayList<String> indexArray = new ArrayList<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.DB_GAMES_NODE);
 
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-
+        ref.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    games.add(snapshot.getValue(Game.class));
-                    indexArray.add(snapshot.getKey());
-                }
-
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                GamesDBGame game = dataSnapshot.getValue(GamesDBGame.class);
+                games.add(game);
+                indexArray.add(dataSnapshot.getKey());
                 int itemPosition = indexArray.indexOf(gameHolder.getPushId());
                 Intent intent = new Intent(mContext, GameDetailActivity.class);
 
@@ -76,7 +73,23 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
             }
 
             @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
             public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }

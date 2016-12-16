@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.backloginsurmountable.R;
-import com.example.backloginsurmountable.models.Game;
 import com.example.backloginsurmountable.models.GamesDBGame;
 import com.example.backloginsurmountable.ui.GameDetailActivity;
 

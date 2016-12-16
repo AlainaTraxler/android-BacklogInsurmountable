@@ -7,7 +7,6 @@ import android.util.Log;
 import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.adapters.GameletListAdapter;
-import com.example.backloginsurmountable.models.Game;
 import com.example.backloginsurmountable.models.GamesDBGame;
 import com.example.backloginsurmountable.models.GamesDBGamelet;
 
@@ -68,36 +67,6 @@ public class GamesDBService {
         Call call = client.newCall(request);
         call.enqueue(callback);
 
-    }
-
-    public Game processResultByName(Response response) {
-        String name;
-        String genre = "Unknown";
-        String deck;
-        String imageURL;
-        String id;
-
-        Game game = new Game("Not Found", "Not Found", "Not Found", "https://image.freepik.com/free-icon/question-mark_318-52837.jpg", "Not Found");
-
-        try {
-            String jsonData = response.body().string();
-            if (response.isSuccessful()) {
-                JSONObject gameJSON = new JSONObject(jsonData);
-                gameJSON = gameJSON.getJSONArray("results").getJSONObject(0);
-                Log.v("JSON String", gameJSON.toString());
-
-                name = gameJSON.getString("name");
-                deck = gameJSON.getString("deck");
-                imageURL = gameJSON.getJSONObject("image").getString("super_url");
-                id = gameJSON.getString("id");
-                game = new Game(name, genre, deck, imageURL, id);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return game;
     }
 
     public GamesDBGame processResultById(Response response, int id) {

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.util.Log;
 
-import com.example.backloginsurmountable.models.Game;
 import com.example.backloginsurmountable.models.GamesDBGame;
 import com.example.backloginsurmountable.utils.ItemTouchHelperAdapter;
 import com.example.backloginsurmountable.utils.OnStartDragListener;

@@ -7,15 +7,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.backloginsurmountable.models.Game;
+import com.example.backloginsurmountable.models.GamesDBGame;
 import com.example.backloginsurmountable.ui.GameDetailFragment;
 
 import java.util.ArrayList;
 
 public class GamePagerAdapter extends FragmentPagerAdapter {
-    private ArrayList<Game> mGames;
+    private ArrayList<GamesDBGame> mGames;
 
-    public GamePagerAdapter(FragmentManager fm, ArrayList<Game> games) {
+    public GamePagerAdapter(FragmentManager fm, ArrayList<GamesDBGame> games) {
         super(fm);
         mGames = games;
     }
@@ -32,6 +32,6 @@ public class GamePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mGames.get(position).getName();
+        return mGames.get(position).getGameTitle();
     }
 }

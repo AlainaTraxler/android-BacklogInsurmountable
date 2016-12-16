@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.R;
-import com.example.backloginsurmountable.models.Game;
+import com.example.backloginsurmountable.models.GamesDBGame;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,23 +33,29 @@ import butterknife.ButterKnife;
  */
 public class GameDetailFragment extends Fragment {
     @Bind(R.id.textView_Deck) TextView mTextView_Deck;
-    @Bind(R.id.textView_Name) TextView mTextView_Name;
     @Bind(R.id.imageView_Splash) ImageView mImageView_Splash;
     @Bind(R.id.checkBox_Complete) CheckBox mCheckBox_Complete;
     @Bind(R.id.checkBox_100) CheckBox mCheckBox_100;
     @Bind(R.id.checkBox_Blind) CheckBox mCheckBox_Blind;
     @Bind(R.id.checkBox_Hardcore) CheckBox mCheckBox_Hardcore;
+    @Bind(R.id.imageView_Screenshot) ImageView mImageView_Screenshot;
+    @Bind(R.id.textView_Developer) TextView mTextView_Developer;
+    @Bind(R.id.textView_Publisher) TextView mTextView_Publisher;
+    @Bind(R.id.textView_Genres) TextView mTextView_Genres;
+    @Bind(R.id.textView_Date) TextView mTextView_Date;
+    @Bind(R.id.textView_Players) TextView mTextView_Players;
+    @Bind(R.id.textView_Coop) TextView mTextView_Coop;
 
     public FirebaseAuth mAuth;
     private DatabaseReference dbCurrentUser;
 
-    private Game mGame;
+    private GamesDBGame mGame;
 
     public GameDetailFragment() {
         // Required empty public constructor
     }
 
-    public static GameDetailFragment newInstance(Game game) {
+    public static GameDetailFragment newInstance(GamesDBGame game) {
         GameDetailFragment gameDetailFragment = new GameDetailFragment();
         Bundle args = new Bundle();
         args.putParcelable("game", Parcels.wrap(game));
@@ -75,16 +81,16 @@ public class GameDetailFragment extends Fragment {
         dbCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild("complete/" + mGame.getpushId())){
+                if(dataSnapshot.hasChild("complete/" + mGame.getPushId())){
                     mCheckBox_Complete.setChecked(true);
                 }
-                if(dataSnapshot.hasChild("100/" + mGame.getpushId())){
+                if(dataSnapshot.hasChild("100/" + mGame.getPushId())){
                     mCheckBox_100.setChecked(true);
                 }
-                if(dataSnapshot.hasChild("blind/" + mGame.getpushId())){
+                if(dataSnapshot.hasChild("blind/" + mGame.getPushId())){
                     mCheckBox_Blind.setChecked(true);
                 }
-                if(dataSnapshot.hasChild("hardcore/" + mGame.getpushId())){
+                if(dataSnapshot.hasChild("hardcore/" + mGame.getPushId())){
                     mCheckBox_Hardcore.setChecked(true);
                 }
             }
@@ -102,10 +108,10 @@ public class GameDetailFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if ( isChecked ) {
-                    dbCurrentUser.child("complete").child(mGame.getpushId()).setValue(true);
-                    dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
+                    dbCurrentUser.child("complete").child(mGame.getPushId()).setValue(mGame.getIndex());
+                    dbCurrentUser.child("remaining").child(mGame.getPushId()).removeValue();
                 }else{
-                    dbCurrentUser.child("complete").child(mGame.getpushId()).removeValue();
+                    dbCurrentUser.child("complete").child(mGame.getPushId()).removeValue();
                     mCheckBox_Hardcore.setChecked(false);
                     mCheckBox_100.setChecked(false);
                     mCheckBox_Blind.setChecked(false);
@@ -121,11 +127,11 @@ public class GameDetailFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if ( isChecked ) {
-                    dbCurrentUser.child("100").child(mGame.getpushId()).setValue(true);
-                    dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
+                    dbCurrentUser.child("100").child(mGame.getPushId()).setValue(mGame.getIndex());
+                    dbCurrentUser.child("remaining").child(mGame.getPushId()).removeValue();
                     mCheckBox_Complete.setChecked(true);
                 }else{
-                    dbCurrentUser.child("100").child(mGame.getpushId()).removeValue();
+                    dbCurrentUser.child("100").child(mGame.getPushId()).removeValue();
                     checkBoxCleanup();
                 }
             }
@@ -137,11 +143,11 @@ public class GameDetailFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if ( isChecked ) {
-                    dbCurrentUser.child("blind").child(mGame.getpushId()).setValue(true);
-                    dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
+                    dbCurrentUser.child("blind").child(mGame.getPushId()).setValue(mGame.getIndex());
+                    dbCurrentUser.child("remaining").child(mGame.getPushId()).removeValue();
                     mCheckBox_Complete.setChecked(true);
                 }else{
-                    dbCurrentUser.child("blind").child(mGame.getpushId()).removeValue();
+                    dbCurrentUser.child("blind").child(mGame.getPushId()).removeValue();
                     checkBoxCleanup();
                 }
 
@@ -154,20 +160,30 @@ public class GameDetailFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
             {
                 if ( isChecked ) {
-                    dbCurrentUser.child("hardcore").child(mGame.getpushId()).setValue(true);
-                    dbCurrentUser.child("remaining").child(mGame.getpushId()).removeValue();
+                    dbCurrentUser.child("hardcore").child(mGame.getPushId()).setValue(mGame.getIndex());
+                    dbCurrentUser.child("remaining").child(mGame.getPushId()).removeValue();
                     mCheckBox_Complete.setChecked(true);
                 }else{
-                    dbCurrentUser.child("hardcore").child(mGame.getpushId()).removeValue();
+                    dbCurrentUser.child("hardcore").child(mGame.getPushId()).removeValue();
                     checkBoxCleanup();
                 }
 
             }
         });
 
-        mTextView_Name.setText(mGame.getName());
-        mTextView_Deck.setText(mGame.getDeck());
-        Picasso.with(getActivity().getApplicationContext()).load(mGame.getImageURL()).into(mImageView_Splash);
+        mTextView_Deck.setText(mGame.getOverview());
+        mTextView_Developer.setText(mGame.getDeveloper());
+        mTextView_Publisher.setText(mGame.getPublisher());
+        mTextView_Genres.setText("?");
+        mTextView_Date.setText("?");
+        mTextView_Players.setText(mGame.getPlayers());
+        mTextView_Coop.setText(mGame.getCoop());
+
+        if(mGame.getScreenshots().size() > 0){
+            Picasso.with(getActivity().getApplicationContext()).load(mGame.getScreenshots().get(0).toString()).into(mImageView_Screenshot);
+        }
+
+        Picasso.with(getActivity().getApplicationContext()).load(mGame.getBoxArt()).into(mImageView_Splash);
 
         return view;
     }
@@ -180,7 +196,7 @@ public class GameDetailFragment extends Fragment {
 
     public void checkBoxCleanup(){
         if(!mCheckBox_Complete.isChecked() && !mCheckBox_100.isChecked() && !mCheckBox_Blind.isChecked() && !mCheckBox_Hardcore.isChecked()){
-            dbCurrentUser.child("remaining").child(mGame.getpushId()).setValue(true);
+            dbCurrentUser.child("remaining").child(mGame.getPushId()).setValue(mGame.getIndex());
         }
     }
 }

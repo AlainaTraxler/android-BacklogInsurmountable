@@ -9,8 +9,6 @@ import android.widget.Toast;
 
 import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.adapters.FirebaseGameViewHolder;
-import com.example.backloginsurmountable.models.Game;
-import com.example.backloginsurmountable.ui.BacklogActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;

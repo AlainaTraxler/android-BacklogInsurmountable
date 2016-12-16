@@ -1,5 +1,7 @@
 package com.example.backloginsurmountable.models;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -7,12 +9,14 @@ import java.util.StringTokenizer;
 /**
  * Created by Guest on 12/14/16.
  */
+
+@Parcel
 public class GamesDBGame {
-    public List<String> genres;
+    public List<String> genres = new ArrayList<>();
     public String players;
     public String publisher;
     public String developer;
-    public List<String> screenshots;
+    public List<String> screenshots = new ArrayList<>();
     public String coop;
     public String overview;
     public String gameTitle;
