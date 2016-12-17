@@ -2,18 +2,13 @@ package com.example.backloginsurmountable.adapters;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.util.Log;
 
 import com.example.backloginsurmountable.models.GamesDBGame;
 import com.example.backloginsurmountable.utils.ItemTouchHelperAdapter;
 import com.example.backloginsurmountable.utils.OnStartDragListener;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-
-import static android.graphics.Typeface.createFromAsset;
 
 /**
  * Created by Guest on 12/12/16.

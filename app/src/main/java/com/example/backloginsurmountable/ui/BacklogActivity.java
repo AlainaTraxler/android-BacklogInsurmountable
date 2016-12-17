@@ -2,8 +2,6 @@ package com.example.backloginsurmountable.ui;
 
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,10 +9,8 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.example.backloginsurmountable.R;
@@ -22,9 +18,7 @@ import com.example.backloginsurmountable.adapters.FirebaseGameListAdapter;
 import com.example.backloginsurmountable.adapters.FirebaseGameViewHolder;
 import com.example.backloginsurmountable.models.GamesDBGame;
 import com.example.backloginsurmountable.utils.OnStartDragListener;
-import com.example.backloginsurmountable.utils.OnSwipeTouchListener;
 import com.example.backloginsurmountable.utils.SimpleItemTouchHelperCallback;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -32,17 +26,11 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import okhttp3.internal.DiskLruCache;
 
 import static android.graphics.Typeface.createFromAsset;
 

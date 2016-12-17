@@ -6,7 +6,6 @@ import android.preference.PreferenceManager;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-
 import java.util.ArrayList;
 
 /**

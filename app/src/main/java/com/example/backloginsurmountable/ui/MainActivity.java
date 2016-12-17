@@ -1,32 +1,22 @@
 package com.example.backloginsurmountable.ui;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.R;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-import static android.graphics.Typeface.*;
+import static android.graphics.Typeface.createFromAsset;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.textView_Backlog) TextView mTextView_Backlog;

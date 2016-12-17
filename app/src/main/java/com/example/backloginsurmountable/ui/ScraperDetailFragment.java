@@ -11,12 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.adapters.GameletListAdapter;
-import com.example.backloginsurmountable.adapters.ScraperListAdapter;
 import com.example.backloginsurmountable.models.GamesDBGame;
 import com.example.backloginsurmountable.models.GamesDBGamelet;
 import com.example.backloginsurmountable.models.ScraperListItem;

@@ -1,15 +1,11 @@
 package com.example.backloginsurmountable.adapters;
 
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.R;
@@ -21,13 +17,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
-
-import static android.graphics.Typeface.createFromAsset;
 
 /**
  * Created by Guest on 12/9/16.
@@ -55,6 +48,7 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
     public void onClick(View view) {
         final ArrayList<GamesDBGame> games = new ArrayList<>();
         final ArrayList<String> indexArray = new ArrayList<>();
+
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.DB_GAMES_NODE);
 
         ref.addChildEventListener(new ChildEventListener() {
@@ -64,10 +58,12 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
                 games.add(game);
                 indexArray.add(dataSnapshot.getKey());
                 int itemPosition = indexArray.indexOf(gameHolder.getPushId());
-                Intent intent = new Intent(mContext, GameDetailActivity.class);
 
+                Intent intent = new Intent(mContext, GameDetailActivity.class);
                 intent.putExtra("position", itemPosition);
                 intent.putExtra("games", Parcels.wrap(games));
+
+
 
                 mContext.startActivity(intent);
             }

@@ -1,19 +1,12 @@
 package com.example.backloginsurmountable.services;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.example.backloginsurmountable.Constants;
-import com.example.backloginsurmountable.R;
-import com.example.backloginsurmountable.adapters.GameletListAdapter;
 import com.example.backloginsurmountable.models.GamesDBGame;
-import com.example.backloginsurmountable.models.GamesDBGamelet;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 import org.json.XML;
 
 import java.io.IOException;

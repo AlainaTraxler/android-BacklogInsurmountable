@@ -1,13 +1,11 @@
 package com.example.backloginsurmountable.ui;
 
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.example.backloginsurmountable.R;
-import com.example.backloginsurmountable.adapters.GamePagerAdapter;
 import com.example.backloginsurmountable.adapters.ScraperPagerAdapter;
-import com.example.backloginsurmountable.models.Game;
 import com.example.backloginsurmountable.models.ScraperListItem;
 
 import org.parceler.Parcels;

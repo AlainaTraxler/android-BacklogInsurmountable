@@ -1,13 +1,14 @@
 package com.example.backloginsurmountable.ui;
 
-import android.support.v7.app.AppCompatActivity;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 
 import com.example.backloginsurmountable.R;
 import com.example.backloginsurmountable.adapters.GamePagerAdapter;
 import com.example.backloginsurmountable.models.GamesDBGame;
-
-import android.support.v4.view.ViewPager;
 
 import org.parceler.Parcels;
 
@@ -17,7 +18,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class GameDetailActivity extends AppCompatActivity {
+public class GameDetailActivity extends BaseActivity {
     @Bind(R.id.viewPager) ViewPager mViewPager;
     private GamePagerAdapter adapterViewPager;
     ArrayList<GamesDBGame> mGames = new ArrayList<>();
@@ -29,10 +30,22 @@ public class GameDetailActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mGames = Parcels.unwrap(getIntent().getParcelableExtra("games"));
-        int startingPosition = getIntent().getIntExtra("position", 0);
+        final int startingPosition = getIntent().getIntExtra("position", 0);
 
-        adapterViewPager = new GamePagerAdapter(getSupportFragmentManager(), mGames);
+        adapterViewPager = new GamePagerAdapter(getSupportFragmentManager(), mGames, mContext);
         mViewPager.setAdapter(adapterViewPager);
         mViewPager.setCurrentItem(startingPosition);
+
+        SensorEventListener sensor = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                adapterViewPager = new GamePagerAdapter(getSupportFragmentManager(), mGames, mContext);
+                mViewPager.setAdapter(adapterViewPager);
+                mViewPager.setCurrentItem(startingPosition);
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+        };
     }
 }

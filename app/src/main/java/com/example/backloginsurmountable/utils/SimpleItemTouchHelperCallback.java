@@ -4,8 +4,6 @@ import android.graphics.Canvas;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.example.backloginsurmountable.Constants;
 import com.example.backloginsurmountable.adapters.FirebaseGameViewHolder;
