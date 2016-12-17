@@ -78,7 +78,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         final DatabaseReference dbCurrentUser = FirebaseDatabase.getInstance().getReference(Constants.DB_USERS_NODE).child(auth.getCurrentUser().getUid());
-        dbCurrentUser.child("complete").child(itemViewHolder.getGameHolder().getPushId()).setValue(true);
+        dbCurrentUser.child("complete").child(itemViewHolder.getGameHolder().getPushId()).setValue(itemViewHolder.getGameHolder().getIndex());
         dbCurrentUser.child("remaining").child(itemViewHolder.getGameHolder().getPushId()).removeValue();
 
         Handler handler = new Handler();

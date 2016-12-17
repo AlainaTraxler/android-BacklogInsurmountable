@@ -122,7 +122,7 @@ public class BacklogActivity extends BaseActivity implements OnStartDragListener
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //add filter?
-                mCompleted = dataSnapshot.child("complete").getChildrenCount();
+                mCompleted = dataSnapshot.getChildrenCount();
                 dbCurrentUser.child("remaining").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
