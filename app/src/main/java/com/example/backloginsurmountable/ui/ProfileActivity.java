@@ -38,26 +38,14 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         final Typeface PressStart2P = createFromAsset(getAssets(), "fonts/PressStart2P.ttf");
         final Typeface nintender = createFromAsset(getAssets(), "fonts/Nintender.ttf");
 
-        dbGameLists.child("NES").addListenerForSingleValueEvent(new ValueEventListener() {
+        dbCurrentUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                final float totalNESGames = dataSnapshot.getChildrenCount();
-                dbCurrentUser.child("complete").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        float completed = 0;
-                        completed = dataSnapshot.getChildrenCount();
-                        float percentCompleted = (completed / totalNESGames) * 100;
-
-                        mTextView_NESvs.setTypeface(PressStart2P);
-                        mTextView_NESvs.setText(String.format("%.0f", completed) + "/" + String.format("%.0f", totalNESGames));
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
+                float completed = dataSnapshot.child("complete").getChildrenCount();
+                final float totalNESGames = dataSnapshot.child("remaining").getChildrenCount() + completed;
+//                float percentCompleted = (completed / totalNESGames) * 100;
+                mTextView_NESvs.setTypeface(PressStart2P);
+                mTextView_NESvs.setText(String.format("%.0f", completed) + "/" + String.format("%.0f", totalNESGames));
             }
 
             @Override
@@ -71,37 +59,11 @@ public class ProfileActivity extends BaseActivity implements View.OnClickListene
         mTextView_Username.setTypeface(PressStart2P);
         mTextView_Username.setText(mAuth.getCurrentUser().getEmail());
 
+        mButton_Scraper.setVisibility(View.INVISIBLE);
         mButton_Scraper.setOnClickListener(this);
     }
 
     public void onClick(View v){
-
-//        dbGames.addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                dbGameLists.child(dataSnapshot.getKey()).setValue(dataSnapshot.getValue(GamesDBGame.class).getIndex());
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
         Intent intent = new Intent(ProfileActivity.this, ScraperActivity.class);
         startActivity(intent);
     }
