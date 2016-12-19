@@ -1,13 +1,213 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.GameDetailFragmentLand">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="fill_parent"
+        android:alpha=".10"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:id="@+id/imageView_Splash"
+        android:layout_toRightOf="@id/imageView_Screenshot"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true" />
 
-</FrameLayout>
+    <ImageView
+        android:layout_height="match_parent"
+        android:layout_width="300dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:id="@+id/imageView_Screenshot"
+        android:src="@drawable/noscreenshots"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Complete"
+        android:id="@+id/checkBox_Complete"
+        android:checked="false"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/imageView_Screenshot"
+        android:layout_toEndOf="@+id/imageView_Screenshot" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100%"
+        android:id="@+id/checkBox_100"
+        android:checked="false"
+        android:layout_below="@+id/checkBox_Complete"
+        android:layout_toRightOf="@+id/imageView_Screenshot"
+        android:layout_toEndOf="@+id/imageView_Screenshot" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Blind"
+        android:id="@+id/checkBox_Blind"
+        android:checked="false"
+        android:layout_below="@+id/checkBox_100"
+        android:layout_toRightOf="@+id/imageView_Screenshot"
+        android:layout_toEndOf="@+id/imageView_Screenshot" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hardcore"
+        android:id="@+id/checkBox_Hardcore"
+        android:checked="false"
+        android:layout_below="@+id/checkBox_Blind"
+        android:layout_toRightOf="@+id/imageView_Screenshot"
+        android:layout_toEndOf="@+id/imageView_Screenshot" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Developer"
+        android:id="@+id/textView10"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:layout_alignTop="@+id/checkBox_Complete"
+        android:layout_toRightOf="@+id/checkBox_Complete"
+        android:layout_toEndOf="@+id/checkBox_Complete" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Publisher"
+        android:id="@+id/textView11"
+        android:paddingRight="10dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:id="@+id/textView_Developer"
+        android:layout_alignLeft="@id/textView10"
+        android:layout_below="@+id/textView10" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="15dp"
+        android:id="@+id/textView_Publisher"
+        android:layout_below="@+id/textView11"
+        android:layout_alignRight="@+id/textView11"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Genres"
+        android:id="@+id/textView14"
+        android:layout_below="@+id/textView_Developer"
+        android:layout_alignLeft="@+id/textView_Developer"
+        android:layout_alignStart="@+id/textView_Developer" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Release Date"
+        android:id="@+id/textView15"
+        android:paddingRight="10dp"
+        android:layout_below="@+id/textView_Publisher"
+        android:layout_alignRight="@+id/textView_Publisher"
+        android:layout_alignEnd="@+id/textView_Publisher" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:id="@+id/textView_Genres"
+        android:layout_below="@+id/textView14"
+        android:layout_alignLeft="@+id/textView14"
+        android:layout_alignStart="@+id/textView14" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="15dp"
+        android:id="@+id/textView_Date"
+        android:layout_below="@+id/textView15"
+        android:layout_alignRight="@+id/textView15"
+        android:layout_alignEnd="@+id/textView15" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Players"
+        android:id="@+id/textView18"
+        android:paddingLeft="10dp"
+        android:layout_below="@+id/textView_Genres"
+        android:layout_alignLeft="@+id/textView_Genres"
+        android:layout_alignStart="@+id/textView_Genres" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:paddingRight="10dp"
+        android:text="Co-op"
+        android:id="@+id/textView19"
+        android:layout_below="@+id/textView_Date"
+        android:layout_alignRight="@+id/textView15"
+        android:layout_alignEnd="@+id/textView15" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_Players"
+        android:paddingLeft="15dp"
+        android:layout_below="@+id/textView18"
+        android:layout_alignLeft="@+id/textView18"
+        android:layout_alignStart="@+id/textView18" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_Coop"
+        android:paddingRight="15dp"
+        android:layout_below="@+id/textView19"
+        android:layout_alignRight="@+id/textView19"
+        android:layout_alignEnd="@+id/textView19" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:layout_below="@id/checkBox_Hardcore"
+        android:layout_toRightOf="@id/imageView_Screenshot">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/textView_Deck"
+            android:textAlignment="center"
+            android:text="Deck"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_below="@id/line"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </ScrollView>
+
+</RelativeLayout>

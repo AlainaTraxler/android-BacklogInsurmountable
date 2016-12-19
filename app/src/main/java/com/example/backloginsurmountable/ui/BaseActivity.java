@@ -3,6 +3,7 @@ package com.example.backloginsurmountable.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -31,6 +32,7 @@ public class BaseActivity extends AppCompatActivity {
     DatabaseReference dbGames = db.child(Constants.DB_GAMES_NODE);
     DatabaseReference dbUsers = db.child(Constants.DB_USERS_NODE);
     DatabaseReference dbCurrentUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,8 @@ public class BaseActivity extends AppCompatActivity {
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mSharedPreferences.edit();
+
+
 
     }
 

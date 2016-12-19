@@ -34,6 +34,7 @@
         <activity android:name=".ui.SignUpActivity" />
         <activity
             android:name=".ui.GameDetailActivity"
+            android:configChanges="orientation"
             android:noHistory="true" />
         <activity android:name=".ui.InfoActivity" />
         <activity android:name=".ui.BaseActivity" />

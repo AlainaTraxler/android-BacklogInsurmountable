@@ -62,6 +62,7 @@ public class FirebaseGameViewHolder extends RecyclerView.ViewHolder implements V
                 Intent intent = new Intent(mContext, GameDetailActivity.class);
                 intent.putExtra("position", itemPosition);
                 intent.putExtra("games", Parcels.wrap(games));
+                intent.putExtra("restart", false);
 
 
 
